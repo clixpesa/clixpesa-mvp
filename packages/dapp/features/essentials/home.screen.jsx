@@ -20,6 +20,26 @@ const HomeScreen = () => {
   return (
     <VStack flex="1" bg="muted.200" p="2">
       <Box bg="#fff" p="4">
+        {/*
+        
+          <FeatureHomeCard
+              balance={totalBalance.toFixed(4).toString()}
+              apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
+              // expScreen="DummyModal"
+              btn1={{
+                icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
+                name: 'Deposit',
+                screen: 'depositFunds',
+              }}
+              btn2={{
+                icon: <Icon as={Feather} name="arrow-right" size="md" color="primary.600" mr="1" />,
+                name: 'Transfer',
+                screen: 'sendFunds',
+              }}
+              itemBottom={false}
+            />
+        
+        */}
         <Text>Actual Balance (KES)</Text>
         <Heading>0.00</Heading>
         <Text>0.00 (cUSD)</Text>
