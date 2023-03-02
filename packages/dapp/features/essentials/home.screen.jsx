@@ -11,10 +11,10 @@ import {
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 
-import SectionHeader from '../../../components/section-header.component';
+import SectionHeader from '../../components/section-header.component';
 import Transaction from '../components/transaction.component';
 
-import { transactions } from '../../../data';
+import { transactions } from '../../data';
 
 const HomeScreen = () => {
   return (
