@@ -48,7 +48,11 @@ export default function SpacesHomeScreen({ navigation }) {
               itemBottom={false}
             />
           </>
-        } 
+        }
+        renderItem={({ item, index }) => (
+          <Box key={item.id}></Box>
+        )} 
+        keyExtractor={(item) => item.id}
         ListFooterComponent={
           <>
             <HStack mx={1} justifyContent="space-between" my={4}>
