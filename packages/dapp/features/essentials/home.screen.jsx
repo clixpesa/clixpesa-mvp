@@ -11,9 +11,7 @@ import {
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 
-import SectionHeader from '../../components/section-header.component';
-import Transaction from '../../components/transaction.component';
-// import FeatureHomeCard from '../../components/feature-home-card.component';
+import {SectionHeader, Transaction} from '../../components';
 
 import { transactions } from '../../data';
 

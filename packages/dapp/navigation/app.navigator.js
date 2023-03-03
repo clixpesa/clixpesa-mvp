@@ -2,8 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-remix-icon';
 
-import HomeScreen from '../features/essentials/home.screen';
-
+import { HomeScreen } from '../features/essentials';
 import { SpacesNavigator } from './spaces.navigator';
 import { LoansNavigator } from './loans.navigator';
 import { AccountNavigator } from './account.navigator';
