@@ -24,3 +24,26 @@ export const transactions = [
     date: '2020-10-01',
   },
 ];
+
+export const spaces = [
+  { id: "0x1", 
+    type: "rosca", 
+    name: "Masomo", 
+    balance: "50", 
+    token: "cUSD"
+  }, 
+  {
+    id: "0x2", 
+    type: "rosca", 
+    name: "TMK Wanaume", 
+    balance: "500", 
+    token: "cUSD"
+  }, 
+  {
+    id: "0x3", 
+    type: "personal", 
+    name: "Vacation", 
+    balance: "500", 
+    token: "cUSD"
+  }
+]
