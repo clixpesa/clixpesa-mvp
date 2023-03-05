@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState, useCallback} from 'react';
 import {
   Text,
   Box,
@@ -9,86 +9,81 @@ import {
   Icon,
   FlatList,
 } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
+import { RefreshControl } from 'react-native'
 
-import SectionHeader from '../../components/section-header.component';
-import Transaction from '../../components/transaction.component';
-// import FeatureHomeCard from '../../components/feature-home-card.component';
+import {SectionHeader, TransactionItem, FeatureHomeCard} from '../../components';
+import { rates, transactions } from '../../data';
 
-import { transactions } from '../../data';
+const HomeScreen = ({ navigation }) => {
+  const [refreshing, setRefreshing] = useState(false)
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout))
+  }
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true)
+    wait(2000).then(async () => {
+      setRefreshing(false)
+  })}, [])
 
-const HomeScreen = () => {
+  let totalBalance = 0
+  const celoInUsd = 0.458
   return (
-    <VStack flex="1" bg="muted.200" p="2">
-      <Box bg="#fff" p="4" rounded="2xl">
-        {/* <FeatureHomeCard
-          balance={totalBalance.toFixed(4).toString()}
-          apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
-          // expScreen="DummyModal"
-          btn1={{
-            icon: (
-              <Icon
-                as={Feather}
-                name="plus"
-                size="md"
-                color="primary.600"
-                mr="1"
-              />
-            ),
-            name: 'Deposit',
-            screen: 'depositFunds',
-          }}
-          btn2={{
-            icon: (
-              <Icon
-                as={Feather}
-                name="arrow-right"
-                size="md"
-                color="primary.600"
-                mr="1"
-              />
-            ),
-            name: 'Transfer',
-            screen: 'sendFunds',
-          }}
-          itemBottom={false}
-        /> */}
-        <Text>Actual Balance (KES)</Text>
-        <Heading>0.00</Heading>
-        <Text>0.00 (cUSD)</Text>
-        <HStack space="2" mt="2">
-          <Button
-            leftIcon={<Icon as={Ionicons} name="add" size="sm" />}
-            variant="subtle"
-            rounded="3xl"
-          >
-            Deposit
-          </Button>
-          <Button
-            leftIcon={<Icon as={Ionicons} name="arrow-forward" size="sm" />}
-            variant="subtle"
-            rounded="3xl"
-          >
-            Transfer
-          </Button>
-          <Button variant="subtle" rounded="3xl">
-            <Icon as={Ionicons} name="ellipsis-horizontal" size="sm" />
-          </Button>
-        </HStack>
-      </Box>
-      <SectionHeader
-        title="Recent Transactions"
-        action={() => console.log('View All')}
-        actionText="View All"
-      />
+    <Box flex={1} bg="muted.100" alignItems="center">
       <FlatList
+        width="95%"
         data={transactions}
-        renderItem={({ item }) => (
-          <Transaction transaction={item} key={item.id} />
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        ListHeaderComponent={
+          <Box>
+            <FeatureHomeCard
+              balance={totalBalance.toFixed(4).toString()}
+              apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
+              // expScreen="DummyModal"
+              btn1={{
+                icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
+                name: 'Deposit',
+                screen: 'depositFunds',
+              }}
+              btn2={{
+                icon: <Icon as={Feather} name="arrow-right" size="md" color="primary.600" mr="1" />,
+                name: 'Transfer',
+                screen: 'sendFunds',
+              }}
+              itemBottom={false}
+            />
+            {transactions.length > 0 ? (<SectionHeader title="Transactions" actionText="See all" action={() => console.log("See all")}/>) : null}
+          </Box>
+        }
+        renderItem={({ item, index }) => (
+          <Box
+            bg="white"
+            opacity={85}
+            roundedTop={index == 0 ? '2xl' : 'md'}
+            roundedBottom={index == transactions.length - 1 ? '2xl' : 'md'}
+            mt={1}
+            //key={index.toString()}
+          >
+            <TransactionItem
+              key={item.id}
+              credited={item.credited}
+              trTitle={item.title}
+              trDate={item.date}
+              spAmount={
+                (item.credited ? '+' : '-') + (item.amount * 1).toFixed(2) + ' ' + item.token
+              }
+              eqAmount={
+                (item.amount * rates[item.token]).toFixed(2) +
+                ' KES'
+              }
+              screen="DummyModal"
+            />
+          </Box>
         )}
         keyExtractor={(item) => item.id}
       />
-    </VStack>
+    </Box>
   );
 };
 

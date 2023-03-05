@@ -25,7 +25,7 @@ const FeatureHomeCard = (props) => {
     >
       <HStack justifyContent="space-between">
         <Stack mx="4" my="3">
-          <Text _light={{ color: 'warmGray.700' }}>Total Balance (fUSD)</Text>
+          <Text _light={{ color: 'warmGray.700' }}>Total Balance (USD)</Text>
           <HStack alignItems="center">
             <Heading
               size="xl"
