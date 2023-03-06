@@ -1,5 +1,3 @@
-import React from 'react';
-import { Box, Text } from 'native-base';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { SpacesHomeScreen } from '../features/spaces';

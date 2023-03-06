@@ -1,4 +1,3 @@
-import React from 'react';
 import { HStack, Text, Spacer, Pressable } from 'native-base';
 
 const SectionHeader = ({ title, action, actionText }) => (

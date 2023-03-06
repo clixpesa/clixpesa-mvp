@@ -1,28 +1,29 @@
-import { Box, Text, FlatList, Icon, HStack, VStack, Avatar, Stack, Pressable } from 'native-base'
-import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { useState, useEffect, useCallback } from 'react'
-import { RefreshControl } from 'react-native'
+import { Box, Text, FlatList, Icon, HStack, VStack, Avatar, Stack, Pressable } from 'native-base';
+import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { useState, useEffect, useCallback } from 'react';
+import { RefreshControl } from 'react-native';
 
-import { spaces } from '../../data';
-import { FeatureHomeCard } from '../../components'
+import { spaces } from '../../../data';
+import { FeatureHomeCard } from '../../components';
 
 export default function SpacesHomeScreen({ navigation }) {
-  const [refreshing, setRefreshing] = useState(false)
+  const [refreshing, setRefreshing] = useState(false);
   const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout))
-  }
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
   const onRefresh = useCallback(async () => {
-    setRefreshing(true)
+    setRefreshing(true);
     wait(2000).then(async () => {
-      setRefreshing(false)
-  })}, [])
+      setRefreshing(false);
+    });
+  }, []);
 
-  let totalBalance = 0
-  let groupsBal = 0
-  let challengesBal = 0
-  let personalBal = 0
+  let totalBalance = 0;
+  let groupsBal = 0;
+  let challengesBal = 0;
+  let personalBal = 0;
   return (
-    <Box flex={1} bg="muted.100" alignItems="center" >
+    <Box flex={1} bg="muted.100" alignItems="center">
       <FlatList
         width="95%"
         data={spaces}
@@ -49,9 +50,7 @@ export default function SpacesHomeScreen({ navigation }) {
             />
           </>
         }
-        renderItem={({ item, index }) => (
-          <Box key={item.id}></Box>
-        )} 
+        renderItem={({ item, index }) => <Box key={item.id}></Box>}
         keyExtractor={(item) => item.id}
         ListFooterComponent={
           <>

@@ -1,33 +1,25 @@
-import {useState, useCallback} from 'react';
-import {
-  Text,
-  Box,
-  Button,
-  HStack,
-  VStack,
-  Heading,
-  Icon,
-  FlatList,
-} from 'native-base';
-import { Feather, Ionicons } from '@expo/vector-icons';
-import { RefreshControl } from 'react-native'
+import { useState, useCallback } from 'react';
+import { Box, Icon, FlatList } from 'native-base';
+import { Feather } from '@expo/vector-icons';
+import { RefreshControl } from 'react-native';
 
-import {SectionHeader, TransactionItem, FeatureHomeCard} from '../../components';
-import { rates, transactions } from '../../data';
+import { SectionHeader, TransactionItem, FeatureHomeCard } from '../../components';
+import { rates, transactions } from '../../../data';
 
 const HomeScreen = ({ navigation }) => {
-  const [refreshing, setRefreshing] = useState(false)
+  const [refreshing, setRefreshing] = useState(false);
   const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout))
-  }
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
   const onRefresh = useCallback(async () => {
-    setRefreshing(true)
+    setRefreshing(true);
     wait(2000).then(async () => {
-      setRefreshing(false)
-  })}, [])
+      setRefreshing(false);
+    });
+  }, []);
 
-  let totalBalance = 0
-  const celoInUsd = 0.458
+  let totalBalance = 0;
+  const celoInUsd = 0.458;
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
       <FlatList
@@ -53,7 +45,13 @@ const HomeScreen = ({ navigation }) => {
               }}
               itemBottom={false}
             />
-            {transactions.length > 0 ? (<SectionHeader title="Transactions" actionText="See all" action={() => console.log("See all")}/>) : null}
+            {transactions.length > 0 ? (
+              <SectionHeader
+                title="Transactions"
+                actionText="See all"
+                action={() => console.log('See all')}
+              />
+            ) : null}
           </Box>
         }
         renderItem={({ item, index }) => (
@@ -73,10 +71,7 @@ const HomeScreen = ({ navigation }) => {
               spAmount={
                 (item.credited ? '+' : '-') + (item.amount * 1).toFixed(2) + ' ' + item.token
               }
-              eqAmount={
-                (item.amount * rates[item.token]).toFixed(2) +
-                ' KES'
-              }
+              eqAmount={(item.amount * rates[item.token]).toFixed(2) + ' KES'}
               screen="DummyModal"
             />
           </Box>

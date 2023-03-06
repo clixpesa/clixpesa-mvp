@@ -1,10 +1,9 @@
-import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NativeBaseProvider } from 'native-base';
 
-import { Navigation } from './navigation';
+import { Navigation } from './src/navigation';
 
-import { theme } from './theme';
+import { theme } from './src/theme';
 
 export default function App() {
   return (
