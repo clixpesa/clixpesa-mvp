@@ -3,7 +3,7 @@ import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useState, useEffect, useCallback } from 'react';
 import { RefreshControl } from 'react-native';
 
-import { spaces } from '../../../data';
+import { spaces } from '../../data';
 import { FeatureHomeCard } from '../../components';
 
 export default function SpacesHomeScreen({ navigation }) {

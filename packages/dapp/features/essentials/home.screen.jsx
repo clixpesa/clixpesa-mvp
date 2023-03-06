@@ -4,7 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 
 import { SectionHeader, TransactionItem, FeatureHomeCard } from '../../components';
-import { rates, transactions } from '../../../data';
+import { rates, transactions } from '../../data';
 
 const HomeScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
