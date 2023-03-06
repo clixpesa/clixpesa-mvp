@@ -9,9 +9,9 @@ import {
   HStack,
   Box,
   Icon,
-} from 'native-base'
-import { MaterialIcons } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
+} from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * Card for popular spaces
@@ -24,12 +24,12 @@ import { useNavigation } from '@react-navigation/native'
  * @param {string} bgColor background color
  */
 const PopularItem = (props) => {
-  const navigation = useNavigation()
-  const title = props.title.split(' ')
+  const navigation = useNavigation();
+  const title = props.title.split(' ');
   const initials =
     title.length > 1
       ? title[0].slice(0, 1) + title[1].slice(0, 1)
-      : title[0].slice(0, 2).toUpperCase()
+      : title[0].slice(0, 2).toUpperCase();
   return (
     <Pressable onPress={() => navigation.navigate(props.screen)}>
       <VStack
@@ -102,7 +102,7 @@ const PopularItem = (props) => {
         </Stack>
       </VStack>
     </Pressable>
-  )
-}
+  );
+};
 
-export default PopularItem
+export default PopularItem;

@@ -1,10 +1,10 @@
-import { Actionsheet, HStack, Box, Text, Button, FlatList } from 'native-base'
-import { TouchableOpacity } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { Actionsheet, HStack, Box, Text, Button, FlatList } from 'native-base';
+import { TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 const ScheduleActSheet = (props) => {
-  const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-  const dispatch = useDispatch()
+  const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const dispatch = useDispatch();
   return (
     <Actionsheet isOpen={props.isOpen} onClose={props.onClose}>
       <Actionsheet.Content>
@@ -91,9 +91,9 @@ const ScheduleActSheet = (props) => {
           _text={{ color: 'text.900', fontWeight: 'semibold', mb: '0.5' }}
           onPress={() => {
             if (props.isSetCtb) {
-              dispatch(props.setCtbSchedule(props.schedule))
+              dispatch(props.setCtbSchedule(props.schedule));
             } else {
-              dispatch(props.setDisbSchedule(props.schedule))
+              dispatch(props.setDisbSchedule(props.schedule));
             }
           }}
           onPressOut={props.onClose}
@@ -102,7 +102,7 @@ const ScheduleActSheet = (props) => {
         </Button>
       </Actionsheet.Content>
     </Actionsheet>
-  )
-}
+  );
+};
 
-export default ScheduleActSheet
+export default ScheduleActSheet;

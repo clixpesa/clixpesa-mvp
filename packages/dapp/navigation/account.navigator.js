@@ -1,16 +1,8 @@
-import React from 'react';
-import { Box, Text } from 'native-base';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const AccountStack = createNativeStackNavigator();
+import AccountScreen from '../features/account/account.screen';
 
-const AccountScreen = () => {
-  return (
-    <Box flex={1} bg="primary.100" alignItems="center" justifyContent="center">
-      <Text fontSize="xl">Account Screen!</Text>
-    </Box>
-  );
-};
+const AccountStack = createNativeStackNavigator();
 
 export const AccountNavigator = () => {
   return (

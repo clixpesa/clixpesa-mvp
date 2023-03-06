@@ -1,14 +1,13 @@
-import React from 'react';
 import { Text, Box, HStack, VStack, Avatar, Pressable, Spacer } from 'native-base';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 
 const TransactionItem = (props) => {
-  const navigation = useNavigation()
-  const title = props.trTitle.split(' ')
+  const navigation = useNavigation();
+  const title = props.trTitle.split(' ');
   const initials =
     title.length > 1
       ? title[0].slice(0, 1) + title[1].slice(0, 1).toUpperCase()
-      : title[0].slice(0, 2).toUpperCase()
+      : title[0].slice(0, 2).toUpperCase();
   return (
     <Pressable onPress={() => navigation.navigate(props.screen)}>
       <HStack space={3} my={2} mx={3} alignItems="center">
@@ -36,7 +35,7 @@ const TransactionItem = (props) => {
         </Box>
       </HStack>
     </Pressable>
-  )
-}
+  );
+};
 
-export default TransactionItem
+export default TransactionItem;

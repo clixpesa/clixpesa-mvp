@@ -1,7 +1,6 @@
-import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-remix-icon';
-import { Box, Text, Avatar, Pressable, HStack } from 'native-base'
+import { Box, Text } from 'native-base';
 
 import { HomeScreen } from '../features/essentials';
 import { SpacesNavigator } from './spaces.navigator';
@@ -14,13 +13,13 @@ const TAB_ICON = {
   Home: ['home-3-fill', 'home-3-line'],
   Spaces: ['safe-2-fill', 'safe-2-line'],
   Loans: ['hand-coin-fill', 'hand-coin-line'],
-  Account: ['user-3-fill', 'user-3-line']
+  Account: ['user-3-fill', 'user-3-line'],
 };
 
 const screenOptions = ({ route }) => {
   const iconName = TAB_ICON[route.name];
   return {
-    tabBarIcon: ({ focused, size }) => (
+    tabBarIcon: ({ focused }) => (
       <Box bg={focused ? 'primary.200' : '#ffffff'} rounded="2xl" px="5" py="1" mt="1">
         <Icon name={focused ? iconName[0] : iconName[1]} size={22} color="#0F766E" />
       </Box>
@@ -30,8 +29,9 @@ const screenOptions = ({ route }) => {
         {route.name}
       </Text>
     ),
-  }
+  };
 };
+
 export const AppNavigator = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
