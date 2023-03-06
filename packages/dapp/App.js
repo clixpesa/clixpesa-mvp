@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { NativeBaseProvider } from 'native-base';
 
-import { Navigation } from './src/navigation';
+import { Navigation } from './navigation';
 
-import { theme } from './src/theme';
+import { theme } from './theme';
 
 export default function App() {
   return (
