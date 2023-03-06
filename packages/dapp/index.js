@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 // import '@ethersproject/shims';
 
 import App from './App';
-import { store } from './src/store/store';
+import { store } from './src/store';
 
 const ReduxApp = () => (
   <Provider store={store}>
