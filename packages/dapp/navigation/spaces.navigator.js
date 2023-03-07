@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { SpacesHomeScreen } from '../features/spaces';
+import { SpacesHomeScreen, CreateSpaceScreen, CustomizePersonalScreen } from '../features/spaces';
 
 const SpacesStack = createNativeStackNavigator();
 
@@ -12,6 +12,8 @@ export const SpacesNavigator = () => {
       }}
     >
       <SpacesStack.Screen name="Main" component={SpacesHomeScreen} />
+      <SpacesStack.Screen name="CreateSpace" component={CreateSpaceScreen} />
+      <SpacesStack.Screen name="CustomizePersonal" component={CustomizePersonalScreen} />
     </SpacesStack.Navigator>
   );
 };
