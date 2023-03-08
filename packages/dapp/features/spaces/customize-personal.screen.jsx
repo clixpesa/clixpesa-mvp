@@ -3,8 +3,8 @@ import { Box, HStack, FormControl, Stack, Input, Button, Image } from 'native-ba
 
 const CustomizePersonalScreen = ({ navigation }) => {
   const suggestions = ['Savings', 'Vacation', 'Chama', 'Gift', 'Sherehe', 'Emergency', 'Masomo'];
-
   const [spaceName, setSpaceName] = useState('');
+
   return (
     <Box flex={1} bg="muted.50">
       <Image
@@ -54,7 +54,7 @@ const CustomizePersonalScreen = ({ navigation }) => {
                 mb: '0.5',
               }}
               onPress={() => {
-                navigation.navigate('setPersonalGoal');
+                navigation.navigate('SetPersonalGoal');
               }}
             >
               Continue
