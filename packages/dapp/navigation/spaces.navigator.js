@@ -5,6 +5,7 @@ import {
   CreateSpaceScreen,
   CustomizePersonalScreen,
   SetPersonalGoalScreen,
+  RecurringTransferScreen,
 } from '../features/spaces';
 
 const SpacesStack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ export const SpacesNavigator = () => {
       <SpacesStack.Screen name="CreateSpace" component={CreateSpaceScreen} />
       <SpacesStack.Screen name="CustomizePersonal" component={CustomizePersonalScreen} />
       <SpacesStack.Screen name="SetPersonalGoal" component={SetPersonalGoalScreen} />
+      <SpacesStack.Screen name="RecurringTransfer" component={RecurringTransferScreen} />
     </SpacesStack.Navigator>
   );
 };

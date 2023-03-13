@@ -1,7 +1,7 @@
 import { Box, Text, VStack, Button, HStack, Input, Icon, Stack } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const SetPersonalGoalScreen = () => {
+const SetPersonalGoalScreen = ({ navigation }) => {
   return (
     <Box flex={1} bg="muted.100" alignItems="center" p={4}>
       <Box w="100%" my={4} pl={4}>
@@ -49,7 +49,7 @@ const SetPersonalGoalScreen = () => {
         <Button
           rounded="3xl"
           _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
-          onPress={() => navigation.navigate('PersonalHome')}
+          onPress={() => navigation.navigate('RecurringTransfer')}
         >
           Continue
         </Button>

@@ -43,7 +43,7 @@ const CustomizePersonalScreen = ({ navigation }) => {
               );
             })}
           </HStack>
-          <Stack alignItems="center" pt="40%">
+          <Stack alignItems="center" mt="40%">
             <Button
               variant="subtle"
               rounded="3xl"
