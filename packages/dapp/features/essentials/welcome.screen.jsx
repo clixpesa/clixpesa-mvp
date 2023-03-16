@@ -1,6 +1,6 @@
 import { Box, Heading, VStack, Button, Spacer } from 'native-base';
 
-const WelcomeScreen = () => (
+const WelcomeScreen = ({ navigation }) => (
   <Box flex={1} bg="white" alignItems="center" justifyContent="center">
     <Box width="85%" top="30%">
       <Heading textAlign="center" color="blueGray.800">
@@ -21,6 +21,7 @@ const WelcomeScreen = () => (
         rounded="3xl"
         minW="65%"
         _text={{ color: 'primary.700', fontWeight: 'semibold', mb: '0.5' }}
+        onPress={() => navigation.navigate('importWallet')}
       >
         Use Existing Account
       </Button>
