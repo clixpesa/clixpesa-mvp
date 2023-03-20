@@ -1,5 +1,7 @@
 import { Text, Box, FormControl, VStack, Input, Spacer, Button } from 'native-base';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { isValidMnemonic } from '../../utils/mnemonic';
+import { setPendingWallet } from './pending-wallet';
 
 const ImportWalletScreen = ({ navigation }) => {
   const [phrase, setPhrase] = useState('');
@@ -7,6 +9,27 @@ const ImportWalletScreen = ({ navigation }) => {
   const handleChange = (text) => {
     setPhrase(text);
   };
+
+  const handleSubmit = (values) => {
+    //const validationResults = validateForm(values)
+    if (validateForm(values)) {
+      //TODO: handle import when user already has another account
+      setIsLoading(true);
+    }
+  };
+
+  useEffect(() => {
+    //set a pending account
+    const handlePendingWallet = async () => {
+      await setPendingWallet(phrase);
+    };
+    if (isLoading) {
+      handlePendingWallet();
+      navigation.navigate('getUserDetails');
+      setIsLoading(false);
+    }
+  }, [isLoading]);
+
   return (
     <Box flex={1} bg="white" alignItems="center">
       <FormControl>
@@ -69,5 +92,13 @@ const ImportWalletScreen = ({ navigation }) => {
     </Box>
   );
 };
+
+function validateForm(values) {
+  if (!isValidMnemonic(values.phrase)) {
+    return console.warn('Invalid recovery phrase');
+  }
+
+  return { isValid: true };
+}
 
 export default ImportWalletScreen;
