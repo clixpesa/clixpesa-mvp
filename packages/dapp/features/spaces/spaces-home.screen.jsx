@@ -1,6 +1,6 @@
 import { Box, Text, FlatList, Icon, HStack, VStack, Avatar, Stack, Pressable } from 'native-base';
-import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { useState, useEffect, useCallback } from 'react';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { useState, useCallback } from 'react';
 import { RefreshControl } from 'react-native';
 
 import { spaces } from '../../data';
@@ -31,9 +31,9 @@ export default function SpacesHomeScreen({ navigation }) {
         ListHeaderComponent={
           <>
             <FeatureHomeCard
+              bgColor="white"
               balance={totalBalance.toFixed(4).toString()}
               apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
-              // expScreen="DummyModal"
               btn1={{
                 icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
                 name: 'New Space',
@@ -50,7 +50,7 @@ export default function SpacesHomeScreen({ navigation }) {
             />
           </>
         }
-        renderItem={({ item, index }) => <Box key={item.id}></Box>}
+        renderItem={({ item }) => <Box key={item.id} />}
         keyExtractor={(item) => item.id}
         ListFooterComponent={
           <>
