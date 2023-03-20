@@ -49,7 +49,7 @@ const SetPersonalGoalScreen = ({ navigation }) => {
         <Button
           rounded="3xl"
           _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
-          onPress={() => navigation.navigate('RecurringTransfer')}
+          onPress={() => navigation.navigate('SpareChange')}
         >
           Continue
         </Button>

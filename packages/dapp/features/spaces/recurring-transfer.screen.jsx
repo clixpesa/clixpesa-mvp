@@ -8,11 +8,14 @@ import {
   Actionsheet,
   useDisclose,
   Button,
+  Pressable,
+  FlatList,
 } from 'native-base';
-import { FlatList } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const RecurringTransferScreen = () => {
+const Divider = () => <Box w="100%" h={0.5} bg="muted.200" />;
+
+const RecurringTransferScreen = ({ navigation }) => {
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const { isOpen, onOpen, onClose } = useDisclose();
   return (
@@ -45,25 +48,22 @@ const RecurringTransferScreen = () => {
         </HStack>
         <HStack justifyContent="space-between" bg="#fff" p={4} roundedTop="md" roundedBottom="2xl">
           <Text>Repeat</Text>
-          <HStack space={2}>
-            <Icon
-              as={<MaterialIcons name="date-range" />}
-              size="md"
-              color="primary.700"
-              onPress={onOpen}
-            />
-            <Text>Weekly on Mon</Text>
-          </HStack>
+          <Pressable onPress={onOpen}>
+            <HStack space={2}>
+              <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.700" />
+              <Text>Weekly on Mon</Text>
+            </HStack>
+          </Pressable>
         </HStack>
       </VStack>
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content>
-          <Box w="100%" px={4} justifyContent="center">
+          <Box w="100%" px={4}>
             <Text fontWeight="semibold">Repeat</Text>
             <Text fontSize="xs" color="muted.500">
               Weekly on Wednesday
             </Text>
-            <HStack space={2} m={4}>
+            <HStack space={2} m={4} justifyContent="center">
               <Button variant="subtle" px={4} rounded="lg">
                 Daily
               </Button>
@@ -76,20 +76,25 @@ const RecurringTransferScreen = () => {
             </HStack>
           </Box>
 
-          <FlatList
-            data={days}
-            horizontal={false}
-            style={{ width: '90%', height: '40%' }}
-            keyExtractor={(item, index) => item + index}
-            ItemSeparatorComponent={() => <Box w="100%" h={0.5} bg="muted.200" />}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <Actionsheet.Item alignItems="center">{item}</Actionsheet.Item>
-            )}
-          />
+          <Box w="90%" h="40%">
+            <FlatList
+              data={days}
+              horizontal={false}
+              keyExtractor={(item, index) => item + index}
+              ItemSeparatorComponent={Divider}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <Actionsheet.Item alignItems="center">{item}</Actionsheet.Item>
+              )}
+            />
+          </Box>
 
           <Box w="60%" px={4} justifyContent="center" m={2}>
-            <Button variant="subtle" rounded="2xl">
+            <Button
+              variant="subtle"
+              rounded="2xl"
+              onPress={() => navigation.navigate('PersonalHome')}
+            >
               Set
             </Button>
           </Box>

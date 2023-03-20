@@ -6,7 +6,7 @@ import { RefreshControl } from 'react-native';
 import { SectionHeader, TransactionItem, FeatureHomeCard } from '../../components';
 import { rates, transactions } from '../../data';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -19,7 +19,6 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   let totalBalance = 0;
-  const celoInUsd = 0.458;
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
       <FlatList
@@ -30,9 +29,10 @@ const HomeScreen = ({ navigation }) => {
         ListHeaderComponent={
           <Box>
             <FeatureHomeCard
+              color="warmGray.800"
+              bgColor="white"
               balance={totalBalance.toFixed(4).toString()}
               apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
-              // expScreen="DummyModal"
               btn1={{
                 icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
                 name: 'Deposit',
@@ -58,10 +58,9 @@ const HomeScreen = ({ navigation }) => {
           <Box
             bg="white"
             opacity={85}
-            roundedTop={index == 0 ? '2xl' : 'md'}
-            roundedBottom={index == transactions.length - 1 ? '2xl' : 'md'}
+            roundedTop={index === 0 ? '2xl' : 'md'}
+            roundedBottom={index === transactions.length - 1 ? '2xl' : 'md'}
             mt={1}
-            //key={index.toString()}
           >
             <TransactionItem
               key={item.id}
