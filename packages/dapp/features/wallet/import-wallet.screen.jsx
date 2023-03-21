@@ -25,7 +25,7 @@ const ImportWalletScreen = ({ navigation }) => {
     };
     if (isLoading) {
       handlePendingWallet();
-      navigation.navigate('getUserDetails');
+      navigation.navigate('setUserDetails');
       setIsLoading(false);
     }
   }, [isLoading]);
@@ -65,7 +65,7 @@ const ImportWalletScreen = ({ navigation }) => {
             pr="4"
             minW="75%"
             _text={{
-              color: isLoading ? 'primary.600' : 'primary.100',
+              color: isLoading ? 'primary.700' : 'primary.100',
               fontWeight: 'semibold',
               mb: '0.5',
             }}
@@ -82,6 +82,7 @@ const ImportWalletScreen = ({ navigation }) => {
             rounded="3xl"
             pr="4"
             minW="75%"
+            isDisabled={isLoading}
             _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
             onPress={() => navigation.navigate('Welcome')}
           >
