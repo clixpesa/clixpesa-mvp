@@ -1,6 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import userReducer from './user/user.slice';
+import essentialReducer from './essentials/essential.slice';
+import accountReducer from './account/account.slice';
 
 export const rootReducer = combineReducers({
-  user: userReducer,
+  essential: essentialReducer,
+  account: accountReducer,
 });
