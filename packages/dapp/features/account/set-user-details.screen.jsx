@@ -14,6 +14,7 @@ import {
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { validateNames, validatePhoneNo } from '../../utils/validations';
+import { setUserDetails as setDetails } from '../../store/account/account.slice';
 
 const UserDetailsScreen = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const UserDetailsScreen = () => {
 
   const handleSubmit = () => {
     if (!isInvalid.invalidName && !isInvalid.invalidNo && isChecked) {
-      //dispatch(setUserDetails({ userNames, phoneNumber }));
+      dispatch(setDetails(userDetails));
       navigation.navigate('verifyPhoneNo');
     }
   };
@@ -64,9 +65,9 @@ const UserDetailsScreen = () => {
               size="md"
               onValueChange={(value) => setUserDetails({ ...userDetails, ctryCode: value })}
             >
-              <Select.Item label="Kenya" value="+254" />
-              <Select.Item label="Uganda" value="+256" />
-              <Select.Item label="Tanzania" value="+255" />
+              <Select.Item label="Kenya (+254)" value="+254" />
+              <Select.Item label="Uganda (+256)" value="+256" />
+              <Select.Item label="Tanzania (+255)" value="+255" />
             </Select>
             <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
               Please make a selection!
