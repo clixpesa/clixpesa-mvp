@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import { validateNames, validatePhoneNo } from '../../utils/validations';
 import { setUserDetails as setDetails } from '../../store/account/account.slice';
 
-const UserDetailsScreen = () => {
+const UserDetailsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [userDetails, setUserDetails] = useState({ userNames: '', ctryCode: '', phoneNo: '' });
   const [isInvalid, setIsInvalid] = useState({ invalidName: false, invalidNo: false });
