@@ -1,7 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  userDetails: null,
+  userDetails: {
+    names: null,
+    initials: null,
+    phoneNo: null,
+    country: null,
+    userToken: null,
+  },
 };
 
 export const accountSlice = createSlice({
@@ -12,7 +18,6 @@ export const accountSlice = createSlice({
       const { userNames, ctryCode, phoneNo } = payload;
       state.userDetails.names = userNames;
       state.userDetails.phoneNo = ctryCode + phoneNo;
-
       const country = { '+254': 'Kenya', '+255': 'Tanzania', '+256': 'Uganda' };
       state.userDetails.country = country[ctryCode];
 

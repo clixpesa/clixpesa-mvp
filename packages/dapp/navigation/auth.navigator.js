@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { WelcomeScreen } from '../features/essentials';
+import { VerificationScreen, WelcomeScreen } from '../features/essentials';
 import { ImportWalletScreen } from '../features/wallet';
 import { SetUserDetailsScreen } from '../features/account';
 
@@ -27,6 +27,13 @@ export const AuthNavigator = () => {
         <AuthStack.Screen
           name="setUserDetails"
           component={SetUserDetailsScreen}
+          options={{
+            headerTitle: '',
+          }}
+        />
+        <AuthStack.Screen
+          name="verifyPhoneNo"
+          component={VerificationScreen}
           options={{
             headerTitle: '',
           }}

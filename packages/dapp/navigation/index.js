@@ -4,7 +4,7 @@ import { AppNavigator } from './app.navigator';
 import { AuthNavigator } from './auth.navigator';
 
 export const Navigation = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   return (
     <NavigationContainer>{isLoggedIn ? <AppNavigator /> : <AuthNavigator />}</NavigationContainer>
   );
