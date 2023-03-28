@@ -16,7 +16,7 @@ export async function setPendingWallet(mnemonic, isImported = true) {
   const formattedMnemonic = normalizeMnemonic(mnemonic);
   const importedWallet = await generateWalletFromMnemonic(formattedMnemonic);
   pendingWallet = { importedWallet, isImported };
-  console.log(pendingWallet);
+  //console.log(pendingWallet);
   console.log('Pending Set');
 }
 

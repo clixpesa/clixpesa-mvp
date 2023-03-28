@@ -9,8 +9,10 @@ const VerificationScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAutoFill, setIsAutoFill] = useState(false);
   const verCode = '123456';
+
   useEffect(() => {
     setIsAutoFill(true);
+
     let i = 0;
     function loopCode() {
       setTimeout(function () {

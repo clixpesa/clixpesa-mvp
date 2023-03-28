@@ -28,6 +28,7 @@ const UserDetailsScreen = ({ navigation }) => {
       navigation.navigate('verifyPhoneNo');
     }
   };
+
   return (
     <Box flex={1} bg="muted.50" alignItems="center">
       <FormControl mt={10}>
