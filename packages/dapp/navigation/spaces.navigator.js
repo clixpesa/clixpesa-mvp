@@ -6,6 +6,10 @@ import {
   CustomizePersonalScreen,
   SetPersonalGoalScreen,
   RecurringTransferScreen,
+  SpareChangeScreen,
+  PersonalHomeScreen,
+  AddFundsScreen,
+  WithdrawFundsScreen,
 } from '../features/spaces';
 
 const SpacesStack = createNativeStackNavigator();
@@ -14,7 +18,7 @@ export const SpacesNavigator = () => {
   return (
     <SpacesStack.Navigator
       screenOptions={{
-        headerShown: false,
+        presentation: 'modal',
       }}
     >
       <SpacesStack.Screen name="Main" component={SpacesHomeScreen} />
@@ -22,6 +26,10 @@ export const SpacesNavigator = () => {
       <SpacesStack.Screen name="CustomizePersonal" component={CustomizePersonalScreen} />
       <SpacesStack.Screen name="SetPersonalGoal" component={SetPersonalGoalScreen} />
       <SpacesStack.Screen name="RecurringTransfer" component={RecurringTransferScreen} />
+      <SpacesStack.Screen name="SpareChange" component={SpareChangeScreen} />
+      <SpacesStack.Screen name="PersonalHome" component={PersonalHomeScreen} />
+      <SpacesStack.Screen name="AddFunds" component={AddFundsScreen} />
+      <SpacesStack.Screen name="WithdrawFunds" component={WithdrawFundsScreen} />
     </SpacesStack.Navigator>
   );
 };
