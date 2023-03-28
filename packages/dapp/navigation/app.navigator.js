@@ -29,6 +29,7 @@ const screenOptions = ({ route }) => {
         {route.name}
       </Text>
     ),
+    tabBarHideOnKeyboard: true,
   };
 };
 

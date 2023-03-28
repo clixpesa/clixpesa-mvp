@@ -1,6 +1,6 @@
 import { Button, Text } from 'native-base';
 
-const SpareChange = ({ item }) => {
+const SpareChange = ({ item, action }) => {
   const { spareChange, selected } = item;
   return (
     <Button
@@ -8,8 +8,9 @@ const SpareChange = ({ item }) => {
       rounded="lg"
       justifyContent="center"
       alignItems="center"
+      onPress={action}
     >
-      <Text color={`${selected && 'white'}`}>{spareChange}</Text>
+      <Text color={`${selected ? 'white' : 'black'}`}>{spareChange}</Text>
     </Button>
   );
 };

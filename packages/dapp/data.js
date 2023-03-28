@@ -47,7 +47,7 @@ export const spaces = [
 
 export const rates = { cKES: 1, cUSD: 125.75, CELO: 125.75 * 0.485 };
 
-export const spareChange = [
+export const spareChangeList = [
   {
     id: 1,
     spareChange: 'x1',
@@ -56,7 +56,6 @@ export const spareChange = [
   {
     id: 2,
     spareChange: 'x2',
-    selected: false,
   },
   {
     id: 3,
