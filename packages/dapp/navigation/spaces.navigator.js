@@ -18,7 +18,7 @@ export const SpacesNavigator = () => {
   return (
     <SpacesStack.Navigator
       screenOptions={{
-        headerShown: false,
+        presentation: 'modal',
       }}
     >
       <SpacesStack.Screen name="Main" component={SpacesHomeScreen} />

@@ -36,9 +36,9 @@ export const AppNavigator = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Spaces" component={SpacesNavigator} />
-      <Tab.Screen name="Loans" component={LoansNavigator} />
-      <Tab.Screen name="Account" component={AccountNavigator} />
+      <Tab.Screen name="Spaces" component={SpacesNavigator} options={{ headerShown: false }} />
+      <Tab.Screen name="Loans" component={LoansNavigator} options={{ headerShown: false }} />
+      <Tab.Screen name="Account" component={AccountNavigator} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 };

@@ -1,4 +1,15 @@
-import { Box, Text, Image, HStack, Spacer, VStack, Progress, Icon, FlatList } from 'native-base';
+import {
+  Box,
+  Text,
+  Image,
+  HStack,
+  Spacer,
+  VStack,
+  Progress,
+  Icon,
+  FlatList,
+  ScrollView,
+} from 'native-base';
 import { Feather } from '@expo/vector-icons';
 
 import { SectionHeader, TransactionItem, FeatureHomeCard } from '../../components';
@@ -80,34 +91,36 @@ const PersonalHomeScreen = () => {
           actionText="See all"
           action={() => console.log('all')}
         />
-        <FlatList
-          data={transactions}
-          renderItem={({ item, index }) => (
-            <Box
-              bg="white"
-              opacity={85}
-              roundedTop={index === 0 ? '2xl' : 'md'}
-              roundedBottom={index === transactions.length - 1 ? '2xl' : 'md'}
-              mt={1}
-            >
-              <TransactionItem
-                key={item.id}
-                credited={item.credited}
-                trTitle={item.title}
-                trDate={item.date}
-                spAmount={
-                  (item.credited ? '+' : '-') + (item.amount * 1).toFixed(2) + ' ' + item.token
-                }
-                eqAmount={(item.amount * rates[item.token]).toFixed(2) + ' KES'}
-                screen="DummyModal"
-              />
-            </Box>
-          )}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          w="95%"
-          mt={2}
-        />
+        <ScrollView showsVerticalScrollIndicator={false} h="24%">
+          <FlatList
+            data={transactions}
+            renderItem={({ item, index }) => (
+              <Box
+                bg="white"
+                opacity={85}
+                roundedTop={index === 0 ? '2xl' : 'md'}
+                roundedBottom={index === transactions.length - 1 ? '2xl' : 'md'}
+                mt={1}
+              >
+                <TransactionItem
+                  key={item.id}
+                  credited={item.credited}
+                  trTitle={item.title}
+                  trDate={item.date}
+                  spAmount={
+                    (item.credited ? '+' : '-') + (item.amount * 1).toFixed(2) + ' ' + item.token
+                  }
+                  eqAmount={(item.amount * rates[item.token]).toFixed(2) + ' KES'}
+                  screen="DummyModal"
+                />
+              </Box>
+            )}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            w="95%"
+            mt={2}
+          />
+        </ScrollView>
       </Box>
     </Box>
   );

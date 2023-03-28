@@ -1,6 +1,9 @@
 import { Box, Text, HStack, VStack, Switch, Button } from 'native-base';
 import Icon from 'react-native-remix-icon';
 
+import SpareChange from '../../components/spare-change.component';
+import { spareChange } from '../../data';
+
 const SpareChangeScreen = ({ navigation }) => (
   <Box flex={1} bg="muted.100" alignItems="center" p={4}>
     <Box w="100%" my={4} pl={4}>
@@ -29,24 +32,9 @@ const SpareChangeScreen = ({ navigation }) => (
       <VStack bg="#fff" p={4} space={2} roundedTop="md" roundedBottom="2xl">
         <Text>Spare change accelerator</Text>
         <HStack space={2}>
-          <Box bg="primary.600" rounded="lg" p={2}>
-            <Text color="white">x1</Text>
-          </Box>
-          <Box bg="primary.100" rounded="lg" p={2}>
-            <Text>x2</Text>
-          </Box>
-          <Box bg="primary.100" rounded="lg" p={2}>
-            <Text>x3</Text>
-          </Box>
-          <Box bg="primary.100" rounded="lg" p={2}>
-            <Text>x4</Text>
-          </Box>
-          <Box bg="primary.100" rounded="lg" p={2}>
-            <Text>x5</Text>
-          </Box>
-          <Box bg="primary.100" rounded="lg" p={2}>
-            <Text>x10</Text>
-          </Box>
+          {spareChange.map((item) => (
+            <SpareChange key={item.id} item={item} />
+          ))}
         </HStack>
       </VStack>
     </VStack>

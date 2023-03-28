@@ -76,7 +76,7 @@ const RecurringTransferScreen = ({ navigation }) => {
             </HStack>
           </Box>
 
-          <Box w="90%" h="40%">
+          <Box w="90%" maxH={130}>
             <FlatList
               data={days}
               horizontal={false}
