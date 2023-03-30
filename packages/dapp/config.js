@@ -1,0 +1,1 @@
+export const ATBaseUrl = 'https://api.sandbox.africastalking.com/version1';

@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { VerificationScreen, WelcomeScreen } from '../features/essentials';
+import { WelcomeScreen } from '../features/essentials';
 import { ImportWalletScreen } from '../features/wallet';
-import { SetUserDetailsScreen } from '../features/account';
+import { SetUserDetailsScreen, VerificationScreen } from '../features/account';
 
 const AuthStack = createNativeStackNavigator();
 
