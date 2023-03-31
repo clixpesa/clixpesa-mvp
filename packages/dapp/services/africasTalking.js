@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ATBaseUrl } from '../config';
-//import { AFRICASTALKINGKEY } from 'app-env';
+import { AFRICASTALKINGKEY } from 'app-env';
 
 export const africasTalkingApi = createApi({
   reducerPath: 'africasTalkingApi',
@@ -14,7 +14,7 @@ export const africasTalkingApi = createApi({
         headers: {
           'Content-Type': 'multipart/form-data',
           Accept: 'application/json',
-          apiKey: 'b3ade13470b2fcbfb234af217c07d5973988eb37d26fe7299185101f73a53fdf',
+          apiKey: AFRICASTALKINGKEY,
         },
       }),
     }),
