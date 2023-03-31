@@ -1,5 +1,6 @@
 import { registerRootComponent } from 'expo';
 import { Provider } from 'react-redux';
+import 'react-native-get-random-values';
 import '@ethersproject/shims';
 
 import App from './App';

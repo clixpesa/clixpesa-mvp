@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { CodeInput } from '../../components';
 import { useSendMessageMutation } from '../../services/africasTalking';
+import { customAlphabet } from 'nanoid';
 import * as Clipboard from 'expo-clipboard';
 
 const VerificationScreen = () => {
@@ -12,7 +13,7 @@ const VerificationScreen = () => {
   const [verCode, setVerCode] = useState('123456');
   const [copiedCode, setCopiedCode] = useState('');
   const [isAutoFill, setIsAutoFill] = useState(false);
-  //const data = null;
+  const nanoid = customAlphabet('1234567890', 6);
 
   useEffect(() => {
     sendNewCode();
@@ -21,7 +22,6 @@ const VerificationScreen = () => {
   if (data && data.SMSMessageData.Recipients[0].status === 'Success' && !isAutoFill) {
     console.log('Checking for copied code');
     setTimeout(() => {
-      console.log('Called code');
       handleOnCopyCode();
     }, 10000);
   }
@@ -70,7 +70,7 @@ const VerificationScreen = () => {
   }
 
   const sendNewCode = () => {
-    const sent = '123456'; //nanoid();
+    const sent = nanoid();
     let formData = new FormData();
     formData.append('username', 'sandbox');
     formData.append('to', '+254722345677');
