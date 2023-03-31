@@ -2,18 +2,17 @@ import { Text, Box, VStack, HStack, Pressable, Spacer } from 'native-base';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { CodeInput } from '../../components';
-//import { useSendMessageMutation } from '../../services/africasTalking';
+import { useSendMessageMutation } from '../../services/africasTalking';
 import * as Clipboard from 'expo-clipboard';
 
 const VerificationScreen = () => {
   const phoneNumber = useSelector((s) => s.account.userDetails.phoneNo);
-  console.log(phoneNumber);
-  //const [sendMessage, { isLoading, data }] = useSendMessageMutation();
-  const [code, setCode] = useState('123456');
+  const [sendMessage, { isLoading, data }] = useSendMessageMutation();
+  const [code, setCode] = useState('');
   const [verCode, setVerCode] = useState('123456');
   const [copiedCode, setCopiedCode] = useState('');
   const [isAutoFill, setIsAutoFill] = useState(false);
-  const data = null;
+  //const data = null;
 
   useEffect(() => {
     sendNewCode();
@@ -22,6 +21,7 @@ const VerificationScreen = () => {
   if (data && data.SMSMessageData.Recipients[0].status === 'Success' && !isAutoFill) {
     console.log('Checking for copied code');
     setTimeout(() => {
+      console.log('Called code');
       handleOnCopyCode();
     }, 10000);
   }
@@ -42,8 +42,8 @@ const VerificationScreen = () => {
           }
         }
       })
-      .catch(() => {
-        console.log('No code copied');
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -77,7 +77,7 @@ const VerificationScreen = () => {
     formData.append('message', `C#${sent} is your Clixpesa verification code.`);
     formData.append('from', 'Clixpesa');
     setVerCode(sent);
-    //sendMessage(formData);
+    sendMessage(formData);
     if (isAutoFill) {
       setIsAutoFill(false);
     }

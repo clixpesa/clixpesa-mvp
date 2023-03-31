@@ -10,7 +10,10 @@
       "packages/*"
     ],
     "nohoist": [
-      "**/@expo/vector-icons"
+      "**/@expo/vector-icons",
+      "**/@reduxjs/toolkit",
+      "**/react-redux",
+      "**/expo-clipboard"
     ]
   },
   "private": true
