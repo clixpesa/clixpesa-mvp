@@ -20,7 +20,8 @@ const SuccessModal = ({ isOpen, onClose, message, screen, scrnOptions }) => {
             mt={3}
             _text={{ color: 'text.900', fontWeight: 'semibold', mb: '0.5' }}
             onPress={() => {
-              onClose(), navigation.navigate(screen, scrnOptions);
+              onClose();
+              navigation.navigate(screen, scrnOptions);
             }}
           >
             OK

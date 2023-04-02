@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Box,
   HStack,
@@ -16,8 +17,15 @@ import { MaterialIcons } from '@expo/vector-icons';
 const Divider = () => <Box w="100%" h={0.5} bg="muted.200" />;
 
 const RecurringTransferScreen = ({ navigation }) => {
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const { isOpen, onOpen, onClose } = useDisclose();
+  const [amount, setAmount] = useState(0);
+  const [schedule, setSchedule] = useState({
+    repeat: 'Weekly',
+    day: 'Monday',
+  });
+
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
   return (
     <Box flex={1} bg="muted.100" alignItems="center" p={4}>
       <Box w="100%" my={4} pl={4}>
@@ -42,7 +50,9 @@ const RecurringTransferScreen = ({ navigation }) => {
               base: '75%',
               md: '25%',
             }}
-            keyboardType="numeric"
+            value={amount}
+            onChangeText={(text) => setAmount(text)}
+            onSu
             InputRightElement={<Text mr={2}>cUSD</Text>}
           />
         </HStack>
@@ -51,26 +61,46 @@ const RecurringTransferScreen = ({ navigation }) => {
           <Pressable onPress={onOpen}>
             <HStack space={2}>
               <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.700" />
-              <Text>Weekly on Mon</Text>
+              <Text>
+                {schedule.repeat} {schedule.day === 'Everyday' ? null : `on ${schedule.day}`}
+              </Text>
             </HStack>
           </Pressable>
         </HStack>
       </VStack>
+      <Box w="50%" mt="80%">
+        <Button variant="subtle" rounded="2xl" onPress={() => navigation.navigate('PersonalHome')}>
+          Confirm
+        </Button>
+      </Box>
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content>
           <Box w="100%" px={4}>
             <Text fontWeight="semibold">Repeat</Text>
             <Text fontSize="xs" color="muted.500">
-              Weekly on Wednesday
+              {schedule.repeat} {schedule.day === 'Everyday' ? null : `on ${schedule.day}`}
             </Text>
             <HStack space={2} m={4} justifyContent="center">
-              <Button variant="subtle" px={4} rounded="lg">
+              <Button
+                variant="subtle"
+                px={4}
+                rounded="lg"
+                onPress={() => setSchedule({ repeat: 'Daily', day: 'Everyday' })}
+              >
                 Daily
               </Button>
-              <Button variant="subtle" rounded="lg">
+              <Button
+                variant="subtle"
+                rounded="lg"
+                onPress={() => setSchedule({ repeat: 'Weekly', day: schedule.day })}
+              >
                 Weekly
               </Button>
-              <Button variant="subtle" rounded="lg">
+              <Button
+                variant="subtle"
+                rounded="lg"
+                onPress={() => setSchedule({ repeat: 'Monthly', day: schedule.day })}
+              >
                 Monthly
               </Button>
             </HStack>
@@ -84,17 +114,20 @@ const RecurringTransferScreen = ({ navigation }) => {
               ItemSeparatorComponent={Divider}
               showsVerticalScrollIndicator={false}
               renderItem={({ item }) => (
-                <Actionsheet.Item alignItems="center">{item}</Actionsheet.Item>
+                <Actionsheet.Item
+                  alignItems="center"
+                  onPress={() => {
+                    setSchedule({ ...schedule, day: item });
+                  }}
+                >
+                  {item}
+                </Actionsheet.Item>
               )}
             />
           </Box>
 
           <Box w="60%" px={4} justifyContent="center" m={2}>
-            <Button
-              variant="subtle"
-              rounded="2xl"
-              onPress={() => navigation.navigate('PersonalHome')}
-            >
+            <Button variant="subtle" rounded="2xl" onPress={() => onClose()}>
               Set
             </Button>
           </Box>

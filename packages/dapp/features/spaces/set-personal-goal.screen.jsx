@@ -1,7 +1,29 @@
+import { useState } from 'react';
 import { Box, Text, VStack, Button, HStack, Input, Icon, Stack } from 'native-base';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const SetPersonalGoalScreen = ({ navigation }) => {
+  const [amount, setAmount] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
   return (
     <Box flex={1} bg="muted.100" alignItems="center" p={4}>
       <Box w="100%" my={4} pl={4}>
@@ -26,6 +48,8 @@ const SetPersonalGoalScreen = ({ navigation }) => {
               base: '75%',
               md: '25%',
             }}
+            value={amount}
+            onChangeText={(text) => setAmount(text)}
             keyboardType="numeric"
             InputRightElement={<Text mr={2}>cUSD</Text>}
           />
@@ -33,8 +57,21 @@ const SetPersonalGoalScreen = ({ navigation }) => {
         <HStack justifyContent="space-between" bg="#fff" p={4} roundedTop="md" roundedBottom="2xl">
           <Text>Deadline</Text>
           <HStack space={2}>
-            <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.700" />
-            <Text>Set</Text>
+            <Icon
+              as={<MaterialIcons name="date-range" />}
+              size="md"
+              color="primary.700"
+              onPress={showDatepicker}
+            />
+            <Text>{date.toLocaleDateString()}</Text>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                onChange={onChange}
+              />
+            )}
           </HStack>
         </HStack>
       </VStack>
