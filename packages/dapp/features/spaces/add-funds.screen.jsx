@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const AddFundsScreen = () => {
   const [amount, setAmount] = useState('');
+
   return (
     <Box flex={1} bg="muted.100" alignItems="center" p={4}>
       <Box w="100%" my={4} pl={4}>
@@ -30,7 +31,6 @@ const AddFundsScreen = () => {
             }}
             value={amount}
             onChangeText={(text) => setAmount(text)}
-            onSu
             InputRightElement={<Text mr={2}>cUSD</Text>}
           />
         </HStack>

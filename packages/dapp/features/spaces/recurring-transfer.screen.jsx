@@ -68,6 +68,11 @@ const RecurringTransferScreen = ({ navigation }) => {
           </Pressable>
         </HStack>
       </VStack>
+      <Box w="50%" mt="80%">
+        <Button variant="subtle" rounded="2xl" onPress={() => navigation.navigate('PersonalHome')}>
+          Confirm
+        </Button>
+      </Box>
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content>
           <Box w="100%" px={4}>
@@ -122,14 +127,7 @@ const RecurringTransferScreen = ({ navigation }) => {
           </Box>
 
           <Box w="60%" px={4} justifyContent="center" m={2}>
-            <Button
-              variant="subtle"
-              rounded="2xl"
-              onPress={() => {
-                navigation.navigate('PersonalHome');
-                onClose();
-              }}
-            >
+            <Button variant="subtle" rounded="2xl" onPress={() => onClose()}>
               Set
             </Button>
           </Box>

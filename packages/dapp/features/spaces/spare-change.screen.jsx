@@ -44,6 +44,13 @@ const SpareChangeScreen = ({ navigation }) => {
                   setSpareChange((prev) => {
                     const newSpareChange = prev.map((i) => {
                       if (i.id === item.id) {
+                        prev.forEach((j) => {
+                          if (j.id !== item.id) {
+                            j.selected = false;
+                          }
+                        });
+                      }
+                      if (i.id === item.id) {
                         return { ...i, selected: !i.selected };
                       }
                       return i;
