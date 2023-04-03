@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Text, VStack, Button, HStack, Input, Icon, Stack } from 'native-base';
+import { Box, Text, VStack, Button, HStack, Input, Icon, Stack, Pressable } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -56,24 +56,16 @@ const SetPersonalGoalScreen = ({ navigation }) => {
         </HStack>
         <HStack justifyContent="space-between" bg="#fff" p={4} roundedTop="md" roundedBottom="2xl">
           <Text>Deadline</Text>
-          <HStack space={2}>
-            <Icon
-              as={<MaterialIcons name="date-range" />}
-              size="md"
-              color="primary.700"
-              onPress={showDatepicker}
-            />
-            <Text>{date.toLocaleDateString()}</Text>
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode={mode}
-                onChange={onChange}
-              />
-            )}
-          </HStack>
+          <Pressable onPress={showDatepicker}>
+            <HStack space={2}>
+              <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.700" />
+              <Text>{date.toLocaleDateString()}</Text>
+            </HStack>
+          </Pressable>
         </HStack>
+        {show && (
+          <DateTimePicker testID="dateTimePicker" value={date} mode={mode} onChange={onChange} />
+        )}
       </VStack>
       <Stack space={3} mt="70%" w="50%">
         <Button

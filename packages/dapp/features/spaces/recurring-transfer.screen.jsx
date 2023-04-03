@@ -116,9 +116,7 @@ const RecurringTransferScreen = ({ navigation }) => {
               renderItem={({ item }) => (
                 <Actionsheet.Item
                   alignItems="center"
-                  onPress={() => {
-                    setSchedule({ ...schedule, day: item });
-                  }}
+                  onPress={() => setSchedule({ ...schedule, day: item })}
                 >
                   {item}
                 </Actionsheet.Item>
