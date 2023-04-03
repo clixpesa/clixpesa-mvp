@@ -63,15 +63,15 @@ const SpareChangeScreen = ({ navigation }) => {
           </HStack>
         </VStack>
       </VStack>
-      <Button
-        variant="subtle"
-        rounded="2xl"
-        mt="80%"
-        w="60%"
-        onPress={() => navigation.navigate('RecurringTransfer')}
-      >
-        Continue
-      </Button>
+      <Box mt="60%" w="50%">
+        <Button
+          variant="subtle"
+          rounded="2xl"
+          onPress={() => navigation.navigate('RecurringTransfer')}
+        >
+          Continue
+        </Button>
+      </Box>
     </Box>
   );
 };
