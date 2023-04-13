@@ -89,9 +89,9 @@ const PersonalHomeScreen = () => {
               roundedTop={index === 0 ? '2xl' : 'md'}
               roundedBottom={index === transactions.length - 1 ? '2xl' : 'md'}
               mt={1}
+              key={item.id}
             >
               <TransactionItem
-                key={item.id}
                 credited={item.credited}
                 trTitle={item.title}
                 trDate={item.date}

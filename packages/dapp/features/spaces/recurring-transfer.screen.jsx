@@ -18,7 +18,7 @@ const Divider = () => <Box w="100%" h={0.5} bg="muted.200" />;
 
 const RecurringTransferScreen = ({ navigation }) => {
   const { isOpen, onOpen, onClose } = useDisclose();
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState('');
   const [schedule, setSchedule] = useState({
     repeat: 'Weekly',
     day: 'Monday',
@@ -52,7 +52,6 @@ const RecurringTransferScreen = ({ navigation }) => {
             }}
             value={amount}
             onChangeText={(text) => setAmount(text)}
-            onSu
             InputRightElement={<Text mr={2}>cUSD</Text>}
           />
         </HStack>
