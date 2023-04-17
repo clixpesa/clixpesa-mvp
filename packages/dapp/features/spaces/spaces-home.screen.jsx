@@ -28,7 +28,7 @@ export default function SpacesHomeScreen({ navigation }) {
     <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <Box flex={1} px={2}>
         <FeatureHomeCard
-          bgColor="white"
+          bg="white"
           balance={totalBalance.toFixed(4).toString()}
           apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
           btn1={{
@@ -39,6 +39,11 @@ export default function SpacesHomeScreen({ navigation }) {
           btn2={{
             icon: <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />,
             name: 'Fund',
+            screen: 'DummyModal',
+          }}
+          btn3={{
+            icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
+            name: 'More',
             screen: 'DummyModal',
           }}
           itemBottom={false}

@@ -7,3 +7,4 @@ export { default as SpareChangeScreen } from './spare-change.screen';
 export { default as PersonalHomeScreen } from './personal-home.screen';
 export { default as AddFundsScreen } from './add-funds.screen';
 export { default as WithdrawFundsScreen } from './withdraw-funds.screen';
+export { default as CustomizePScreen } from './customize-p.screen';

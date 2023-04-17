@@ -10,6 +10,7 @@ import {
   PersonalHomeScreen,
   AddFundsScreen,
   WithdrawFundsScreen,
+  CustomizePScreen,
 } from '../features/spaces';
 
 const SpacesStack = createNativeStackNavigator();
@@ -31,6 +32,7 @@ export const SpacesNavigator = () => {
       <SpacesStack.Screen name="PersonalHome" component={PersonalHomeScreen} />
       <SpacesStack.Screen name="AddFunds" component={AddFundsScreen} />
       <SpacesStack.Screen name="WithdrawFunds" component={WithdrawFundsScreen} />
+      <SpacesStack.Screen name="Customize" component={CustomizePScreen} />
     </SpacesStack.Navigator>
   );
 };

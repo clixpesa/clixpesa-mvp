@@ -30,7 +30,7 @@ const HomeScreen = () => {
           <Box>
             <FeatureHomeCard
               color="warmGray.800"
-              bgColor="white"
+              bg="white"
               balance={totalBalance.toFixed(4).toString()}
               apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
               btn1={{
@@ -42,6 +42,11 @@ const HomeScreen = () => {
                 icon: <Icon as={Feather} name="arrow-right" size="md" color="primary.600" mr="1" />,
                 name: 'Transfer',
                 screen: 'sendFunds',
+              }}
+              btn3={{
+                icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
+                name: 'More',
+                screen: 'DummyModal',
               }}
               itemBottom={false}
             />
