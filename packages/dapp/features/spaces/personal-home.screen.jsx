@@ -34,6 +34,11 @@ const PersonalHomeScreen = () => {
               name: 'Withdraw',
               screen: 'WithdrawFunds',
             }}
+            btn3={{
+              icon: <Icon as={Feather} name="settings" size="lg" color="primary.600" />,
+              name: 'Customize',
+              screen: 'Customize',
+            }}
             itemBottom={false}
           />
         </Box>

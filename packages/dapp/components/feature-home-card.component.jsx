@@ -2,11 +2,11 @@ import { Box, Text, HStack, Stack, Button, Heading, Icon, Spinner } from 'native
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const FeatureHomeCard = ({ color, bgColor, btn1, btn2, itemBottom, apprxBalance, balance }) => {
+const FeatureHomeCard = ({ color, bg, btn1, btn2, btn3, itemBottom, apprxBalance, balance }) => {
   const navigation = useNavigation();
   const bal = balance.split('.');
   return (
-    <Box mt="4" bg={bgColor} roundedTop="2xl" roundedBottom={itemBottom ? 'md' : '2xl'}>
+    <Box mt="4" bg={bg} roundedTop="2xl" roundedBottom={itemBottom ? 'md' : '2xl'}>
       <HStack justifyContent="space-between">
         <Stack mx="4" my="3">
           <Text _light={{ color }}>Total Balance (USD)</Text>
@@ -50,13 +50,13 @@ const FeatureHomeCard = ({ color, bgColor, btn1, btn2, itemBottom, apprxBalance,
           {btn2.name}
         </Button>
         <Button
-          leftIcon={<Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />}
+          leftIcon={btn3.icon}
           rounded="3xl"
           variant="subtle"
           px="4"
           size="sm"
           _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-          onPress={() => console.log('More')}
+          onPress={() => navigation.navigate(btn3.screen)}
         />
       </HStack>
     </Box>
