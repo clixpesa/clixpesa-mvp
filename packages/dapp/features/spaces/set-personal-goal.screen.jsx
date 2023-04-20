@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import { Box, Text, VStack, Button, HStack, Input, Icon, Stack, Pressable } from 'native-base';
+import { useDispatch } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const SetPersonalGoalScreen = ({ navigation }) => {
+import { setGoalAmount, setCtbDeadline } from '../../store/spaces/spaces.slice';
+
+const SetPersonalGoalScreen = ({ navigation, route }) => {
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+
+  const dispatch = useDispatch();
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -68,20 +73,43 @@ const SetPersonalGoalScreen = ({ navigation }) => {
         )}
       </VStack>
       <Stack space={3} mt="70%" w="50%">
-        <Button
-          variant="subtle"
-          rounded="3xl"
-          _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-        >
-          Skip
-        </Button>
-        <Button
-          rounded="3xl"
-          _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
-          onPress={() => navigation.navigate('SpareChange')}
-        >
-          Continue
-        </Button>
+        {!route.params?.edit && (
+          <Button
+            variant="subtle"
+            rounded="3xl"
+            _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
+            onPress={() => navigation.navigate('SpareChange')}
+          >
+            Skip
+          </Button>
+        )}
+
+        {!route.params?.edit ? (
+          <Button
+            rounded="3xl"
+            _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+            onPress={() => {
+              navigation.navigate('SpareChange');
+              dispatch(setGoalAmount(amount));
+              dispatch(setCtbDeadline(date.toISOString()));
+            }}
+          >
+            Continue
+          </Button>
+        ) : (
+          <Button
+            rounded="3xl"
+            isDisabled={!amount || !date}
+            _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+            onPress={() => {
+              navigation.navigate('Customize');
+              dispatch(setGoalAmount(amount));
+              dispatch(setCtbDeadline(date.toISOString()));
+            }}
+          >
+            Save
+          </Button>
+        )}
       </Stack>
     </Box>
   );

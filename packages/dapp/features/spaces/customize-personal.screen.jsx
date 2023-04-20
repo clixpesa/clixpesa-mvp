@@ -1,9 +1,14 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Box, HStack, FormControl, Stack, Input, Button, Image } from 'native-base';
 
-const CustomizePersonalScreen = ({ navigation }) => {
+import { setSpaceInfo } from '../../store/spaces/spaces.slice';
+
+const CustomizePersonalScreen = ({ navigation, route }) => {
   const suggestions = ['Savings', 'Vacation', 'Chama', 'Gift', 'Sherehe', 'Emergency', 'Masomo'];
   const [spaceName, setSpaceName] = useState('');
+
+  const dispatch = useDispatch();
 
   return (
     <Box flex={1} bg="muted.50">
@@ -44,21 +49,41 @@ const CustomizePersonalScreen = ({ navigation }) => {
             })}
           </HStack>
           <Stack alignItems="center" mt="40%">
-            <Button
-              variant="subtle"
-              rounded="3xl"
-              w="60%"
-              _text={{
-                color: 'primary.600',
-                fontWeight: 'semibold',
-                mb: '0.5',
-              }}
-              onPress={() => {
-                navigation.navigate('SetPersonalGoal');
-              }}
-            >
-              Continue
-            </Button>
+            {!route.params?.edit ? (
+              <Button
+                variant="subtle"
+                rounded="3xl"
+                w="60%"
+                _text={{
+                  color: 'primary.600',
+                  fontWeight: 'semibold',
+                  mb: '0.5',
+                }}
+                onPress={() => {
+                  navigation.navigate('SetPersonalGoal');
+                  dispatch(setSpaceInfo({ spaceName }));
+                }}
+              >
+                Continue
+              </Button>
+            ) : (
+              <Button
+                variant="solid"
+                rounded="3xl"
+                isDisabled={!spaceName}
+                w="60%"
+                _text={{
+                  fontWeight: 'semibold',
+                  mb: '0.5',
+                }}
+                onPress={() => {
+                  navigation.navigate('Customize');
+                  dispatch(setSpaceInfo({ spaceName }));
+                }}
+              >
+                Save
+              </Button>
+            )}
           </Stack>
         </Stack>
       </FormControl>

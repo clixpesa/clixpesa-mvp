@@ -1,7 +1,13 @@
 import { Box, HStack, Icon, Button, Image, Text, VStack, Pressable } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 
 const CustomizePScreen = ({ navigation }) => {
+  const spaceName = useSelector((state) => state.spaces.spaceInfo.spaceName);
+  const spaceGoal = useSelector((state) => state.spaces.spaceInfo.goalAmount);
+  const spaceDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
+  console.log('date', new Date(spaceDeadline).toLocaleDateString());
+
   return (
     <Box flex={1} bg="muted.100">
       <Image
@@ -22,37 +28,65 @@ const CustomizePScreen = ({ navigation }) => {
         <VStack space={4} p={4} bg="#fff" roundedTop="2xl" roundedBottom="md">
           <HStack justifyContent="space-between">
             <Text>Name</Text>
-            <Pressable>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('CustomizePersonal', {
+                  edit: 'name',
+                });
+              }}
+            >
               <HStack space={2}>
                 <Icon
                   color="primary.600"
                   as={<MaterialCommunityIcons name="pencil-outline" />}
                   size="md"
                 />
-                <Text color="primary.600">Sherehe</Text>
+                <Text color="primary.600">{spaceName}</Text>
               </HStack>
             </Pressable>
           </HStack>
           <HStack justifyContent="space-between">
             <Text>Goal</Text>
-            <Pressable>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('SetPersonalGoal', {
+                  edit: 'goal',
+                });
+              }}
+            >
               <HStack space={2}>
                 <Icon
                   color="primary.600"
                   as={<MaterialCommunityIcons name="pencil-outline" />}
                   size="md"
                 />
-                <Text color="primary.600">Kshs 1000</Text>
+                {spaceGoal ? (
+                  <Text color="primary.600">{spaceGoal}</Text>
+                ) : (
+                  <Text color="primary.600">Set a goal</Text>
+                )}
               </HStack>
             </Pressable>
           </HStack>
           <HStack justifyContent="space-between">
             <Text>Deadline</Text>
-            <Pressable>
-              <HStack space={2}>
-                <Icon color="primary.600" as={<MaterialCommunityIcons name="plus" />} size="md" />
-                <Text color="primary.600">add deadline</Text>
-              </HStack>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('SetPersonalGoal', {
+                  edit: 'deadline',
+                });
+              }}
+            >
+              {spaceDeadline ? (
+                <HStack space={2}>
+                  <Text color="primary.600">{new Date(spaceDeadline).toLocaleDateString()}</Text>
+                </HStack>
+              ) : (
+                <HStack space={2}>
+                  <Icon color="primary.600" as={<MaterialCommunityIcons name="plus" />} size="md" />
+                  <Text color="primary.600">Set a deadline</Text>
+                </HStack>
+              )}
             </Pressable>
           </HStack>
         </VStack>
