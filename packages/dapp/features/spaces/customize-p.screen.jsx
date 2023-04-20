@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 const CustomizePScreen = ({ navigation }) => {
   const spaceName = useSelector((state) => state.spaces.spaceInfo.spaceName);
   const spaceGoal = useSelector((state) => state.spaces.spaceInfo.goalAmount);
-  const spaceDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
+  let spaceDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
+  spaceDeadline = new Date(spaceDeadline).toLocaleDateString();
 
   return (
     <Box flex={1} bg="muted.100">
@@ -78,7 +79,7 @@ const CustomizePScreen = ({ navigation }) => {
             >
               {spaceDeadline ? (
                 <HStack space={2}>
-                  <Text color="primary.600">{new Date(spaceDeadline).toLocaleDateString()}</Text>
+                  <Text color="primary.600">{spaceDeadline}</Text>
                 </HStack>
               ) : (
                 <HStack space={2}>
