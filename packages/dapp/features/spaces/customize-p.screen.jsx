@@ -6,7 +6,6 @@ const CustomizePScreen = ({ navigation }) => {
   const spaceName = useSelector((state) => state.spaces.spaceInfo.spaceName);
   const spaceGoal = useSelector((state) => state.spaces.spaceInfo.goalAmount);
   const spaceDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
-  console.log('date', new Date(spaceDeadline).toLocaleDateString());
 
   return (
     <Box flex={1} bg="muted.100">
