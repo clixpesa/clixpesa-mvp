@@ -52,6 +52,7 @@ const RecurringTransferScreen = ({ navigation }) => {
             }}
             value={amount}
             onChangeText={(text) => setAmount(text)}
+            keyboardType="numeric"
             InputRightElement={<Text mr={2}>cUSD</Text>}
           />
         </HStack>
