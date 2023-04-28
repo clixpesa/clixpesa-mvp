@@ -1,12 +1,26 @@
 import { Box, Text, Image, HStack, Spacer, VStack, Progress, Icon, ScrollView } from 'native-base';
+import { useSelector } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
 
 import { SectionHeader, TransactionItem, FeatureHomeCard } from '../../components';
 import { rates, transactions } from '../../data';
 
 const PersonalHomeScreen = () => {
-  const totalBalance = 500.0;
-  const prog = (300.89 / 5000.0) * 100;
+  const goalAmount = useSelector((state) => state.spaces.spaceInfo.goalAmount);
+  const ctbAmount = useSelector((state) => state.spaces.spaceInfo.ctbAmount);
+  let ctbDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  ctbDeadline = new Date(ctbDeadline).toDateString();
+  console.log(ctbDeadline);
+  const totalBalance = 80;
+  // contribution / goal
+  const prog = (ctbAmount / goalAmount) * 100;
+
+  // calculate number of days left until deadline
+  const today = new Date();
+  const deadline = new Date(ctbDeadline);
+  const diffTime = Math.abs(deadline - today);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
   return (
     <ScrollView>
@@ -58,13 +72,13 @@ const PersonalHomeScreen = () => {
                 </Text>
                 <Spacer />
                 <Text _light={{ color: 'muted.500' }} fontWeight="medium" pt={1}>
-                  300.89/5000.00 cUSD
+                  {ctbAmount}/{goalAmount} cUSD
                 </Text>
               </HStack>
               <Progress colorScheme="primary" value={prog} mx="4" bg="primary.100" />
               <HStack mx="5" my="2">
                 <Text fontWeight="medium" color="muted.500">
-                  30 April 2023 - 30 days to go
+                  {ctbDeadline} - {diffDays} days left
                 </Text>
               </HStack>
             </VStack>
@@ -76,7 +90,8 @@ const PersonalHomeScreen = () => {
               </Text>
               <Spacer />
               <Text _light={{ color: 'primary.600' }} fontWeight="medium" py={1}>
-                200/1635.89 cUSD
+                {ctbAmount} cUSD
+                {/* 200/1635.89 cUSD */}
               </Text>
             </HStack>
           </Box>

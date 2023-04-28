@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Text, HStack, VStack, Input, Button, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const AddFundsScreen = () => {
+const AddFundsScreen = ({ navigation }) => {
   const [amount, setAmount] = useState('');
 
   return (
@@ -31,6 +31,7 @@ const AddFundsScreen = () => {
             }}
             value={amount}
             onChangeText={(text) => setAmount(text)}
+            keyboardType="numeric"
             InputRightElement={<Text mr={2}>cUSD</Text>}
           />
         </HStack>
@@ -50,7 +51,7 @@ const AddFundsScreen = () => {
         </HStack>
       </VStack>
       <Box w="50%" mt="80%">
-        <Button variant="subtle" rounded="2xl">
+        <Button variant="subtle" rounded="2xl" onPress={() => navigation.navigate('PersonalHome')}>
           Confirm
         </Button>
       </Box>

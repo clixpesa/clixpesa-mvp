@@ -7,12 +7,13 @@ const INITIAL_STATE = {
     spaceId: null,
     spaceType: 'Personal', // 'personal' 'regular' 'rosca'
     goalAmount: null,
-    ctbAmount: null,
+    ctbAmount: 250,
     ctbDeadline: null,
     ctbDay: 'Monday',
     ctbOccurrence: 'Weekly',
     disbDay: 'Tuesday',
     disbOccurrence: 'Weekly',
+    totalAmount: null,
   },
 };
 
@@ -32,6 +33,12 @@ export const spacesSlice = createSlice({
     setCtbSchedule(state, action) {
       state.spaceInfo.ctbDay = action.payload.ctbDay;
       state.spaceInfo.ctbOccurrence = action.payload.ctbOccurrence;
+    },
+    fundSpace(state, action) {
+      state.spaceInfo.totalAmount = action.payload;
+    },
+    withdrawFromSpace(state, action) {
+      state.spaceInfo.spaceType = 'Personal';
     },
   },
 });
