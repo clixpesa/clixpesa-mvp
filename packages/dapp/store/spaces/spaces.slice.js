@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     spaceId: null,
     spaceType: 'Personal', // 'personal' 'regular' 'rosca'
     goalAmount: null,
-    ctbAmount: 250,
+    ctbAmount: 0,
     ctbDeadline: null,
     ctbDay: 'Monday',
     ctbOccurrence: 'Weekly',
@@ -34,15 +34,22 @@ export const spacesSlice = createSlice({
       state.spaceInfo.ctbDay = action.payload.ctbDay;
       state.spaceInfo.ctbOccurrence = action.payload.ctbOccurrence;
     },
-    fundSpace(state, action) {
-      state.spaceInfo.totalAmount = action.payload;
+    addFunds(state, action) {
+      state.spaceInfo.totalAmount += action.payload;
     },
-    withdrawFromSpace(state, action) {
-      state.spaceInfo.spaceType = 'Personal';
+    withdrawFunds(state, action) {
+      state.spaceInfo.totalAmount -= action.payload;
     },
   },
 });
 
-export const { setSpaceInfo, setGoalAmount, setCtbDeadline, setCtbSchedule } = spacesSlice.actions;
+export const {
+  setSpaceInfo,
+  setGoalAmount,
+  setCtbDeadline,
+  setCtbSchedule,
+  addFunds,
+  withdrawFunds,
+} = spacesSlice.actions;
 
 export default spacesSlice.reducer;

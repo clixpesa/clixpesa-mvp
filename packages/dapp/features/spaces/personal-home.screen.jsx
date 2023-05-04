@@ -8,11 +8,13 @@ import { rates, transactions } from '../../data';
 const PersonalHomeScreen = () => {
   const goalAmount = useSelector((state) => state.spaces.spaceInfo.goalAmount);
   const ctbAmount = useSelector((state) => state.spaces.spaceInfo.ctbAmount);
+  const totalAmount = useSelector((state) => state.spaces.spaceInfo.totalAmount);
+  console.log('totalAmount', totalAmount);
+  console.log('totalAmount', typeof totalAmount);
   let ctbDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   ctbDeadline = new Date(ctbDeadline).toDateString();
-  console.log(ctbDeadline);
-  const totalBalance = 80;
+  const totalBalance = 0;
+  const newTotalAmount = totalAmount + totalBalance;
   // contribution / goal
   const prog = (ctbAmount / goalAmount) * 100;
 
@@ -37,7 +39,7 @@ const PersonalHomeScreen = () => {
           <FeatureHomeCard
             color="white"
             balance={totalBalance.toFixed(4).toString()}
-            apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
+            apprxBalance={(newTotalAmount * 120.75).toFixed(2).toString()}
             btn1={{
               icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
               name: 'Fund',
@@ -91,6 +93,7 @@ const PersonalHomeScreen = () => {
               <Spacer />
               <Text _light={{ color: 'primary.600' }} fontWeight="medium" py={1}>
                 {ctbAmount} cUSD
+                {/* Show over the total goal amount to be contributed.. */}
                 {/* 200/1635.89 cUSD */}
               </Text>
             </HStack>

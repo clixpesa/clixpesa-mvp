@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Box, Text, HStack, VStack, Input, Button, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 
+import { withdrawFunds } from '../../store/spaces/spaces.slice';
+
 const WithdrawFundsScreen = ({ navigation }) => {
   const [amount, setAmount] = useState('');
+  const dispatch = useDispatch();
 
   return (
     <Box flex={1} bg="muted.100" alignItems="center" p={4}>
@@ -51,7 +55,14 @@ const WithdrawFundsScreen = ({ navigation }) => {
         </HStack>
       </VStack>
       <Box w="50%" mt="80%">
-        <Button variant="subtle" rounded="2xl" onPress={() => navigation.navigate('PersonalHome')}>
+        <Button
+          variant="subtle"
+          rounded="2xl"
+          onPress={() => {
+            dispatch(withdrawFunds(parseFloat(amount)));
+            navigation.navigate('PersonalHome');
+          }}
+        >
           Confirm
         </Button>
       </Box>
