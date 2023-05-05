@@ -12,8 +12,6 @@ const PersonalHomeScreen = () => {
   let ctbDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
   ctbDeadline = new Date(ctbDeadline).toDateString();
 
-  console.log('contribution amount', ctbAmount);
-
   const prog = (ctbAmount / goalAmount) * 100;
 
   // calculate number of days left until deadline
@@ -82,19 +80,6 @@ const PersonalHomeScreen = () => {
                 </Text>
               </HStack>
             </VStack>
-          </Box>
-          <Box bg="white" roundedTop="md" roundedBottom="xl" width="95%" mt={1}>
-            <HStack mx="5" my="2" pb={1}>
-              <Text fontWeight="medium" fontSize="md" color="blueGray.600">
-                Your Contribution
-              </Text>
-              <Spacer />
-              <Text _light={{ color: 'primary.600' }} fontWeight="medium" py={1}>
-                {ctbAmount} cUSD
-                {/* Show over the total goal amount to be contributed.. */}
-                {/* 200/1635.89 cUSD */}
-              </Text>
-            </HStack>
           </Box>
         </Box>
         <Box alignItems="center" mb={3} mx={3}>
