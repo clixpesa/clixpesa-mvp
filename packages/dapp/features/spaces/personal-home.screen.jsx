@@ -9,13 +9,11 @@ const PersonalHomeScreen = () => {
   const goalAmount = useSelector((state) => state.spaces.spaceInfo.goalAmount);
   const ctbAmount = useSelector((state) => state.spaces.spaceInfo.ctbAmount);
   const totalAmount = useSelector((state) => state.spaces.spaceInfo.totalAmount);
-  console.log('totalAmount', totalAmount);
-  console.log('totalAmount', typeof totalAmount);
   let ctbDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
   ctbDeadline = new Date(ctbDeadline).toDateString();
-  const totalBalance = 0;
-  const newTotalAmount = totalAmount + totalBalance;
-  // contribution / goal
+
+  console.log('contribution amount', ctbAmount);
+
   const prog = (ctbAmount / goalAmount) * 100;
 
   // calculate number of days left until deadline
@@ -38,8 +36,8 @@ const PersonalHomeScreen = () => {
         <Box position="absolute" top="5%" left={1}>
           <FeatureHomeCard
             color="white"
-            balance={totalBalance.toFixed(4).toString()}
-            apprxBalance={(newTotalAmount * 120.75).toFixed(2).toString()}
+            balance={totalAmount.toFixed(4).toString()}
+            apprxBalance={(totalAmount * 120.75).toFixed(2).toString()}
             btn1={{
               icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
               name: 'Fund',

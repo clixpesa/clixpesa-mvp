@@ -13,7 +13,7 @@ const INITIAL_STATE = {
     ctbOccurrence: 'Weekly',
     disbDay: 'Tuesday',
     disbOccurrence: 'Weekly',
-    totalAmount: null,
+    totalAmount: 0,
   },
 };
 
@@ -34,6 +34,9 @@ export const spacesSlice = createSlice({
       state.spaceInfo.ctbDay = action.payload.ctbDay;
       state.spaceInfo.ctbOccurrence = action.payload.ctbOccurrence;
     },
+    addRecurringTransfer(state, action) {
+      state.spaceInfo.ctbAmount += action.payload;
+    },
     addFunds(state, action) {
       state.spaceInfo.totalAmount += action.payload;
     },
@@ -48,6 +51,7 @@ export const {
   setGoalAmount,
   setCtbDeadline,
   setCtbSchedule,
+  addRecurringTransfer,
   addFunds,
   withdrawFunds,
 } = spacesSlice.actions;
