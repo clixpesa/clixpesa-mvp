@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { Box, Text, HStack, VStack, Input, Button, Icon } from 'native-base';
+import { useDispatch } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const AddFundsScreen = () => {
-  const [amount, setAmount] = useState('');
+import { addFunds } from '../../store/spaces/spaces.slice';
 
+const AddFundsScreen = ({ navigation }) => {
+  const [amount, setAmount] = useState('');
+  const dispatch = useDispatch();
+
+  console.log(amount);
+  console.log(typeof amount);
   return (
     <Box flex={1} bg="muted.100" alignItems="center" p={4}>
       <Box w="100%" my={4} pl={4}>
@@ -31,6 +37,7 @@ const AddFundsScreen = () => {
             }}
             value={amount}
             onChangeText={(text) => setAmount(text)}
+            keyboardType="numeric"
             InputRightElement={<Text mr={2}>cUSD</Text>}
           />
         </HStack>
@@ -50,7 +57,14 @@ const AddFundsScreen = () => {
         </HStack>
       </VStack>
       <Box w="50%" mt="80%">
-        <Button variant="subtle" rounded="2xl">
+        <Button
+          variant="subtle"
+          rounded="2xl"
+          onPress={() => {
+            dispatch(addFunds(parseFloat(amount)));
+            navigation.navigate('PersonalHome');
+          }}
+        >
           Confirm
         </Button>
       </Box>

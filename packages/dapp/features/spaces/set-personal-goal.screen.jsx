@@ -90,7 +90,7 @@ const SetPersonalGoalScreen = ({ navigation, route }) => {
             _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
             onPress={() => {
               navigation.navigate('SpareChange');
-              dispatch(setGoalAmount(amount));
+              dispatch(setGoalAmount(parseFloat(amount)));
               dispatch(setCtbDeadline(date.toISOString()));
             }}
           >
@@ -103,7 +103,7 @@ const SetPersonalGoalScreen = ({ navigation, route }) => {
             _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
             onPress={() => {
               navigation.navigate('Customize');
-              dispatch(setGoalAmount(amount));
+              dispatch(setGoalAmount(parseFloat(amount)));
               dispatch(setCtbDeadline(date.toISOString()));
             }}
           >

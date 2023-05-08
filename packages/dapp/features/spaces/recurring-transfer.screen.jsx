@@ -14,11 +14,15 @@ import {
 } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 
+import { useDispatch } from 'react-redux';
+import { addRecurringTransfer, addFunds } from '../../store/spaces/spaces.slice';
+
 const Divider = () => <Box w="100%" h={0.5} bg="muted.200" />;
 
 const RecurringTransferScreen = ({ navigation }) => {
   const { isOpen, onOpen, onClose } = useDisclose();
   const [amount, setAmount] = useState('');
+  const dispatch = useDispatch();
   const [schedule, setSchedule] = useState({
     repeat: 'Weekly',
     day: 'Monday',
@@ -69,7 +73,15 @@ const RecurringTransferScreen = ({ navigation }) => {
         </HStack>
       </VStack>
       <Box w="50%" mt="80%">
-        <Button variant="subtle" rounded="2xl" onPress={() => navigation.navigate('PersonalHome')}>
+        <Button
+          variant="subtle"
+          rounded="2xl"
+          onPress={() => {
+            dispatch(addRecurringTransfer(parseFloat(amount)));
+            dispatch(addFunds(parseFloat(amount)));
+            navigation.navigate('PersonalHome');
+          }}
+        >
           Confirm
         </Button>
       </Box>

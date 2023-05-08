@@ -22,7 +22,7 @@ const CustomizePScreen = ({ navigation }) => {
         <Icon as={<MaterialCommunityIcons name="camera-outline" />} size="lg" color="primary.800" />
       </Box>
       <VStack mx={2} space={1}>
-        <Box p={4}>
+        <Box p={2}>
           <Text>Your space</Text>
         </Box>
         <VStack space={4} p={4} bg="#fff" roundedTop="2xl" roundedBottom="md">
@@ -61,7 +61,7 @@ const CustomizePScreen = ({ navigation }) => {
                   size="md"
                 />
                 {spaceGoal ? (
-                  <Text color="primary.600">{spaceGoal}</Text>
+                  <Text color="primary.600">{spaceGoal} cUSD</Text>
                 ) : (
                   <Text color="primary.600">Set a goal</Text>
                 )}
@@ -96,7 +96,7 @@ const CustomizePScreen = ({ navigation }) => {
         <Box p={4} bg="#fff" roundedBottom="2xl" roundedTop="md">
           <Text>Report an Issue</Text>
         </Box>
-        <Box p={2} mt="10%" w="100%" alignItems="center">
+        <Box p={2} mt="5%" w="100%" alignItems="center">
           <Button
             variant="subtle"
             colorScheme="secondary"

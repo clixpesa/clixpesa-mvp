@@ -1,12 +1,24 @@
 import { Box, Text, Image, HStack, Spacer, VStack, Progress, Icon, ScrollView } from 'native-base';
+import { useSelector } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
 
 import { SectionHeader, TransactionItem, FeatureHomeCard } from '../../components';
 import { rates, transactions } from '../../data';
 
 const PersonalHomeScreen = () => {
-  const totalBalance = 500.0;
-  const prog = (300.89 / 5000.0) * 100;
+  const goalAmount = useSelector((state) => state.spaces.spaceInfo.goalAmount);
+  const ctbAmount = useSelector((state) => state.spaces.spaceInfo.ctbAmount);
+  const totalAmount = useSelector((state) => state.spaces.spaceInfo.totalAmount);
+  let ctbDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
+  ctbDeadline = new Date(ctbDeadline).toDateString();
+
+  const prog = (ctbAmount / goalAmount) * 100;
+
+  // calculate number of days left until deadline
+  const today = new Date();
+  const deadline = new Date(ctbDeadline);
+  const diffTime = Math.abs(deadline - today);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
   return (
     <ScrollView>
@@ -22,8 +34,8 @@ const PersonalHomeScreen = () => {
         <Box position="absolute" top="5%" left={1}>
           <FeatureHomeCard
             color="white"
-            balance={totalBalance.toFixed(4).toString()}
-            apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
+            balance={totalAmount.toFixed(4).toString()}
+            apprxBalance={(totalAmount * 120.75).toFixed(2).toString()}
             btn1={{
               icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
               name: 'Fund',
@@ -58,27 +70,16 @@ const PersonalHomeScreen = () => {
                 </Text>
                 <Spacer />
                 <Text _light={{ color: 'muted.500' }} fontWeight="medium" pt={1}>
-                  300.89/5000.00 cUSD
+                  {ctbAmount}/{goalAmount} cUSD
                 </Text>
               </HStack>
               <Progress colorScheme="primary" value={prog} mx="4" bg="primary.100" />
               <HStack mx="5" my="2">
                 <Text fontWeight="medium" color="muted.500">
-                  30 April 2023 - 30 days to go
+                  {ctbDeadline} - {diffDays} days left
                 </Text>
               </HStack>
             </VStack>
-          </Box>
-          <Box bg="white" roundedTop="md" roundedBottom="xl" width="95%" mt={1}>
-            <HStack mx="5" my="2" pb={1}>
-              <Text fontWeight="medium" fontSize="md" color="blueGray.600">
-                Your Contribution
-              </Text>
-              <Spacer />
-              <Text _light={{ color: 'primary.600' }} fontWeight="medium" py={1}>
-                200/1635.89 cUSD
-              </Text>
-            </HStack>
           </Box>
         </Box>
         <Box alignItems="center" mb={3} mx={3}>
