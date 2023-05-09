@@ -1,11 +1,28 @@
+import { useLayoutEffect } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { Box, Text, Image, HStack, Spacer, VStack, Progress, Icon, ScrollView } from 'native-base';
 import { useSelector } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import { SectionHeader, TransactionItem, FeatureHomeCard } from '../../components';
 import { rates, transactions } from '../../data';
 
+const HeaderIcon = () => {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity onPress={() => navigation.navigate('Main')}>
+      <Icon as={Feather} name="arrow-left" size="2xl" mr="4" />
+    </TouchableOpacity>
+  );
+};
+
+const Header = () => <HeaderIcon />;
+
 const PersonalHomeScreen = () => {
+  const navigation = useNavigation();
+
   const goalAmount = useSelector((state) => state.spaces.spaceInfo.goalAmount);
   const ctbAmount = useSelector((state) => state.spaces.spaceInfo.ctbAmount);
   const totalAmount = useSelector((state) => state.spaces.spaceInfo.totalAmount);
@@ -19,6 +36,12 @@ const PersonalHomeScreen = () => {
   const deadline = new Date(ctbDeadline);
   const diffTime = Math.abs(deadline - today);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: Header,
+    });
+  }, [navigation]);
 
   return (
     <ScrollView>

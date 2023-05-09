@@ -1,5 +1,7 @@
+import { useLayoutEffect } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { Box, HStack, Icon, Button, Image, Text, VStack, Pressable } from 'native-base';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
 const CustomizePScreen = ({ navigation }) => {
@@ -8,6 +10,15 @@ const CustomizePScreen = ({ navigation }) => {
   let spaceDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
   spaceDeadline = new Date(spaceDeadline).toLocaleDateString();
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.navigate('PersonalHome')}>
+          <Icon as={Feather} name="arrow-left" size="2xl" mr="4" />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
   return (
     <Box flex={1} bg="muted.100">
       <Image
