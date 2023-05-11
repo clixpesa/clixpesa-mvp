@@ -5,9 +5,9 @@ import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
 const CustomizePScreen = ({ navigation }) => {
-  const spaceName = useSelector((state) => state.spaces.spaceInfo.spaceName);
-  const spaceGoal = useSelector((state) => state.spaces.spaceInfo.goalAmount);
-  let spaceDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
+  const spaceName = useSelector((state) => state.spaces.personalSpace.spaceName);
+  const spaceGoal = useSelector((state) => state.spaces.personalSpace.goalAmount);
+  let spaceDeadline = useSelector((state) => state.spaces.personalSpace.ctbDeadline);
   spaceDeadline = new Date(spaceDeadline).toLocaleDateString();
 
   useLayoutEffect(() => {

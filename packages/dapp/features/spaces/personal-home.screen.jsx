@@ -23,10 +23,10 @@ const Header = () => <HeaderIcon />;
 const PersonalHomeScreen = () => {
   const navigation = useNavigation();
 
-  const goalAmount = useSelector((state) => state.spaces.spaceInfo.goalAmount);
-  const ctbAmount = useSelector((state) => state.spaces.spaceInfo.ctbAmount);
-  const totalAmount = useSelector((state) => state.spaces.spaceInfo.totalAmount);
-  let ctbDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
+  const goalAmount = useSelector((state) => state.spaces.personalSpace.goalAmount);
+  const ctbAmount = useSelector((state) => state.spaces.personalSpace.ctbAmount);
+  const totalAmount = useSelector((state) => state.spaces.personalSpace.totalAmount);
+  let ctbDeadline = useSelector((state) => state.spaces.personalSpace.ctbDeadline);
   ctbDeadline = new Date(ctbDeadline).toDateString();
 
   const prog = (ctbAmount / goalAmount) * 100;

@@ -30,6 +30,8 @@ const RecurringTransferScreen = ({ navigation }) => {
 
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
+  console.log('amount', amount);
+  console.log('type', typeof amount);
   return (
     <Box flex={1} bg="muted.100" alignItems="center" p={4}>
       <Box w="100%" my={4} pl={4}>
@@ -74,11 +76,11 @@ const RecurringTransferScreen = ({ navigation }) => {
       </VStack>
       <Box w="50%" mt="80%">
         <Button
-          variant="subtle"
+          isDisabled={amount === ''}
+          variant="solid"
           rounded="2xl"
           onPress={() => {
             dispatch(addRecurringTransfer(parseFloat(amount)));
-            dispatch(addFunds(parseFloat(amount)));
             navigation.navigate('PersonalHome');
           }}
         >
