@@ -61,7 +61,7 @@ const CustomizePersonalScreen = ({ navigation, route }) => {
                 }}
                 onPress={() => {
                   navigation.navigate('SetPersonalGoal');
-                  dispatch(setSpaceName({ name }));
+                  dispatch(setSpaceName(name));
                 }}
               >
                 Continue
@@ -78,7 +78,7 @@ const CustomizePersonalScreen = ({ navigation, route }) => {
                 }}
                 onPress={() => {
                   navigation.navigate('Customize');
-                  dispatch(setSpaceName({ name }));
+                  dispatch(setSpaceName(name));
                 }}
               >
                 Save

@@ -1,24 +1,32 @@
 import { useLayoutEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Box, HStack, Icon, Button, Image, Text, VStack, Pressable } from 'native-base';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
+const HeaderIcon = () => {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity onPress={() => navigation.navigate('PersonalHome')}>
+      <Icon as={Feather} name="arrow-left" size="2xl" mr="4" />
+    </TouchableOpacity>
+  );
+};
+
+const CustomHeaderIcon = () => <HeaderIcon />;
+
 const CustomizePScreen = ({ navigation }) => {
-  const spaceName = useSelector((state) => state.spaces.personalSpace.spaceName);
-  const spaceGoal = useSelector((state) => state.spaces.personalSpace.goalAmount);
-  let spaceDeadline = useSelector((state) => state.spaces.personalSpace.ctbDeadline);
-  spaceDeadline = new Date(spaceDeadline).toLocaleDateString();
+  const { name, goalAmount, deadline } = useSelector((state) => state.spaces.personalSpace);
+  let spaceDeadline = new Date(deadline).toLocaleDateString();
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => navigation.navigate('PersonalHome')}>
-          <Icon as={Feather} name="arrow-left" size="2xl" mr="4" />
-        </TouchableOpacity>
-      ),
+      headerLeft: CustomHeaderIcon,
     });
   }, [navigation]);
+
   return (
     <Box flex={1} bg="muted.100">
       <Image
@@ -52,7 +60,7 @@ const CustomizePScreen = ({ navigation }) => {
                   as={<MaterialCommunityIcons name="pencil-outline" />}
                   size="md"
                 />
-                <Text color="primary.600">{spaceName}</Text>
+                <Text color="primary.600">{name}</Text>
               </HStack>
             </Pressable>
           </HStack>
@@ -71,8 +79,8 @@ const CustomizePScreen = ({ navigation }) => {
                   as={<MaterialCommunityIcons name="pencil-outline" />}
                   size="md"
                 />
-                {spaceGoal ? (
-                  <Text color="primary.600">{spaceGoal} cUSD</Text>
+                {goalAmount ? (
+                  <Text color="primary.600">{goalAmount} cUSD</Text>
                 ) : (
                   <Text color="primary.600">Set a goal</Text>
                 )}
