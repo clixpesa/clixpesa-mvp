@@ -12,6 +12,19 @@ const INITIAL_STATE = {
     recurringTransfer: 0,
     spareChange: 0,
   },
+  roscaSpace: {
+    spaceName: null,
+    spaceId: null,
+    spaceType: 'Personal', // 'personal' 'regular' 'rosca'
+    goalAmount: null,
+    ctbAmount: 0,
+    ctbDeadline: null,
+    ctbDay: 'Monday',
+    ctbOccurrence: 'Weekly',
+    disbDay: 'Tuesday',
+    disbOccurrence: 'Weekly',
+    totalAmount: 0,
+  },
 };
 
 export const spacesSlice = createSlice({
