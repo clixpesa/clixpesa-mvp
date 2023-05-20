@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { setGoalAmount, setCtbDeadline } from '../../store/spaces/spaces.slice';
+import { setGoalAmount, setGoalDeadline } from '../../store/spaces/spaces.slice';
 
 const SetPersonalGoalScreen = ({ navigation, route }) => {
   const [amount, setAmount] = useState('');
@@ -91,7 +91,7 @@ const SetPersonalGoalScreen = ({ navigation, route }) => {
             onPress={() => {
               navigation.navigate('SpareChange');
               dispatch(setGoalAmount(parseFloat(amount)));
-              dispatch(setCtbDeadline(date.toISOString()));
+              dispatch(setGoalDeadline(date.toISOString()));
             }}
           >
             Continue
@@ -104,7 +104,7 @@ const SetPersonalGoalScreen = ({ navigation, route }) => {
             onPress={() => {
               navigation.navigate('Customize');
               dispatch(setGoalAmount(parseFloat(amount)));
-              dispatch(setCtbDeadline(date.toISOString()));
+              dispatch(setGoalDeadline(date.toISOString()));
             }}
           >
             Save

@@ -2,7 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const INITIAL_STATE = {
   isLoading: true,
-  spaceInfo: {
+  personalSpace: {
+    name: null,
+    id: null,
+    goalAmount: null,
+    ctbAmount: 0,
+    deadline: null,
+    totalAmount: 0,
+    recurringTransfer: 0,
+    spareChange: 0,
+  },
+  roscaSpace: {
     spaceName: null,
     spaceId: null,
     spaceType: 'Personal', // 'personal' 'regular' 'rosca'
@@ -21,36 +31,31 @@ export const spacesSlice = createSlice({
   name: 'spaces',
   initialState: INITIAL_STATE,
   reducers: {
-    setSpaceInfo(state, action) {
-      state.spaceInfo.spaceName = action.payload.spaceName;
+    setSpaceName(state, action) {
+      state.personalSpace.name = action.payload;
     },
     setGoalAmount(state, action) {
-      state.spaceInfo.goalAmount = action.payload;
+      state.personalSpace.goalAmount = action.payload;
     },
-    setCtbDeadline(state, action) {
-      state.spaceInfo.ctbDeadline = action.payload;
-    },
-    setCtbSchedule(state, action) {
-      state.spaceInfo.ctbDay = action.payload.ctbDay;
-      state.spaceInfo.ctbOccurrence = action.payload.ctbOccurrence;
+    setGoalDeadline(state, action) {
+      state.personalSpace.deadline = action.payload;
     },
     addRecurringTransfer(state, action) {
-      state.spaceInfo.ctbAmount += action.payload;
+      state.personalSpace.recurringTransfer = action.payload;
     },
     addFunds(state, action) {
-      state.spaceInfo.totalAmount += action.payload;
+      state.personalSpace.totalAmount += action.payload;
     },
     withdrawFunds(state, action) {
-      state.spaceInfo.totalAmount -= action.payload;
+      state.personalSpace.totalAmount -= action.payload;
     },
   },
 });
 
 export const {
-  setSpaceInfo,
+  setSpaceName,
   setGoalAmount,
-  setCtbDeadline,
-  setCtbSchedule,
+  setGoalDeadline,
   addRecurringTransfer,
   addFunds,
   withdrawFunds,

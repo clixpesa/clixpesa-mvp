@@ -9,8 +9,6 @@ const AddFundsScreen = ({ navigation }) => {
   const [amount, setAmount] = useState('');
   const dispatch = useDispatch();
 
-  console.log(amount);
-  console.log(typeof amount);
   return (
     <Box flex={1} bg="muted.100" alignItems="center" p={4}>
       <Box w="100%" my={4} pl={4}>

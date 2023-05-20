@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, HStack, FormControl, Stack, Input, Button, Image } from 'native-base';
 
-import { setSpaceInfo } from '../../store/spaces/spaces.slice';
+import { setSpaceName } from '../../store/spaces/spaces.slice';
 
 const CustomizePersonalScreen = ({ navigation, route }) => {
   const suggestions = ['Savings', 'Vacation', 'Chama', 'Gift', 'Sherehe', 'Emergency', 'Masomo'];
-  const [spaceName, setSpaceName] = useState('');
+  const [name, setName] = useState('');
 
   const dispatch = useDispatch();
 
@@ -28,8 +28,8 @@ const CustomizePersonalScreen = ({ navigation, route }) => {
               p={2}
               placeholder="Savings"
               size="lg"
-              value={spaceName}
-              onChangeText={(text) => setSpaceName(text)}
+              value={name}
+              onChangeText={(text) => setName(text)}
             />
           </Stack>
           <HStack space={2} flexWrap="wrap">
@@ -41,7 +41,7 @@ const CustomizePersonalScreen = ({ navigation, route }) => {
                   shadow="1"
                   mb={2}
                   key={item}
-                  onPress={() => setSpaceName(item)}
+                  onPress={() => setName(item)}
                 >
                   {item}
                 </Button>
@@ -51,17 +51,17 @@ const CustomizePersonalScreen = ({ navigation, route }) => {
           <Stack alignItems="center" mt="40%">
             {!route.params?.edit ? (
               <Button
-                variant="subtle"
+                variant="solid"
                 rounded="3xl"
+                isDisabled={!name}
                 w="60%"
                 _text={{
-                  color: 'primary.600',
                   fontWeight: 'semibold',
                   mb: '0.5',
                 }}
                 onPress={() => {
                   navigation.navigate('SetPersonalGoal');
-                  dispatch(setSpaceInfo({ spaceName }));
+                  dispatch(setSpaceName(name));
                 }}
               >
                 Continue
@@ -70,7 +70,7 @@ const CustomizePersonalScreen = ({ navigation, route }) => {
               <Button
                 variant="solid"
                 rounded="3xl"
-                isDisabled={!spaceName}
+                isDisabled={!name}
                 w="60%"
                 _text={{
                   fontWeight: 'semibold',
@@ -78,7 +78,7 @@ const CustomizePersonalScreen = ({ navigation, route }) => {
                 }}
                 onPress={() => {
                   navigation.navigate('Customize');
-                  dispatch(setSpaceInfo({ spaceName }));
+                  dispatch(setSpaceName(name));
                 }}
               >
                 Save

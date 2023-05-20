@@ -1,24 +1,40 @@
+import { useLayoutEffect } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { Box, Text, Image, HStack, Spacer, VStack, Progress, Icon, ScrollView } from 'native-base';
 import { useSelector } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import { SectionHeader, TransactionItem, FeatureHomeCard } from '../../components';
 import { rates, transactions } from '../../data';
+import { numberOfDaysLeft } from '../../utils/utils';
+
+const HeaderIcon = () => {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity onPress={() => navigation.navigate('Main')}>
+      <Icon as={Feather} name="arrow-left" size="2xl" mr="4" />
+    </TouchableOpacity>
+  );
+};
+
+const CustomHeaderIcon = () => <HeaderIcon />;
 
 const PersonalHomeScreen = () => {
-  const goalAmount = useSelector((state) => state.spaces.spaceInfo.goalAmount);
-  const ctbAmount = useSelector((state) => state.spaces.spaceInfo.ctbAmount);
-  const totalAmount = useSelector((state) => state.spaces.spaceInfo.totalAmount);
-  let ctbDeadline = useSelector((state) => state.spaces.spaceInfo.ctbDeadline);
-  ctbDeadline = new Date(ctbDeadline).toDateString();
-
+  const navigation = useNavigation();
+  const { goalAmount, ctbAmount, totalAmount, deadline } = useSelector(
+    ({ spaces }) => spaces.personalSpace,
+  );
+  const cbDeadline = new Date(deadline).toDateString();
+  const daysLeft = numberOfDaysLeft(cbDeadline);
   const prog = (ctbAmount / goalAmount) * 100;
 
-  // calculate number of days left until deadline
-  const today = new Date();
-  const deadline = new Date(ctbDeadline);
-  const diffTime = Math.abs(deadline - today);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: CustomHeaderIcon,
+    });
+  }, [navigation]);
 
   return (
     <ScrollView>
@@ -76,7 +92,7 @@ const PersonalHomeScreen = () => {
               <Progress colorScheme="primary" value={prog} mx="4" bg="primary.100" />
               <HStack mx="5" my="2">
                 <Text fontWeight="medium" color="muted.500">
-                  {ctbDeadline} - {diffDays} days left
+                  {cbDeadline} - {daysLeft} days left
                 </Text>
               </HStack>
             </VStack>
