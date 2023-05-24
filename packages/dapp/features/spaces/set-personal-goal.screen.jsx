@@ -8,7 +8,7 @@ import { setGoalAmount, setGoalDeadline } from '../../store/spaces/spaces.slice'
 
 const SetPersonalGoalScreen = ({ navigation, route }) => {
   const [amount, setAmount] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
@@ -64,12 +64,17 @@ const SetPersonalGoalScreen = ({ navigation, route }) => {
           <Pressable onPress={showDatepicker}>
             <HStack space={2}>
               <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.700" />
-              <Text>{date.toLocaleDateString()}</Text>
+              <Text>{date ? date.toLocaleDateString() : 'Set'}</Text>
             </HStack>
           </Pressable>
         </HStack>
         {show && (
-          <DateTimePicker testID="dateTimePicker" value={date} mode={mode} onChange={onChange} />
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date || new Date()}
+            mode={mode}
+            onChange={onChange}
+          />
         )}
       </VStack>
       <Stack space={3} mt="70%" w="50%">
