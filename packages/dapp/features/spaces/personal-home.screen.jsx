@@ -1,28 +1,15 @@
 import { useLayoutEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
 import { Box, Text, Image, HStack, Spacer, VStack, Progress, Icon, ScrollView } from 'native-base';
 import { useSelector } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 
-import { SectionHeader, TransactionItem, FeatureHomeCard } from '../../components';
+import { SectionHeader, TransactionItem, FeatureHomeCard, HeaderIcon } from '../../components';
 import { rates, transactions } from '../../data';
 import { numberOfDaysLeft } from '../../utils/utils';
 
-const HeaderIcon = () => {
-  const navigation = useNavigation();
+const CustomHeaderIcon = () => <HeaderIcon screen="Main" />;
 
-  return (
-    <TouchableOpacity onPress={() => navigation.navigate('Main')}>
-      <Icon as={Feather} name="arrow-left" size="2xl" mr="4" />
-    </TouchableOpacity>
-  );
-};
-
-const CustomHeaderIcon = () => <HeaderIcon />;
-
-const PersonalHomeScreen = () => {
-  const navigation = useNavigation();
+const PersonalHomeScreen = ({ navigation }) => {
   const { goalAmount, ctbAmount, totalAmount, deadline } = useSelector(
     ({ spaces }) => spaces.personalSpace,
   );

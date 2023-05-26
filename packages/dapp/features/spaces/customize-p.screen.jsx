@@ -1,21 +1,11 @@
 import { useLayoutEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Box, HStack, Icon, Button, Image, Text, VStack, Pressable } from 'native-base';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
-const HeaderIcon = () => {
-  const navigation = useNavigation();
+import { HeaderIcon } from '../../components';
 
-  return (
-    <TouchableOpacity onPress={() => navigation.navigate('PersonalHome')}>
-      <Icon as={Feather} name="arrow-left" size="2xl" mr="4" />
-    </TouchableOpacity>
-  );
-};
-
-const CustomHeaderIcon = () => <HeaderIcon />;
+const CustomHeaderIcon = () => <HeaderIcon screen="PersonalHome" />;
 
 const CustomizePScreen = ({ navigation }) => {
   const { name, goalAmount, deadline } = useSelector((state) => state.spaces.personalSpace);
