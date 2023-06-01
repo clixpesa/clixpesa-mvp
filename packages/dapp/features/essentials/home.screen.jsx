@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Box, Icon, FlatList } from 'native-base';
+import { Box, Icon, FlatList } from '@clixpesa/native-base';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 

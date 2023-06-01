@@ -1,4 +1,4 @@
-import { Text, Box } from 'native-base';
+import { Text, Box } from '@clixpesa/native-base';
 
 const LoginScreen = () => (
   <Box flex={1} bg="primary.100" alignItems="center" justifyContent="center">

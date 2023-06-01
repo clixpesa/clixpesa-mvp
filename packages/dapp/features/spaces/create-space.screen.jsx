@@ -1,4 +1,4 @@
-import { Box, Text, Image, VStack, HStack, Pressable, Icon } from 'native-base';
+import { Box, Text, Image, VStack, HStack, Pressable, Icon } from '@clixpesa/native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import ActionInfo from '../../components/action-info.component';

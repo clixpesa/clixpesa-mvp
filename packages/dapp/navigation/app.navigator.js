@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-remix-icon';
-import { Box, Text } from 'native-base';
+import { Box, Text } from '@clixpesa/native-base';
 
 import { HomeScreen } from '../features/essentials';
 import { SpacesNavigator } from './spaces.navigator';

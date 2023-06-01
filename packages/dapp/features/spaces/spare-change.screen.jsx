@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Text, HStack, VStack, Switch, Button } from 'native-base';
+import { Box, Text, HStack, VStack, Switch, Button } from '@clixpesa/native-base';
 import Icon from 'react-native-remix-icon';
 
 import SpareChange from '../../components/spare-change.component';

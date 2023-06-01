@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Box, Text, VStack, HStack, Icon, Actionsheet, useDisclose } from 'native-base';
+import { Box, Text, VStack, HStack, Icon, Actionsheet, useDisclose } from '@clixpesa/native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const ActionInfo = () => {

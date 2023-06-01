@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'react';
-import { Box, HStack, Icon, Button, Image, Text, VStack, Pressable } from 'native-base';
+import { Box, HStack, Icon, Button, Image, Text, VStack, Pressable } from '@clixpesa/native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 

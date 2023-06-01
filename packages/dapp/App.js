@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { NativeBaseProvider } from 'native-base';
+import { NativeBaseProvider } from '@clixpesa/native-base';
 
 import { Navigation } from './navigation';
 

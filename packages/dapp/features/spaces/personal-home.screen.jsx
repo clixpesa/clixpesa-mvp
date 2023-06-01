@@ -1,5 +1,15 @@
 import { useLayoutEffect } from 'react';
-import { Box, Text, Image, HStack, Spacer, VStack, Progress, Icon, ScrollView } from 'native-base';
+import {
+  Box,
+  Text,
+  Image,
+  HStack,
+  Spacer,
+  VStack,
+  Progress,
+  Icon,
+  ScrollView,
+} from '@clixpesa/native-base';
 import { useSelector } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
 

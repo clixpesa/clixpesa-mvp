@@ -1,6 +1,6 @@
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Icon } from 'native-base';
+import { Icon } from '@clixpesa/native-base';
 import { Feather } from '@expo/vector-icons';
 
 const HeaderIcon = ({ screen }) => {
