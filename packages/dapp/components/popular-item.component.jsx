@@ -56,7 +56,7 @@ const PopularItem = (props) => {
                 alt="spaces"
               />
             ) : (
-              <Box bg={props.bgColor} roundedTop="2xl"></Box>
+              <Box bg={props.bgColor} roundedTop="2xl" />
             )}
           </AspectRatio>
 
