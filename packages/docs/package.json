@@ -1,0 +1,9 @@
+{
+  "name": "@clixpesa-mvp/docs",
+  "version": "1.0.0",
+  "description": "clixpesa help documentation",
+  "main": "index.js",
+  "author": "Kachi <kachdekan@gmail.com>",
+  "license": "Apache 2.0",
+  "private": true
+}
