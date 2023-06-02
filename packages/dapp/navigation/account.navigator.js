@@ -1,8 +1,15 @@
+import { Box, Text } from '@clixpesa/native-base';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import AccountScreen from '../features/account/account.screen';
-
 const AccountStack = createNativeStackNavigator();
+
+const AccountScreen = () => {
+  return (
+    <Box flex={1} bg="primary.100" alignItems="center" justifyContent="center">
+      <Text fontSize="xl">Account Screen!</Text>
+    </Box>
+  );
+};
 
 export const AccountNavigator = () => {
   return (
