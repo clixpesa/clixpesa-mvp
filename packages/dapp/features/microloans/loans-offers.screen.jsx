@@ -3,8 +3,8 @@ import { useState, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 
-import { SectionHeader, LoansOfferItem, FeatureHomeCard } from '@clixpesa/xdapp/components';
-import { rates, LoansData } from '@clixpesa/xdapp/data';
+import { SectionHeader, LoansOfferItem, FeatureHomeCard } from '@dapp/components';
+import { rates, LoansData } from '@dapp/data';
 
 export default function LoanOffersScreen() {
   const [refreshing, setRefreshing] = useState(false);

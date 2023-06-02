@@ -10,8 +10,8 @@ import {
   RoscaFeatureCard,
   LoansOfferItem,
   PotProgressCard,
-} from '@clixpesa/xdapp/components';
-import { LoansData, LoanOffers, LoanRequests, transactions, rates } from '@clixpesa/xdapp/data';
+} from '@dapp/components';
+import { LoansData, LoanOffers, LoanRequests, transactions, rates } from '@dapp/data';
 
 export default function RoscaHomeScreen() {
   const [refreshing, setRefreshing] = useState(false);

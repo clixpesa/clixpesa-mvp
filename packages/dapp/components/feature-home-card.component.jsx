@@ -6,7 +6,7 @@ const FeatureHomeCard = ({ color, bg, btn1, btn2, btn3, itemBottom, apprxBalance
   const navigation = useNavigation();
   const bal = balance.split('.');
   return (
-    <Box mt="4" bg={bg} roundedTop="2xl" roundedBottom={itemBottom ? 'md' : '2xl'}>
+    <Box bg={bg} roundedTop="2xl" roundedBottom={itemBottom ? 'md' : '2xl'}>
       <HStack justifyContent="space-between">
         <Stack mx="4" my="3">
           <Text _light={{ color }}>Total Balance (USD)</Text>

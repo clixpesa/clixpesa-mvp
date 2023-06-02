@@ -18,6 +18,7 @@ import {
 import { LoansHomeScreen } from '../features/microloans';
 import RoscaTabsNavigator from './rosca-tabs.navigator';
 import LoansTabsNavigator from './loan-tabs.navigator';
+import SpacesLandingNavigator from './spaces-landing.navigator';
 
 const Tab = createBottomTabNavigator();
 const AppStack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ export const AppNavigator = () => {
       </AppStack.Group>
       {/* Spaces modals*/}
       <AppStack.Group screenOptions={{ presentation: 'modal' }}>
+        <AppStack.Screen name="SpacesLanding" component={SpacesLandingNavigator} />
         <AppStack.Screen name="Rosca" component={RoscaTabsNavigator} />
         <AppStack.Screen name="createSpace" component={CreateSpaceScreen} />
         <AppStack.Screen name="selectContacts" component={SelectContactsScreen} />
