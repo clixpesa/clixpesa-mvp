@@ -5,3 +5,6 @@ export { default as RoscaPocketsScreen } from './rosca-pockets.screen';
 export { default as CreateSpaceScreen } from './create-space.screen';
 export { default as SelectContactsScreen } from './select-contacts.screen';
 export { default as SetRoscaGoalScreen } from './set-rosca-goal.screen';
+export { default as PersonalHomeScreen } from './personal-home.screen';
+export { default as GroupsHomeScreen } from './groups-home.screen';
+export { default as ChallengesHomeScreen } from './challenges-home.screen';

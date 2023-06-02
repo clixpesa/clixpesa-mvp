@@ -36,7 +36,7 @@ export default function SpacesHomeScreen({ navigation }) {
 
   return (
     <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-      <Box flex={1} px={2}>
+      <Box flex={1} px={2} mt="4">
         <FeatureHomeCard
           bg="white"
           balance={totalBalance.toFixed(4).toString()}
@@ -62,7 +62,7 @@ export default function SpacesHomeScreen({ navigation }) {
         <HStack justifyContent="space-between" my={4}>
           <Pressable
             width="48%"
-            onPress={() => navigation.navigate('MySpaces', { screen: 'Challenges' })}
+            onPress={() => navigation.navigate('SpacesLanding', { screen: 'Challenges' })}
           >
             <VStack bg="white" space="6" p={4} borderRadius="2xl">
               <HStack justifyContent="space-between" alignItems="center">
@@ -86,7 +86,7 @@ export default function SpacesHomeScreen({ navigation }) {
           </Pressable>
           <Pressable
             width="48%"
-            onPress={() => navigation.navigate('MySpaces', { screen: 'Personal' })}
+            onPress={() => navigation.navigate('SpacesLanding', { screen: 'Personal' })}
           >
             <VStack bg="white" space="6" p={4} borderRadius="2xl">
               <HStack justifyContent="space-between" alignItems="center">
@@ -112,7 +112,7 @@ export default function SpacesHomeScreen({ navigation }) {
         <HStack justifyContent="space-between" mb={4}>
           <Pressable
             width="48%"
-            onPress={() => navigation.navigate('MySpaces', { screen: 'Groups' })}
+            onPress={() => navigation.navigate('SpacesLanding', { screen: 'Groups' })}
           >
             <VStack bg="white" space="6" p={4} borderRadius="2xl">
               <HStack justifyContent="space-between" alignItems="center">

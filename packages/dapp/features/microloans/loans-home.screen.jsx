@@ -3,8 +3,8 @@ import { useState, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 
-import { SectionHeader, LoansFeatureItem, FeatureHomeCard } from '@clixpesa/xdapp/components';
-import { rates, LoansData } from '@clixpesa/xdapp/data';
+import { SectionHeader, LoansFeatureItem, FeatureHomeCard } from '@dapp/components';
+import { rates, LoansData } from '@dapp/data';
 
 export default function SpacesHomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
@@ -27,7 +27,7 @@ export default function SpacesHomeScreen() {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
-          <Box>
+          <Box mt="3">
             <FeatureHomeCard
               color="warmGray.800"
               bg="white"

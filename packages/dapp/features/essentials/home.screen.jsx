@@ -27,7 +27,7 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
-          <Box>
+          <Box mt="4">
             <FeatureHomeCard
               color="warmGray.800"
               bg="white"

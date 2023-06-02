@@ -8,8 +8,8 @@ import {
   TransactionItem,
   RoscaFeatureCard,
   PotProgressCard,
-} from '@clixpesa/xdapp/components';
-import { roundDetails, transactions, rates } from '@clixpesa/xdapp/data';
+} from '@dapp/components';
+import { roundDetails, transactions, rates } from '@dapp/data';
 
 export default function RoscaHomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
