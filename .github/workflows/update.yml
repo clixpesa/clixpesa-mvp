@@ -2,7 +2,7 @@ name: update
 on: 
   push:
     paths:
-      - "dapp/**"
+      - "packages/dapp/**"
 
 jobs:
   update:
