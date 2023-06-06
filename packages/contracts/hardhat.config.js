@@ -4,7 +4,7 @@ require('hardhat-abi-exporter')
 require('@nomiclabs/hardhat-ethers')
 require('dotenv').config({path:__dirname+'/.env'})
 
-const defaultNetwork = 'apothem_xdc'
+const defaultNetwork = 'alfajores'
 const mnemonicPath = "m/44'/52752'/0'/0/" 
 const {DEV_MNEMONIC, ACC1, ACC2} = process.env
 
@@ -45,13 +45,18 @@ module.exports = {
       gasPrice: 2500000000,
       gas: 35000000,
     },
-    apothem_xdc: {
-      url: 'https://erpc.apothem.network',
+    alfajores: {
+      url: 'https://alfajores-forno.celo-testnet.org',
       accounts: [ACC1, ACC2],
-      gasPrice: 2500000000,
+      gasPrice: 7500000000,
       gas: 35000000,
-      chainId: 51,
+      chainId: 44787,
       loggingEnabled: true,
+    },
+    alfajoresDatahub: {
+      url: 'https://celo-alfajores--rpc.datahub.figment.io/apikey/<API KEY>',
+      accounts: [ACC1, ACC2],
+      chainId: 44787,
     },
   },
   namedAccounts: {

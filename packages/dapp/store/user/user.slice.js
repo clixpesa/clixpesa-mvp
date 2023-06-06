@@ -1,52 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const INITIAL_STATE = {
+const initialState = {
   isLoggedIn: false,
-  isConnected: false,
-  isSignerSet: false,
-  isImporting: false,
-  currentUser: null,
+  userDetails: {
+    names: null,
+    initials: null,
+    phoneNo: '+245712345678',
+    country: null,
+    userToken: null,
+  },
 };
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: 'user',
-  initialState: INITIAL_STATE,
+  initialState,
   reducers: {
-    setIsLoggedIn(state, action) {
+    setLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
     },
-    setCurrentUser(state, action) {
-      state.currentUser.names = action.payload.userNames;
-      state.currentUser.phoneNo = action.payload.phoneNumber;
+    setUserDetails: (state, { payload }) => {
+      const { userNames, phoneNumber } = payload;
+      state.userDetails.names = userNames;
+      state.userDetails.phoneNo = phoneNumber;
 
-      const country = { '+254': 'Kenya', '+255': 'Tanzania', '+256': 'Uganda' };
-      state.currentUser.country = country[action.payload.countryCode];
+      const country = { '+254': 'Kenya', '+256': 'Uganda', '+255': 'Tanzania' };
+      state.userDetails.country = country[phoneNumber.slice(0, 4)];
 
       const names = userNames.split(' ');
-      state.currentUser.initials = names[0].slice(0, 1) + names[1].slice(0, 1);
+      state.userDetails.initials = names[0].slice(0, 1) + names[1].slice(0, 1);
     },
-    setUserToken(state, action) {
-      state.currentUser.token = action.payload;
+    setUserToken: (state, action) => {
+      state.userDetails.userToken = action.payload;
     },
-    setIsConnected(state, action) {
-      state.isConnected = action.payload;
-    },
-    setIsImporting(state, action) {
-      state.isImporting = action.payload;
-    },
-    setIsSignerSet(state, action) {
-      state.isSignerSet = action.payload;
-    },
+    resetUserDetails: () => initialState,
   },
 });
 
-export const {
-  setIsLoggedIn,
-  setCurrentUser,
-  setUserToken,
-  setIsConnected,
-  setIsImporting,
-  setIsSignerSet,
-} = userSlice.actions;
+export const { setLoggedIn, setUserDetails, setUserToken, resetUserDetails } = userSlice.actions;
 
 export default userSlice.reducer;
