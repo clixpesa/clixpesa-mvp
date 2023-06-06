@@ -7,3 +7,5 @@ export { default as LoansFeatureItem } from './loans-feature-item.component';
 export { default as LoansOfferItem } from './loans-offer-item.component';
 export { default as PotProgressCard } from './pot-progress.component';
 export { default as PocketsFeatureItem } from './pockets-feature-item.component';
+export { default as CodeInput } from './code-input.component';
+export { TokenIcon as TokenIcon } from './token-icons.component';
