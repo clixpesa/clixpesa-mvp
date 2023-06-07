@@ -1,13 +1,13 @@
 import { Box, VStack, Spinner, Text } from '@clixpesa/native-base';
 import { useState } from 'react';
 
-import CodeInput from '@dapp/components/CodeInput';
+import { CodeInput } from '@dapp/components';
 import { DEPRECATED_PIN_BLOCKLIST } from '@dapp/consts';
 import { useDispatch } from 'react-redux';
-import { setToken } from '@dapp/store/essential/essentialSlice';
+import { setUserToken } from '@dapp/store/essential/essential.slice';
 import { saltyPasscode } from '@dapp/utils/encryption';
-import { createWallet, importWallet } from '@dapp/store/wallet/walletSlice';
-import { pendingWallet } from '@dapp/features/wallet/pendingWallet';
+import { createWallet, importWallet } from '@dapp/store/wallet/wallet.slice';
+import { pendingWallet } from '@dapp/features/wallet/pending-wallet';
 
 export default function SetPasscodeScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -18,9 +18,11 @@ export default function SetPasscodeScreen({ navigation }) {
 
   const handleOnSucess = (code) => {
     const token = saltyPasscode(code);
+    console.log('Token: ', token);
     console.log('Pincode Set!');
-    dispatch(setToken(token));
+    dispatch(setUserToken(token));
     if (pendingWallet) {
+      console.log('Is Pending Wallet');
       dispatch(importWallet(code));
     } else {
       dispatch(createWallet(code));

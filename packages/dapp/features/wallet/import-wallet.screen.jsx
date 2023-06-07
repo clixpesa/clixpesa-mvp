@@ -3,7 +3,7 @@ import { Box, Text, VStack, Button, Spacer, FormControl, Input } from '@clixpesa
 import { isValidMnemonic } from '@dapp/utils/mnemonic';
 import { setPendingWallet } from './pending-wallet';
 import { useDispatch } from 'react-redux';
-import { importWallet } from '@dapp/store/wallet/walletSlice';
+import { importWallet } from '@dapp/store/wallet/wallet.slice';
 
 export default function ImportWalletScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -32,11 +32,8 @@ export default function ImportWalletScreen({ navigation }) {
     };
     if (isLoading) {
       handlePendingWallet();
-      wait(1500).then(() => {
-        dispatch(importWallet('223344'));
-        navigation.navigate('Loader');
-        setIsLoading(false);
-      });
+      navigation.navigate('getUserDetails');
+      setIsLoading(false);
     }
   }, [isLoading]);
 

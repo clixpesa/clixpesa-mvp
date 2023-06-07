@@ -25,6 +25,7 @@ const walletSlice = createSlice({
   reducers: {
     updateBalances: (state, action) => {
       const { tokenAddrToValue, lastUpdated } = action.payload;
+      console.log('updateBalances', tokenAddrToValue, lastUpdated);
       state.walletBalances.tokenAddrToValue = tokenAddrToValue;
       state.walletBalances.lastUpdated = lastUpdated;
     },

@@ -37,11 +37,35 @@ export const AppNavigator = () => {
       </AppStack.Group>
       {/* Spaces modals*/}
       <AppStack.Group screenOptions={{ presentation: 'modal' }}>
-        <AppStack.Screen name="SpacesLanding" component={SpacesLandingNavigator} />
-        <AppStack.Screen name="Rosca" component={RoscaTabsNavigator} />
-        <AppStack.Screen name="createSpace" component={CreateSpaceScreen} />
-        <AppStack.Screen name="selectContacts" component={SelectContactsScreen} />
-        <AppStack.Screen name="setRoscaGoal" component={SetRoscaGoalScreen} />
+        <AppStack.Screen
+          name="SpacesLanding"
+          component={SpacesLandingNavigator}
+          options={{
+            headerTitle: 'My Spaces',
+          }}
+        />
+        <AppStack.Screen name="RoscaHome" component={RoscaTabsNavigator} />
+        <AppStack.Screen
+          name="createSpace"
+          component={CreateSpaceScreen}
+          options={{
+            headerTitle: 'Create a Space',
+          }}
+        />
+        <AppStack.Screen
+          name="selectContacts"
+          component={SelectContactsScreen}
+          options={{
+            headerTitle: 'Invite Friends',
+          }}
+        />
+        <AppStack.Screen
+          name="setRoscaGoal"
+          component={SetRoscaGoalScreen}
+          options={{
+            headerTitle: 'Set Pot Amount',
+          }}
+        />
       </AppStack.Group>
       {/* Loans modals*/}
       <AppStack.Group screenOptions={{ presentation: 'modal' }}>

@@ -1,5 +1,5 @@
 import { Box, HStack, Pressable, Text, VStack, Spacer, Button } from '@clixpesa/native-base';
-import CodeInput from '@dapp/components/CodeInput';
+import { CodeInput } from '@dapp/components';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 

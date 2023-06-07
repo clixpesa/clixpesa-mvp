@@ -1,9 +1,9 @@
 import { Box, Text, VStack, Avatar, Spinner } from '@clixpesa/native-base';
 import { View } from 'react-native';
-import CodeInput from '@dapp/components/CodeInput';
+import { CodeInput } from '@dapp/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { setLoggedIn } from '@dapp/store/essential/essentialSlice';
+import { setLoggedIn } from '@dapp/store/essential/essential.slice';
 import { saltyPasscode } from '@dapp/utils/encryption';
 
 export default function LoginScreen({ navigation }) {

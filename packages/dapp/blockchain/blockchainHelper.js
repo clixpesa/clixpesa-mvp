@@ -11,7 +11,8 @@ export const setAppSigner = async (privateKey) => {
   const provider = getProvider();
   //const wallet = Wallet.fromMnemonic(mnemonic, CELO_DERIVATION_PATH)
   const signer = new Wallet(privateKey, provider);
-  //const signer = wallet.connect(provider)
+  //const signer = new CeloWallet(wallet, provider);
+  //console.log('Signer', signer);
   setSigner(signer);
 };
 
@@ -42,7 +43,7 @@ export const getBalances = async (address, tokenMap) => {
   // TODO may be good to batch here if token list is really long
   const fetchPromises = [];
   for (const tokenAddr of tokenAddrs) {
-    // logger.debug(`Fetching ${t.id} balance`)
+    //console.log(`Fetching ${tokenAddr} balance`);
     if (tokenAddr === config.contractAddresses.GoldToken) {
       fetchPromises.push(getNativeBalance(address));
     } else {
@@ -134,12 +135,13 @@ export const smartContractCall = async (contractName, args) => {
     let txReceipt;
     let unsignedTx;
     let overrides = {};
-
+    const provider = getProvider();
+    const minGasPrice = await provider.getGasPrice();
     const feeEstimate = {
-      gasPrice: utils.parseUnits('0.25', 'gwei').toString(),
-      gasLimit: utils.parseUnits('0.025', 'gwei').toString(),
-      //fee: '0.0',
-      //feeToken: config.contractAddresses.StableToken,
+      gasPrice: minGasPrice, //utils.parseUnits('0.1', 'gwei').toString(),
+      gasLimit: utils.parseUnits('0.035', 'gwei').toString(),
+      fee: '0.0',
+      feeToken: config.contractAddresses.StableToken,
     };
 
     if (args.methodType === 'read') {
