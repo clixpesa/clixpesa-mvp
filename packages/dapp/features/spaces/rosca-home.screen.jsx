@@ -1,5 +1,5 @@
 import { Box, Text, Icon, FlatList } from '@clixpesa/native-base';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 
@@ -10,9 +10,59 @@ import {
   PotProgressCard,
 } from '@dapp/components';
 import { roundDetails, transactions, rates } from '@dapp/data';
+import { getRoscaData } from '@dapp/store/spaces/spaces.slice';
+import { useGetTokenTransfersQuery } from '@dapp/services/blockscout';
+import { useSelector, useDispatch } from 'react-redux';
+import { utils } from 'ethers';
+import { areAddressesEqual, shortenAddress } from '@dapp/utils/addresses';
 
-export default function RoscaHomeScreen() {
+export default function RoscaHomeScreen({ navigation, route }) {
+  const thisRosca = useSelector((s) => s.spaces.thisRosca); //route.params.roscaAddress;
+  const dispatch = useDispatch();
+  const { roscaDetails } = useSelector((state) => state.spaces);
   const [refreshing, setRefreshing] = useState(false);
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    dispatch(getRoscaData(thisRosca.roscaAddress));
+  }, []);
+
+  const {
+    data: txData,
+    error: txError,
+    isLoading: txIsLoading,
+  } = useGetTokenTransfersQuery(thisRosca.roscaAddress);
+  const handleGetTransactions = () => {
+    const thisTxs = [];
+    const goodTxs = Array.prototype.filter.call(
+      txData.result,
+      (txs) => txs.value.toString() * 1 >= utils.parseEther('0.0008').toString() * 1,
+    );
+    goodTxs.forEach((tx) => {
+      const txDate = new Date(tx.timeStamp * 1000);
+      const date = txDate.toDateString().split(' ');
+      const txItem = {
+        tx: tx.blockNumber,
+        credited: areAddressesEqual(tx.to, thisRosca.roscaAddress) ? true : false,
+        title: areAddressesEqual(tx.to, thisRosca.roscaAddress)
+          ? shortenAddress(tx.from, true)
+          : shortenAddress(tx.to, true),
+        date: date[0] + ', ' + date[2] + ' ' + date[1] + ', ' + txDate.toTimeString().slice(0, 5),
+        amount: utils.formatUnits(tx.value, 'ether'),
+        token: tx.tokenSymbol,
+      };
+      thisTxs.push(txItem);
+    });
+    setTransactions(thisTxs);
+  };
+
+  useEffect(() => {
+    if (txData) handleGetTransactions();
+  }, [txData]);
+
+  const prog = (roscaDetails.roscaBal / roscaDetails.goalAmount) * 100;
+  const dueAmount = (roscaDetails.goalAmount * 1) / (roscaDetails.activeMembers * 1);
+
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -36,8 +86,8 @@ export default function RoscaHomeScreen() {
             <RoscaFeatureCard
               color="warmGray.800"
               bg="white"
-              balance={totalBalance.toFixed(4).toString()}
-              apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
+              balance={(roscaDetails.roscaBal * 1).toFixed(4).toString()}
+              apprxBalance={(roscaDetails.roscaBal * 120.75).toFixed(2).toString()}
               btn1={{
                 icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
                 name: 'Fund Space',
@@ -57,14 +107,14 @@ export default function RoscaHomeScreen() {
             />
             <SectionHeader
               title={'Round No.' + roundDetails.roundNo}
-              actionText={'For: ' + roundDetails.roundOwner}
+              actionText={'For: ' + roscaDetails.creator.slice(0, 6)}
               action={() => console.log('See all')}
             />
             <PotProgressCard
-              roundBal={roundDetails.roundBal}
-              goalAmount={roundDetails.roundGoal}
-              dueDate={roundDetails.roundDueDate}
-              memberCount={roundDetails.memberCount}
+              roundBal={roscaDetails.roscaBal * 1}
+              goalAmount={roscaDetails.goalAmount * 1}
+              dueDate={roscaDetails.dueDate}
+              memberCount={roscaDetails.activeMembers}
               ctbCount={roundDetails.ctbCount}
               myCtb={roundDetails.myContribution}
               token={roundDetails.token}

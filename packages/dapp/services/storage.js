@@ -11,6 +11,7 @@ export async function storeUserDetails(storeName, userDetails) {
   }
   const serialised = JSON.stringify(userDetails);
   await setItemAsync(storeName, serialised);
+  console.log('User details stored');
 }
 
 export async function getUserDetails(storeName) {

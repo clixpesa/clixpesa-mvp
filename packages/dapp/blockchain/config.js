@@ -18,9 +18,10 @@ const configCeloAlfajores = {
     Spaces: deployed[44787][0].contracts.Spaces.address, //deployed[chainId][0].contracts.Spaces.address,
     P2PLoans: deployed[44787][0].contracts.P2PLoans.address, //deployed[chainId][0].contracts.P2PLoans.address,
     RoscaSpace: '0x0000000000000000000000000000000000000000',
-    PersonalSpace: '0x0000000000000000000000000000000000000000',
+    PersonalSpace: deployed[44787][0].contracts.Personal.address, //deployed[chainId][0].contracts.PersonalSpace.address,
     GroupSpace: '0x0000000000000000000000000000000000000000',
   },
+  nomspaceRegistry: '0x40cd4db228e9c172dA64513D0e874d009486A9a9',
 };
 
 exports.config = Object.freeze(configCeloAlfajores);

@@ -3,7 +3,7 @@ import { Box, HStack, Text, Avatar, VStack, FlatList, Button } from '@clixpesa/n
 import { useDispatch } from 'react-redux';
 import * as Contacts from 'expo-contacts';
 import { TouchableOpacity } from 'react-native';
-//import { setSelectedMembers } from './spacesSlice';
+import { setSelectedMembers } from '@dapp/store/spaces/spaces.slice';
 
 //TODO! Maintain unique selctions
 //TODO! Handle submissions.
@@ -99,7 +99,7 @@ export default function SelectContactsScreen({ navigation }) {
         w="60%"
         _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
         onPress={() => {
-          //dispatch(setSelectedMembers(selectedContacts));
+          dispatch(setSelectedMembers(selectedContacts));
           navigation.navigate('setRoscaGoal');
         }}
       >

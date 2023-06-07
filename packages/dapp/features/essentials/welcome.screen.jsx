@@ -1,5 +1,5 @@
 import { Box, VStack, Button, Heading, Spacer } from '@clixpesa/native-base';
-import { getWallets } from '@dapp/features/wallet/walletsManager';
+import { getWallets } from '@dapp/features/wallet/wallets-manager';
 export default function WelcomeScreen({ navigation }) {
   return (
     <Box flex={1} bg="#fff" alignItems="center" justifyContent="flex-end">

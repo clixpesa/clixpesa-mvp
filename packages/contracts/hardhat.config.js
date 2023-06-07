@@ -27,6 +27,13 @@ module.exports = {
   paths: {
     sources: './src',
   },
+  abiExporter: {
+    path: '../dapp/blockchain/Abis/Jsons',
+    only: ['Spaces', 'Rosca', 'Personal', 'P2PLoans'],
+    runOnCompile: true,
+    clear: true,
+    flat: true,
+  },
   networks: {
     hardhat: {
       accounts: {

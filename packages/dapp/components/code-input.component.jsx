@@ -2,6 +2,27 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet, I18nManager } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
+const styles = StyleSheet.create({
+  containerDefault: {},
+  cellDefault: {
+    borderColor: '#a3a3a3',
+    borderWidth: 2,
+    borderRadius: 8,
+  },
+  cellFocusedDefault: {
+    borderColor: '#0D9488',
+    borderWidth: 2,
+    borderRadius: 8,
+  },
+  textStyleDefault: {
+    color: '#737373',
+    fontSize: 24,
+  },
+  textStyleFocusedDefault: {
+    color: '#0D9488',
+  },
+});
+
 class CodeInput extends Component {
   state = {
     maskDelay: false,
@@ -244,26 +265,5 @@ class CodeInput extends Component {
     disableFullscreenUI: true,
   };
 }
-
-const styles = StyleSheet.create({
-  containerDefault: {},
-  cellDefault: {
-    borderColor: '#a3a3a3',
-    borderWidth: 2,
-    borderRadius: 8,
-  },
-  cellFocusedDefault: {
-    borderColor: '#0D9488',
-    borderWidth: 2,
-    borderRadius: 8,
-  },
-  textStyleDefault: {
-    color: '#737373',
-    fontSize: 24,
-  },
-  textStyleFocusedDefault: {
-    color: '#0D9488',
-  },
-});
 
 export default CodeInput;

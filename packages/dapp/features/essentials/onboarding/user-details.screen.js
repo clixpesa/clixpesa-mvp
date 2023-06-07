@@ -14,7 +14,7 @@ import {
   Button,
 } from '@clixpesa/native-base';
 import { useDispatch } from 'react-redux';
-import { setUserDetails } from '@dapp/store/essential/essentialSlice';
+import { setUserDetails } from '@dapp/store/essential/essential.slice';
 
 export default function UserDetailsScreen({ navigation }) {
   const dispatch = useDispatch();

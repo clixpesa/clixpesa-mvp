@@ -1,7 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 
-const INITIAL_STATE = {
+const spacesInitialState = {
   isLoading: true,
+  selectedMembers: [],
+  spaceInfo: {
+    // for space creation
+    name: null,
+    type: null, //personal, rosca, regular, mchango
+    authCode: '112233AABB',
+    imgLink: null,
+    members: [], //!TODO always include creator.
+    goalAmount: null,
+    ctbAmount: null,
+    ctbDay: 'Monday',
+    ctbOccurence: 'Weekly',
+    disbDay: 'Tuesday',
+    disbOccurence: 'Weekly',
+    creator: null, //creator user address
+  },
   personalSpace: {
     name: null,
     id: null,
@@ -12,53 +28,73 @@ const INITIAL_STATE = {
     recurringTransfer: 0,
     spareChange: 0,
   },
-  roscaSpace: {
-    spaceName: null,
-    spaceId: null,
-    spaceType: 'Personal', // 'personal' 'regular' 'rosca'
-    goalAmount: null,
-    ctbAmount: 0,
-    ctbDeadline: null,
-    ctbDay: 'Monday',
-    ctbOccurrence: 'Weekly',
-    disbDay: 'Tuesday',
-    disbOccurrence: 'Weekly',
-    totalAmount: 0,
+  roscaDetails: {},
+  userSpaces: {
+    // just add contract addresses
+    roscas: [],
+    personal: [],
+    regular: [],
+    mchango: [],
   },
+  thisRosca: null,
 };
 
-export const spacesSlice = createSlice({
+const spacesSlice = createSlice({
   name: 'spaces',
-  initialState: INITIAL_STATE,
+  initialState: spacesInitialState,
   reducers: {
-    setSpaceName(state, action) {
-      state.personalSpace.name = action.payload;
+    setSelectedMembers: (state, action) => {
+      state.selectedMembers = action.payload;
+      state.spaceInfo.members = action.payload;
     },
-    setGoalAmount(state, action) {
-      state.personalSpace.goalAmount = action.payload;
+    setSpaceInfo: (state, { payload }) => {
+      const { spaceName, spaceType, walletAddress, defaultImg } = payload;
+
+      state.spaceInfo.members = state.selectedMembers;
+      state.spaceInfo.name = spaceName;
+      state.spaceInfo.type = spaceType;
+      state.spaceInfo.creator = walletAddress;
+      state.spaceInfo.imgLink = defaultImg;
     },
-    setGoalDeadline(state, action) {
-      state.personalSpace.deadline = action.payload;
+    setCtbSchedule: (state, { payload }) => {
+      (state.spaceInfo.ctbDay = payload.day), (state.spaceInfo.ctbOccurence = payload.occurrence);
     },
-    addRecurringTransfer(state, action) {
-      state.personalSpace.recurringTransfer = action.payload;
+    setDisbSchedule: (state, { payload }) => {
+      (state.spaceInfo.disbDay = payload.day), (state.spaceInfo.disbOccurence = payload.occurrence);
     },
-    addFunds(state, action) {
-      state.personalSpace.totalAmount += action.payload;
+    setGoalAmount: (state, { payload }) => {
+      const size = state.spaceInfo.members.length;
+      state.spaceInfo.goalAmount = payload;
+      state.spaceInfo.ctbAmount = size ? payload / (state.spaceInfo.members.length + 1) : payload;
     },
-    withdrawFunds(state, action) {
-      state.personalSpace.totalAmount -= action.payload;
+    setUserSpaces: (state, { payload }) => {
+      const roscas = payload.filter((s) => s.type === 'rosca');
+      state.userSpaces.roscas = roscas;
+    },
+    setRoscaDetails: (state, { payload }) => {
+      state.roscaDetails = payload;
+    },
+    setThisRosca: (state, { payload }) => {
+      state.thisRosca = payload;
     },
   },
 });
 
 export const {
-  setSpaceName,
+  setSelectedMembers,
+  setSpaceInfo,
+  setCtbSchedule,
+  setDisbSchedule,
   setGoalAmount,
-  setGoalDeadline,
-  addRecurringTransfer,
-  addFunds,
-  withdrawFunds,
+  setUserSpaces,
+  setRoscaDetails,
+  setThisRosca,
 } = spacesSlice.actions;
+
+//Created action
+export const getRoscaData = createAction('spaces/getRoscaData');
+export const getRoscaAddress = createAction('spaces/getRoscaAddress');
+export const fetchSpaces = createAction('spaces/fetchSpaces');
+export const updateSpaces = createAction('spaces/updateSpaces');
 
 export default spacesSlice.reducer;

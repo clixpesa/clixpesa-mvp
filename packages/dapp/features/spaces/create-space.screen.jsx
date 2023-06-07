@@ -1,93 +1,108 @@
-import { Box, Text, Image, VStack, HStack, Pressable, Icon } from '@clixpesa/native-base';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  Box,
+  Text,
+  Image,
+  FormControl,
+  Stack,
+  Input,
+  Button,
+  HStack,
+  Select,
+  CheckIcon,
+} from '@clixpesa/native-base';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { setSpaceInfo } from '@dapp/store/spaces/spaces.slice';
 
-import ActionInfo from '../../components/action-info.component';
+export default function CreateSpaceScreen({ navigation }) {
+  const walletAddress = useSelector((s) => s.wallet.walletInfo.address);
+  const suggestions = ['Savings', 'Vacation', 'Chama', 'Gift', 'Sherehe', 'Emergency', 'Masomo'];
+  const dispatch = useDispatch();
+  const [spaceName, setSpaceName] = useState('');
+  const [spaceType, setSpaceType] = useState('');
 
-const CreateSpaceScreen = ({ navigation }) => {
+  const nextScreen = spaceType !== 'personal' ? 'selectContacts' : 'setPersonalGoal';
+  const defaultImg =
+    spaceType === 'personal' || spaceType === ''
+      ? 'https://source.unsplash.com/0ITvgXAU5Oo'
+      : 'https://source.unsplash.com/ybPJ47PMT_M';
+
   return (
     <Box flex={1} bg="muted.100">
-      <VStack margin={2} space="12" marginTop={6}>
-        <Pressable h="35%" onPress={() => navigation.navigate('CustomizePersonal')}>
-          <HStack m={2}>
-            <VStack bg="white" p={2} space="sm" rounded="2xl" w="100%">
-              <Box
-                m={2}
-                bg="primary.100"
-                rounded="full"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                size={60}
-              >
-                <Icon
-                  as={MaterialCommunityIcons}
-                  name="piggy-bank"
-                  size="lg"
-                  color="primary.600"
-                  m="2"
-                />
-              </Box>
-              <VStack ml={3} mb={3}>
-                <Text fontWeight="semibold">Personal Space</Text>
-                <Text w="70%">Put some money aside with your stable coins or cypto</Text>
-              </VStack>
-            </VStack>
-            <Image
-              source={{
-                uri: 'https://images.unsplash.com/photo-1607863680198-23d4b2565df0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+      <Image
+        source={{
+          uri: defaultImg,
+        }}
+        alt="Your space photo"
+        height="35%"
+        minH={240}
+      />
+      <FormControl alignItems="center" mt={2}>
+        <Stack space={2} w="80%">
+          <Stack>
+            <FormControl.Label>Select your space type</FormControl.Label>
+            <Select
+              size="md"
+              bg="white"
+              accessibilityLabel="Choose Space Type"
+              placeholder="Space type"
+              _selectedItem={{
+                bg: 'primary.600',
+                endIcon: <CheckIcon size={2} color="muted.200" />,
               }}
-              alt="personal space"
-              size={150}
-              borderRadius={100}
-              position="absolute"
-              top={-16}
-              right={-10}
+              mt="1"
+              onValueChange={(type) => setSpaceType(type)}
+            >
+              <Select.Item label="Personal Space" value="personal" />
+              <Select.Item label="Challenge Space" value="challenge" />
+              <Select.Item label="Chamaa (ROSCA) Group" value="rosca" />
+            </Select>
+          </Stack>
+          <Stack>
+            <FormControl.Label>Name your space</FormControl.Label>
+            <Input
+              bg="white"
+              p={2}
+              placeholder="Savings"
+              size="lg"
+              value={spaceName}
+              onChangeText={(text) => setSpaceName(text)}
             />
+          </Stack>
+          <HStack space={3} flexWrap="wrap">
+            {suggestions.map((item) => {
+              return (
+                <Button
+                  size="sm"
+                  variant="subtle"
+                  bg="primary.100"
+                  shadow="1"
+                  mb={2}
+                  key={item}
+                  onPress={() => setSpaceName(item)}
+                >
+                  {item}
+                </Button>
+              );
+            })}
           </HStack>
-        </Pressable>
-        <Pressable h="35%" onPress={() => navigation.navigate('selectContacts')}>
-          <HStack m={2}>
-            <VStack bg="white" p={2} space="sm" rounded="2xl" w="100%">
-              <Box
-                m={2}
-                bg="primary.100"
-                rounded="full"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                size={60}
-              >
-                <Icon
-                  as={MaterialCommunityIcons}
-                  name="safe-square"
-                  size="lg"
-                  color="primary.600"
-                  m="2"
-                />
-              </Box>
-              <VStack ml={3} mb={3}>
-                <Text fontWeight="semibold">Group Space</Text>
-                <Text>Chama, vacation?</Text>
-                <Text>Save money together for a given goal</Text>
-              </VStack>
-            </VStack>
-            <Image
-              source={{
-                uri: 'https://images.unsplash.com/photo-1521510186458-bbbda7aef46b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=881&q=80',
-              }}
-              alt="personal space"
-              size={150}
-              borderRadius={100}
-              position="absolute"
-              top={-16}
-              right={-10}
-            />
-          </HStack>
-        </Pressable>
-      </VStack>
-      <ActionInfo />
+        </Stack>
+        <Stack alignItems="center" width="95%" mt="15%">
+          <Button
+            rounded="3xl"
+            disabled={spaceType ? false : true}
+            pr="4"
+            minW="75%"
+            _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+            onPress={() => {
+              dispatch(setSpaceInfo({ spaceName, spaceType, walletAddress, defaultImg }));
+              navigation.navigate(nextScreen);
+            }}
+          >
+            Continue
+          </Button>
+        </Stack>
+      </FormControl>
     </Box>
   );
-};
-
-export default CreateSpaceScreen;
+}

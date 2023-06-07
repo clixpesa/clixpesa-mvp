@@ -1,10 +1,13 @@
 import { Contract, utils } from 'ethers';
 import { Erc20Abi } from './Abis/erc20';
 import { Erc721Abi } from './Abis/erc721';
-//import { XDCTokenAbi } from './Abis/xdcToken'
+import { CeloTokenAbi } from './Abis/celoToken';
 import { StableTokenAbi } from './Abis/stableToken';
+import { GasPriceMinABI } from './Abis/gasPriceMin';
 import SpacesAbi from './Abis/Jsons/Spaces.json';
 import RoscaAbi from './Abis/Jsons/Rosca.json';
+import PersonalAbi from './Abis/Jsons/Personal.json';
+import P2PLoansAbi from './Abis/Jsons/P2PLoans.json';
 import { getSigner } from './signer';
 import { config } from './config';
 import { areAddressesEqual, normalizeAddress } from '@dapp/utils/addresses';
@@ -15,6 +18,8 @@ let tokenContractCache = {}; // token address to contract
 
 export const spacesIface = new utils.Interface(SpacesAbi);
 export const roscaIface = new utils.Interface(RoscaAbi);
+export const personalIface = new utils.Interface(PersonalAbi);
+export const loansIface = new utils.Interface(P2PLoansAbi);
 
 export function getContract(c) {
   const cachedContract = contractCache[c];
@@ -59,14 +64,22 @@ export function getTokenContract(tokenAddress, abi) {
 
 export function getContractAbi(c) {
   switch (c) {
-    case 'CeloToken':
+    case 'GoldToken':
       return CeloTokenAbi;
     case 'StableToken':
+    case 'StableTokenEUR':
+    case 'StableTokenBRL':
       return StableTokenAbi;
     case 'Spaces':
       return SpacesAbi;
     case 'Rosca':
       return RoscaAbi;
+    case 'Personal':
+      return PersonalAbi;
+    case 'P2PLoans':
+      return P2PLoansAbi;
+    case 'MinGasPrice':
+      return GasPriceMinABI;
     default:
       throw new Error(`No ABI for contract ${c}`);
   }
