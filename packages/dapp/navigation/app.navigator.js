@@ -14,6 +14,7 @@ import {
   CreateSpaceScreen,
   SelectContactsScreen,
   SetRoscaGoalScreen,
+  FundRoscaRoundScreen,
 } from '../features/spaces';
 import { LoansHomeScreen } from '../features/microloans';
 import RoscaTabsNavigator from './rosca-tabs.navigator';
@@ -64,6 +65,13 @@ export const AppNavigator = () => {
           component={SetRoscaGoalScreen}
           options={{
             headerTitle: 'Set Pot Amount',
+          }}
+        />
+        <AppStack.Screen
+          name="fundRoscaRound"
+          component={FundRoscaRoundScreen}
+          options={{
+            headerTitle: 'Fund Round',
           }}
         />
       </AppStack.Group>

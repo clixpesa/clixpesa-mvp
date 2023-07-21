@@ -144,30 +144,6 @@ export default function SpacesHomeScreen({ navigation }) {
         <HStack justifyContent="space-between" my={4}>
           <Pressable
             width="48%"
-            onPress={() => navigation.navigate('SpacesLanding', { screen: 'Challenges' })}
-          >
-            <VStack bg="white" space="6" p={4} borderRadius="2xl">
-              <HStack justifyContent="space-between" alignItems="center">
-                <Avatar bg="violet.500">
-                  <Icon as={MaterialIcons} name="bubble-chart" size="2xl" color="text.50" />
-                </Avatar>
-                <VStack>
-                  <Text fontSize="md" alignSelf="flex-end">
-                    ${challengesBal.toFixed(2)}
-                  </Text>
-                  <Text alignSelf="flex-end">≈ ks{(challengesBal * 120.75).toFixed(0)}</Text>
-                </VStack>
-              </HStack>
-              <Stack>
-                <Text fontSize="md" fontWeight="medium">
-                  Challenges
-                </Text>
-                <Text color="muted.500">Be competitive</Text>
-              </Stack>
-            </VStack>
-          </Pressable>
-          <Pressable
-            width="48%"
             onPress={() => navigation.navigate('SpacesLanding', { screen: 'Personal' })}
           >
             <VStack bg="white" space="6" p={4} borderRadius="2xl">
@@ -187,6 +163,30 @@ export default function SpacesHomeScreen({ navigation }) {
                   Personal
                 </Text>
                 <Text color="muted.500">Save for a goal</Text>
+              </Stack>
+            </VStack>
+          </Pressable>
+          <Pressable
+            width="48%"
+            onPress={() => navigation.navigate('SpacesLanding', { screen: 'Challenges' })}
+          >
+            <VStack bg="white" space="6" p={4} borderRadius="2xl">
+              <HStack justifyContent="space-between" alignItems="center">
+                <Avatar bg="violet.500">
+                  <Icon as={MaterialIcons} name="bubble-chart" size="2xl" color="text.50" />
+                </Avatar>
+                <VStack>
+                  <Text fontSize="md" alignSelf="flex-end">
+                    ${challengesBal.toFixed(2)}
+                  </Text>
+                  <Text alignSelf="flex-end">≈ ks{(challengesBal * 120.75).toFixed(0)}</Text>
+                </VStack>
+              </HStack>
+              <Stack>
+                <Text fontSize="md" fontWeight="medium">
+                  Challenges
+                </Text>
+                <Text color="muted.500">Be competitive</Text>
               </Stack>
             </VStack>
           </Pressable>

@@ -17,12 +17,10 @@ import { LogBox } from 'react-native';
 export default function App() {
   const dispatch = useDispatch();
   const [isReady, setIsReady] = useState(false);
-  /*
-    useEffect(() => {
-      //LogBox.ignoreLogs(['Encountered two children with the same key ...'])
-      LogBox.ignoreAllLogs();
-    }, []);
-  */
+  useEffect(() => {
+    //LogBox.ignoreLogs(['Encountered two children with the same key ...'])
+    LogBox.ignoreAllLogs();
+  }, []);
   // start provider connection
   useEffect(() => {
     async function initProvider() {

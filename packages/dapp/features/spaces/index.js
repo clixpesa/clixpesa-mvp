@@ -8,3 +8,4 @@ export { default as SetRoscaGoalScreen } from './set-rosca-goal.screen';
 export { default as PersonalHomeScreen } from './personal-home.screen';
 export { default as GroupsHomeScreen } from './groups-home.screen';
 export { default as ChallengesHomeScreen } from './challenges-home.screen';
+export { default as FundRoscaRoundScreen } from './fund-rosca-round.screen';
