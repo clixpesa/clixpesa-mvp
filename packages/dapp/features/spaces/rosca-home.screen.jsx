@@ -1,4 +1,4 @@
-import { Box, Text, Icon, FlatList } from '@clixpesa/native-base';
+import { Box, Text, Icon, FlatList, Spinner } from '@clixpesa/native-base';
 import { useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
@@ -22,6 +22,21 @@ export default function RoscaHomeScreen({ navigation, route }) {
   const { roscaDetails } = useSelector((state) => state.spaces);
   const [refreshing, setRefreshing] = useState(false);
   const [transactions, setTransactions] = useState([]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: (props) => {
+        return (
+          <HeaderBackButton
+            {...props}
+            onPress={() => {
+              navigation.navigate('SpacesLanding', { screen: 'Home' });
+            }}
+          />
+        );
+      },
+    });
+  }, [navigation]);
 
   useEffect(() => {
     dispatch(getRoscaData(thisRosca.roscaAddress));
@@ -60,9 +75,6 @@ export default function RoscaHomeScreen({ navigation, route }) {
     if (txData) handleGetTransactions();
   }, [txData]);
 
-  const prog = (roscaDetails.roscaBal / roscaDetails.goalAmount) * 100;
-  const dueAmount = (roscaDetails.goalAmount * 1) / (roscaDetails.activeMembers * 1);
-
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -74,6 +86,9 @@ export default function RoscaHomeScreen({ navigation, route }) {
   }, []);
 
   let totalBalance = 0;
+  if (!roscaDetails.roscaBal) {
+    return <Spinner size="lg" />;
+  }
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
       <FlatList
@@ -90,8 +105,9 @@ export default function RoscaHomeScreen({ navigation, route }) {
               apprxBalance={(roscaDetails.roscaBal * 120.75).toFixed(2).toString()}
               btn1={{
                 icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
-                name: 'Fund Space',
-                screen: 'depositFunds',
+                name: 'Fund Rosca',
+                screen: 'fundRoscaRound',
+                screenParams: { roscaAddress: thisRosca.roscaAddress },
               }}
               btn2={{
                 icon: <Icon as={Feather} name="arrow-down" size="md" color="primary.600" mr="1" />,
@@ -107,7 +123,9 @@ export default function RoscaHomeScreen({ navigation, route }) {
             />
             <SectionHeader
               title={'Round No.' + roundDetails.roundNo}
-              actionText={'For: ' + roscaDetails.creator.slice(0, 6)}
+              actionText={
+                'For: Dekan' //+ roscaDetails.creator ? roscaDetails.creator.slice(0, 6) : 'Next'
+              }
               action={() => console.log('See all')}
             />
             <PotProgressCard

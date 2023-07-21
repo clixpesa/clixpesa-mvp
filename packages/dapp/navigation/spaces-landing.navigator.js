@@ -24,8 +24,8 @@ function SpacesLandingNavigator() {
         tabBarPressColor: '#ffffff',
       }}
     >
-      <Tab.Screen name="Groups" component={GroupsHomeScreen} />
       <Tab.Screen name="Personal" component={PersonalHomeScreen} />
+      <Tab.Screen name="Groups" component={GroupsHomeScreen} />
       <Tab.Screen name="Challenges" component={ChallengesHomeScreen} />
     </Tab.Navigator>
   );

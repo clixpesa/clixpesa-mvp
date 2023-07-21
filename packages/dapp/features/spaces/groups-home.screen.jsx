@@ -12,7 +12,6 @@ export default function GroupsHomeScreen() {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const myGroupsSpaces = useSelector((s) => s.spaces.userSpaces.roscas);
-
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -57,7 +56,7 @@ export default function GroupsHomeScreen() {
               }}
               itemBottom={false}
             />
-            {spaces.length > 0 ? (
+            {myGroupsSpaces.length > 0 ? (
               <SectionHeader
                 title="Spaces"
                 actionText="See all"

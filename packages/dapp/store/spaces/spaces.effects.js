@@ -30,7 +30,7 @@ export const spacesListeners = (startListening) => {
         creator: result.creator,
         roscaBal: utils.formatUnits(result.roscaBal.toString(), 18),
       };
-
+      console.log(roscaDetails);
       listenerApi.dispatch(setRoscaDetails(roscaDetails));
     },
   });
