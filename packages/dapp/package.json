@@ -10,7 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@clixpesa/native-base": "3.5.1",
+    "@clixpesa/native-base": "./clixpesa-native-base-3.5.1.tgz",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-community/datetimepicker": "6.7.3",
     "@react-navigation/bottom-tabs": "^6.5.7",
@@ -33,7 +33,7 @@
     "react-native-animatable": "^1.3.3",
     "react-native-dotenv": "^3.4.8",
     "react-native-gesture-handler": "~2.9.0",
-    "react-native-get-random-values": "~1.8.0",
+    "react-native-get-random-values": "~1.9.0",
     "react-native-pager-view": "6.1.2",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-remix-icon": "^0.4.0",
@@ -51,7 +51,19 @@
     "@types/react": "~18.0.27",
     "@types/react-native": "^0.71.6",
     "prettier": "^2.8.8",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "@react-native-aria/button": "./aria/button-0.2.5.tgz",
+    "@react-native-aria/checkbox": "./aria/checkbox-0.2.4.tgz",
+    "@react-native-aria/combobox": "./aria/combobox-0.2.4.tgz",
+    "@react-native-aria/focus": "./aria/focus-0.2.7.tgz",
+    "@react-native-aria/interactions": "./aria/interactions-0.2.9.tgz",
+    "@react-native-aria/listbox": "./aria/listbox-0.2.5.tgz",
+    "@react-native-aria/overlays": "./aria/overlays-0.3.6.tgz",
+    "@react-native-aria/radio": "./aria/radio-0.2.6.tgz",
+    "@react-native-aria/slider": "./aria/slider-0.2.6.tgz",
+    "@react-native-aria/tabs": "./aria/tabs-0.2.9.tgz",
+    "@react-native-aria/toggle": "./aria/toggle-0.2.4.tgz",
+    "@react-native-aria/utils": "./aria/utils-0.3.0.tgz"
   },
   "private": true
 }

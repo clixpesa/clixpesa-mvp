@@ -11,6 +11,9 @@ npm-debug.*
 *.orig.*
 web-build/
 
+aria/
+clixpesa-native-base-3.5.1.tgz
+
 # macOS
 .DS_Store
 eas.json
