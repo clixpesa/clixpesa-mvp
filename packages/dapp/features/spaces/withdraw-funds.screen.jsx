@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Box, Text, HStack, VStack, Input, Button, Icon } from '@clixpesa/native-base';
+import { Box, Text, HStack, VStack, Input, Button, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { withdrawFunds } from '../../store/spaces/spaces.slice';

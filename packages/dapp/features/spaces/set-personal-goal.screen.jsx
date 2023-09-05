@@ -1,15 +1,5 @@
 import { useState } from 'react';
-import {
-  Box,
-  Text,
-  VStack,
-  Button,
-  HStack,
-  Input,
-  Icon,
-  Stack,
-  Pressable,
-} from '@clixpesa/native-base';
+import { Box, Text, VStack, Button, HStack, Input, Icon, Stack, Pressable } from 'native-base';
 import { useDispatch } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons } from '@expo/vector-icons';

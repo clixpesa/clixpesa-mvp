@@ -1,4 +1,4 @@
-import { Box, VStack, Button, Heading, Spacer } from '@clixpesa/native-base';
+import { Box, VStack, Button, Heading, Spacer } from 'native-base';
 import { getWallets } from '@dapp/features/wallet/wallets-manager';
 export default function WelcomeScreen({ navigation }) {
   return (

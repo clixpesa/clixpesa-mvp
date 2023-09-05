@@ -1,12 +1,11 @@
-import { Box, Text, HStack, Icon, FlatList } from '@clixpesa/native-base';
-import { useState, useEffect, useCallback, useLayoutEffect } from 'react';
+import { Box, Icon, FlatList } from 'native-base';
+import { useState, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 
 import { SectionHeader, SpacesFeatureItem, FeatureHomeCard } from '@dapp/components';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateSpaces } from '@dapp/store/spaces/spaces.slice';
-import { rates, spaces } from '@dapp/data';
 
 export default function GroupsHomeScreen() {
   const dispatch = useDispatch();

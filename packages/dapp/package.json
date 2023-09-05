@@ -10,7 +10,6 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@clixpesa/native-base": "3.5.1",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-community/datetimepicker": "6.7.3",
     "@react-navigation/bottom-tabs": "^6.5.7",
@@ -27,13 +26,14 @@
     "expo-splash-screen": "~0.18.2",
     "expo-status-bar": "~1.4.4",
     "expo-updates": "~0.16.4",
+    "native-base": "3.4.28",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.8",
     "react-native-animatable": "^1.3.3",
     "react-native-dotenv": "^3.4.8",
     "react-native-gesture-handler": "~2.9.0",
-    "react-native-get-random-values": "~1.8.0",
+    "react-native-get-random-values": "~1.9.0",
     "react-native-pager-view": "6.1.2",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-remix-icon": "^0.4.0",

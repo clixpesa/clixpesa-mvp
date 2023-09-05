@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Text, HStack, VStack, Input, Button, Icon } from '@clixpesa/native-base';
+import { Box, Text, HStack, VStack, Input, Button, Icon } from 'native-base';
 import { useDispatch } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 

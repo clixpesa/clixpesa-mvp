@@ -1,4 +1,4 @@
-import { Box, Text, Icon, FlatList, Spinner } from '@clixpesa/native-base';
+import { Box, Icon, FlatList, Spinner } from 'native-base';
 import { useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
@@ -9,7 +9,7 @@ import {
   RoscaFeatureCard,
   PotProgressCard,
 } from '@dapp/components';
-import { roundDetails, transactions, rates } from '@dapp/data';
+import { roundDetails, rates } from '@dapp/data';
 import { getRoscaData } from '@dapp/store/spaces/spaces.slice';
 import { useGetTokenTransfersQuery } from '@dapp/services/blockscout';
 import { useSelector, useDispatch } from 'react-redux';
