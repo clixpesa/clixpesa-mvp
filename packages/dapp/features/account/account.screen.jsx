@@ -1,4 +1,4 @@
-import { Text, Box } from '@clixpesa/native-base';
+import { Text, Box } from 'native-base';
 
 const AccountScreen = () => (
   <Box flex={1} bg="primary.100" alignItems="center" justifyContent="center">

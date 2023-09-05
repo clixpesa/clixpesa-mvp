@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Box, HStack, FormControl, Stack, Input, Button, Image } from '@clixpesa/native-base';
+import { Box, HStack, FormControl, Stack, Input, Button, Image } from 'native-base';
 
 import { setSpaceName } from '../../store/spaces/spaces.slice';
 

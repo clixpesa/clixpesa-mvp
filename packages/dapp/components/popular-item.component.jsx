@@ -9,7 +9,7 @@ import {
   HStack,
   Box,
   Icon,
-} from '@clixpesa/native-base';
+} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 

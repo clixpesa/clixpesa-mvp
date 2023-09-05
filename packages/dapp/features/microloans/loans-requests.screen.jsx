@@ -1,10 +1,9 @@
-import { Box, Text, VStack, Stack, Icon, FlatList, Spacer, Button } from '@clixpesa/native-base';
+import { Box, VStack, Stack, FlatList, Spacer, Button } from 'native-base';
 import { useState, useCallback } from 'react';
-import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 
-import { SectionHeader, LoansOfferItem, FeatureHomeCard } from '@dapp/components';
-import { rates, LoansData } from '@dapp/data';
+import { LoansOfferItem } from '@dapp/components';
+import { LoansData } from '@dapp/data';
 
 export default function LoanRequestsScreen() {
   const [refreshing, setRefreshing] = useState(false);

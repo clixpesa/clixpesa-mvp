@@ -1,4 +1,4 @@
-import { Button, Text } from '@clixpesa/native-base';
+import { Button, Text } from 'native-base';
 
 const SpareChange = ({ item, action }) => {
   const { spareChange, selected } = item;

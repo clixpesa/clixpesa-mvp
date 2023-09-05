@@ -11,7 +11,7 @@ import {
   Button,
   Pressable,
   FlatList,
-} from '@clixpesa/native-base';
+} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { useDispatch } from 'react-redux';

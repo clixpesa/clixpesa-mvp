@@ -1,4 +1,4 @@
-import { Box, HStack, Stack, Text, VStack } from '@clixpesa/native-base';
+import { Box, HStack, Stack, Text, VStack } from 'native-base';
 import { TokenIcon } from '@dapp/components';
 import { NativeTokensByAddress } from './tokens';
 import { useSelector } from 'react-redux';
