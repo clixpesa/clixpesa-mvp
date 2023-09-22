@@ -12,7 +12,7 @@ import {
   useDisclose,
 } from 'native-base';
 import { Feather } from '@expo/vector-icons';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { utils } from 'ethers';
 import { smartContractCall } from '@dapp/blockchain/blockchainHelper';
@@ -39,7 +39,6 @@ export default function FundRoscaRoundScreen({ route }) {
         methodType: 'write',
         params: [fundAmount],
       });
-      //console.log(txReceipt)
       handleTxReceipt(txReceipt);
     } catch (error) {
       console.log(error);

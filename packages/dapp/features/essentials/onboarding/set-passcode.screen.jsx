@@ -9,7 +9,7 @@ import { saltyPasscode } from '@dapp/utils/encryption';
 import { createWallet, importWallet } from '@dapp/store/wallet/wallet.slice';
 import { pendingWallet } from '@dapp/features/wallet/pending-wallet';
 
-export default function SetPasscodeScreen({ navigation }) {
+export default function SetPasscodeScreen() {
   const dispatch = useDispatch();
   const [code1, setCode1] = useState('');
   const [code2, setCode2] = useState('');

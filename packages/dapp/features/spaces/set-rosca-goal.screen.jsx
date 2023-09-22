@@ -15,12 +15,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 
-import {
-  setCtbSchedule,
-  setDisbSchedule,
-  setGoalAmount,
-  setUserSpaces,
-} from '@dapp/store/spaces/spaces.slice';
+import { setCtbSchedule, setDisbSchedule, setGoalAmount } from '@dapp/store/spaces/spaces.slice';
 import { smartContractCall } from '@dapp/blockchain/blockchainHelper';
 import { config } from '@dapp/blockchain/config';
 import { NativeTokens } from '@dapp/features/wallet/tokens';

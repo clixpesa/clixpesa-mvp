@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { withdrawFunds } from '../../store/spaces/spaces.slice';
 
-const WithdrawFundsScreen = ({ navigation }) => {
+export default function WithdrawFundsScreen({ navigation }) {
   const [amount, setAmount] = useState('');
   const dispatch = useDispatch();
 
@@ -68,6 +68,4 @@ const WithdrawFundsScreen = ({ navigation }) => {
       </Box>
     </Box>
   );
-};
-
-export default WithdrawFundsScreen;
+}

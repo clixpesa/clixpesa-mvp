@@ -5,7 +5,7 @@ import Icon from 'react-native-remix-icon';
 import SpareChange from '../../components/spare-change.component';
 import { spareChangeList } from '../../data';
 
-const SpareChangeScreen = ({ navigation }) => {
+export default function SpareChangeScreen({ navigation }) {
   const [spareChange, setSpareChange] = useState(spareChangeList);
 
   return (
@@ -74,6 +74,4 @@ const SpareChangeScreen = ({ navigation }) => {
       </Box>
     </Box>
   );
-};
-
-export default SpareChangeScreen;
+}

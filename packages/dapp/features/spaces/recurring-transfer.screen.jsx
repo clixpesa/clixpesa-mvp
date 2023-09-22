@@ -19,7 +19,7 @@ import { addRecurringTransfer } from '../../store/spaces/spaces.slice';
 
 const Divider = () => <Box w="100%" h={0.5} bg="muted.200" />;
 
-const RecurringTransferScreen = ({ navigation }) => {
+export default function RecurringTransferScreen({ navigation }) {
   const [amount, setAmount] = useState('');
   const [schedule, setSchedule] = useState({
     repeat: 'Weekly',
@@ -146,6 +146,4 @@ const RecurringTransferScreen = ({ navigation }) => {
       </Actionsheet>
     </Box>
   );
-};
-
-export default RecurringTransferScreen;
+}

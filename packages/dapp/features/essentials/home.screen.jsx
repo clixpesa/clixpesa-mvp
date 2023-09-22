@@ -6,14 +6,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NativeTokensByAddress } from '@dapp/features/wallet/tokens';
 import { fetchBalances } from '@dapp/store/wallet/wallet.slice';
 import { useGetTokenTransfersQuery } from '@dapp/services/blockscout';
-import { useGetLatestNewsQuery } from '@dapp/services/newsdata';
 import { shortenAddress, areAddressesEqual } from '@dapp/utils/addresses';
 import { utils } from 'ethers';
 
 import { SectionHeader, TransactionItem, FeatureHomeCard } from '@dapp/components';
 import { rates } from '@dapp/data';
 
-const HomeScreen = (navigation) => {
+export default function HomeScreen() {
   const dispatch = useDispatch();
   const walletAddress = useSelector((s) => s.wallet.walletInfo.address);
   const balances = useSelector((s) => s.wallet.walletBalances.tokenAddrToValue);
@@ -150,6 +149,4 @@ const HomeScreen = (navigation) => {
       />
     </Box>
   );
-};
-
-export default HomeScreen;
+}

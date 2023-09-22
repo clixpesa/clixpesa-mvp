@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { addFunds } from '../../store/spaces/spaces.slice';
 
-const AddFundsScreen = ({ navigation }) => {
+export default function AddFundsScreen({ navigation }) {
   const [amount, setAmount] = useState('');
   const dispatch = useDispatch();
 
@@ -68,6 +68,4 @@ const AddFundsScreen = ({ navigation }) => {
       </Box>
     </Box>
   );
-};
-
-export default AddFundsScreen;
+}
