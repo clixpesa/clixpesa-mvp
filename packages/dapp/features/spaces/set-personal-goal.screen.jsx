@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { setGoalAmount, setGoalDeadline } from '../../store/spaces/spaces.slice';
 
-const SetPersonalGoalScreen = ({ navigation, route }) => {
+export default function SetPersonalGoalScreen({ navigation, route }) {
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(null);
   const [mode, setMode] = useState('date');
@@ -118,6 +118,4 @@ const SetPersonalGoalScreen = ({ navigation, route }) => {
       </Stack>
     </Box>
   );
-};
-
-export default SetPersonalGoalScreen;
+}

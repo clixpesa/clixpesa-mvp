@@ -8,11 +8,10 @@ import {
   LoansFeatureItem,
   RoscaFeatureCard,
   LoansOfferItem,
-  PotProgressCard,
 } from '@dapp/components';
-import { LoansData, LoanOffers, LoanRequests, transactions, rates } from '@dapp/data';
+import { LoansData } from '@dapp/data';
 
-export default function RoscaHomeScreen() {
+export default function RoscaLoansScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));

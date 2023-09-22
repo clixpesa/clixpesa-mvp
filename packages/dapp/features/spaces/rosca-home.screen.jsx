@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { utils } from 'ethers';
 import { areAddressesEqual, shortenAddress } from '@dapp/utils/addresses';
 
-export default function RoscaHomeScreen({ navigation, route }) {
+export default function RoscaHomeScreen({ navigation }) {
   const thisRosca = useSelector((s) => s.spaces.thisRosca); //route.params.roscaAddress;
   const dispatch = useDispatch();
   const { roscaDetails } = useSelector((state) => state.spaces);

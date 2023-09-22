@@ -4,7 +4,7 @@ import { Box, HStack, FormControl, Stack, Input, Button, Image } from 'native-ba
 
 import { setSpaceName } from '../../store/spaces/spaces.slice';
 
-const CustomizePersonalScreen = ({ navigation, route }) => {
+export default function CustomizePersonalScreen({ navigation, route }) {
   const suggestions = ['Savings', 'Vacation', 'Chama', 'Gift', 'Sherehe', 'Emergency', 'Masomo'];
   const [name, setName] = useState('');
 
@@ -89,6 +89,4 @@ const CustomizePersonalScreen = ({ navigation, route }) => {
       </FormControl>
     </Box>
   );
-};
-
-export default CustomizePersonalScreen;
+}

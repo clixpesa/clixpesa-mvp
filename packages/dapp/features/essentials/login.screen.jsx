@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { setLoggedIn } from '@dapp/store/essential/essential.slice';
 import { saltyPasscode } from '@dapp/utils/encryption';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
   const dispatch = useDispatch();
   const { names, initials, userToken } = useSelector((s) => s.essential.userDetails);
   const firstName = names.split(' ')[0];

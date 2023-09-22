@@ -3,15 +3,10 @@ import { useState, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 
-import {
-  SectionHeader,
-  TransactionItem,
-  RoscaFeatureCard,
-  PocketsFeatureItem,
-} from '@dapp/components';
-import { roundDetails, transactions, rates, pockets } from '@dapp/data';
+import { SectionHeader, RoscaFeatureCard, PocketsFeatureItem } from '@dapp/components';
+import { transactions, pockets } from '@dapp/data';
 
-export default function RoscaHomeScreen() {
+export default function RoscaPocketsScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
