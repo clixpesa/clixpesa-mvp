@@ -5,7 +5,7 @@ export default function WelcomeScreen({ navigation }) {
     <Box flex={1} bg="#fff" alignItems="center" justifyContent="flex-end">
       <Box width="75%" mt="3/4">
         <Heading textAlign="center" color="coolGray.700">
-          Step into the future of money with us Clixpesa
+          Step into the future of money with Clixpesa
         </Heading>
       </Box>
       <Spacer />
@@ -15,7 +15,7 @@ export default function WelcomeScreen({ navigation }) {
           pr="4"
           minW="75%"
           _text={{ fontWeight: 'semibold', mb: '0.5' }}
-          onPress={() => navigation.navigate('getUserDetails')}
+          onPress={() => navigation.navigate('signup')}
         >
           Create New Account
         </Button>

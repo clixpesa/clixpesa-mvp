@@ -1,1 +1,1 @@
-//Nothing here yet
+export { default as CodeInput } from './code-input.component';

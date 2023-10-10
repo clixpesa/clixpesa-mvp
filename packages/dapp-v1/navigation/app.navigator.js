@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 //Screens
-import { HomeScreen, DummyScreen, AccountScreen } from '@dapp/essentials';
+import { HomeScreen, DummyScreen, AccountScreen } from 'dapp/essentials';
 
 const AppStack = createNativeStackNavigator();
 

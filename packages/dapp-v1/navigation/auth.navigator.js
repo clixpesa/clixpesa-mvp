@@ -5,13 +5,14 @@ import { useSelector } from 'react-redux';
 import {
   WelcomeScreen,
   DummyScreen,
+  SignUpScreen,
+  VerificationScreen,
+  SetPasscodeScreen,
   //UserDetailsScreen,
   //LoginScreen,
-  //VerificationScreen,
-  //SetPasscodeScreen,
   //StagingScreen,
   //ImportWalletScreen,
-} from '@dapp/essentials';
+} from 'dapp/essentials';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -35,10 +36,10 @@ export function AuthNavigator() {
           component={DummyScreen}
           options={{ headerTitle: 'Comming Soon' }}
         />
-        {/*<AuthStack.Screen
-          name="getUserDetails"
-          component={UserDetailsScreen}
-          options={{ headerTitle: 'Your Details' }}
+        <AuthStack.Screen
+          name="signup"
+          component={SignUpScreen}
+          options={{ headerTitle: 'Sign Up' }}
         />
         <AuthStack.Screen
           name="verifyPhoneNo"
@@ -48,8 +49,15 @@ export function AuthNavigator() {
         <AuthStack.Screen
           name="setPasscode"
           component={SetPasscodeScreen}
-          options={{ headerTitle: 'Set a Passcode' }}
+          options={{ headerTitle: 'Set Passcode' }}
         />
+        {/*<AuthStack.Screen
+          name="getUserDetails"
+          component={UserDetailsScreen}
+          options={{ headerTitle: 'Your Details' }}
+        />
+        
+        
         <AuthStack.Screen
           name="Staging"
           component={StagingScreen}
