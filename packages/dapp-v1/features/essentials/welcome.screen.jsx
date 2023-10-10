@@ -5,7 +5,7 @@ export default function WelcomeScreen({ navigation }) {
     <Box flex={1} bg="#fff" alignItems="center" justifyContent="flex-end">
       <Box width="75%" mt="3/4">
         <Heading textAlign="center" color="coolGray.700">
-          Step into the future of money with Outre Finance
+          Step into the future of money with us Clixpesa
         </Heading>
       </Box>
       <Spacer />

@@ -1,4 +1,4 @@
-module.exports = function(api) {
+module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo', ['@babel/preset-env', { targets: { node: 'current' } }]],
@@ -11,7 +11,7 @@ module.exports = function(api) {
             '@dapp/components': './components',
             '@dapp/config': './config',
             '@dapp/contracts': './contracts',
-            '@dapp/essentials': './features/esentials',
+            '@dapp/essentials': './features/essentials',
             '@dapp/services': './services',
             '@dapp/store': './store',
             '@dapp/utils': './utils',
