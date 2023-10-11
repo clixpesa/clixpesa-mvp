@@ -8,9 +8,9 @@ import {
   SignUpScreen,
   VerificationScreen,
   SetPasscodeScreen,
+  StagingScreen,
   //UserDetailsScreen,
   //LoginScreen,
-  //StagingScreen,
   //ImportWalletScreen,
 } from 'dapp/essentials';
 
@@ -51,6 +51,11 @@ export function AuthNavigator() {
           component={SetPasscodeScreen}
           options={{ headerTitle: 'Set Passcode' }}
         />
+        <AuthStack.Screen
+          name="Staging"
+          component={StagingScreen}
+          options={{ headerShown: false }}
+        />
         {/*<AuthStack.Screen
           name="getUserDetails"
           component={UserDetailsScreen}
@@ -58,11 +63,7 @@ export function AuthNavigator() {
         />
         
         
-        <AuthStack.Screen
-          name="Staging"
-          component={StagingScreen}
-          options={{ headerShown: false }}
-        />
+        
         <AuthStack.Screen
           name="importWallet"
           component={ImportWalletScreen}

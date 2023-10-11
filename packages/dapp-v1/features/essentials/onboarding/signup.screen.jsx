@@ -38,7 +38,7 @@ export default function SignUpScreen({ navigation }) {
     validateNo();
     if (isInvalid) {
       const phoneNumber = parsePhoneNumberFromString(phoneNo, country);
-      console.log(phoneNumber);
+      //console.log(phoneNumber);
       navigation.navigate('verifyPhoneNo', { phone: phoneNumber.number });
     }
   };

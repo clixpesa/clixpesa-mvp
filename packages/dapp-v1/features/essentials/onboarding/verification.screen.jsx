@@ -1,33 +1,18 @@
 import { Box, HStack, Pressable, Text, VStack, Spacer, Button } from 'native-base';
-import { CodeInput } from 'dapp/components';
+import { CodeInput, ResendTimer } from 'dapp/components';
 import { useEffect, useState, useRef } from 'react';
 
 export default function VerificationScreen({ navigation, route }) {
   const phoneNumber = route.params.phone;
   const [code, setCode] = useState('');
-  const [timer, setTimer] = useState(55);
-  const timerRef = useRef(timer);
   const [isLoading, setIsLoading] = useState(false);
   const [isAutoFill, setIsAutoFill] = useState(false);
   const verCode = '786624';
   //TODO Check why codeState is not up todate on done loopCode
 
   useEffect(() => {
-    const timerId = setInterval(() => {
-      timerRef.current -= 1;
-      if (timerRef.current < 0) {
-        clearInterval(timerId);
-      } else {
-        setTimer(timerRef.current);
-      }
-    }, 1000);
-    return () => {
-      clearInterval(timerId);
-    };
-  }, []);
-
-  useEffect(() => {
     setIsAutoFill(true);
+    setCode('');
     let i = 0;
     function loopCode() {
       setTimeout(function () {
@@ -55,10 +40,10 @@ export default function VerificationScreen({ navigation, route }) {
   const handleAutoFullFill = (code) => {
     setIsLoading(false);
     setIsAutoFill(false);
-    if (code === verCode) {
-      //code is not same?!
-      navigation.navigate('setPasscode');
-    }
+    //if (code === verCode) {
+    //code is not same?!
+    navigation.navigate('setPasscode');
+    //}
   };
 
   return (
@@ -77,31 +62,7 @@ export default function VerificationScreen({ navigation, route }) {
             onFulfill={(code) => handleOnFullFill(code)}
           />
         </Box>
-        <HStack>
-          <Text
-            bg="primary.100"
-            color="primary.600"
-            fontWeight="medium"
-            px={3}
-            py={1}
-            borderRadius={8}
-          >
-            New OTP will be sent in {timer}s
-          </Text>
-          <Spacer />
-          <Pressable onPress={() => console.log('Sent another text')}>
-            <Text
-              bg="primary.600"
-              color="primary.100"
-              fontWeight="medium"
-              p={2}
-              pt={1}
-              borderRadius={8}
-            >
-              Send another
-            </Text>
-          </Pressable>
-        </HStack>
+        <ResendTimer seconds={55} onResend={() => handleAutoFullFill()} />
       </VStack>
       <Spacer />
       <Button

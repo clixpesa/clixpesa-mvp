@@ -1,5 +1,5 @@
 import { Box, VStack, Spinner, Text } from 'native-base';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CodeInput } from 'dapp/components';
 import { PIN_BLOCKLIST } from 'dapp/config/constants';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ export default function SetPasscodeScreen({ navigation }) {
   const [code2, setCode2] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const pendingWallet = false;
 
   const handleOnSucess = (code) => {
@@ -22,12 +23,12 @@ export default function SetPasscodeScreen({ navigation }) {
       console.log('Is Pending Wallet');
       //dispatch(createAccount());
       //dispatch(importWallet(code));
-      //navigation.navigate('Staging');
+      setIsSuccess(true);
     } else {
       console.log('creating wallet');
       //dispatch(createAccount());
       //dispatch(createWallet(code));
-      //navigation.navigate('Staging');
+      setIsSuccess(true);
     }
   };
 
@@ -45,7 +46,7 @@ export default function SetPasscodeScreen({ navigation }) {
       console.log('Pin session is done');
       handleOnSucess(code);
       setCode1('');
-      setCode2('');
+      //setCode2('');
       setIsLoading(true);
       setIsVerifying(false);
     } else {
@@ -54,48 +55,63 @@ export default function SetPasscodeScreen({ navigation }) {
     }
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      navigation.navigate('Staging');
+    }
+  }, [isSuccess]);
+
   return (
     <Box flex={1} bg="muted.50" justifyContent="center">
-      {isVerifying ? (
-        <Box>
-          <Box mx="10">
-            <Text fontSize="md" mb="3">
-              Re-enter the passcode
-            </Text>
-            <Text mb="3">Please input the passcode again to confirm.</Text>
-            <CodeInput
-              value={code2}
-              autoFocus={true}
-              password={true}
-              onTextChange={(code) => setCode2(code)}
-              onFulfill={(code) => onFullCode2(code)}
-            />
-          </Box>
-
-          <Text fontSize="xs" mx="10" mt="5">
-            You will use this passcode to authorize transactions and sign into your account. Please
-            keep it safe.
-          </Text>
-        </Box>
+      {isLoading ? (
+        <VStack mx="20" space={3} alignItems="center">
+          <Spinner size="lg" />
+          <Text fontSize="md">Loading Account...</Text>
+        </VStack>
       ) : (
-        <Box>
-          <Box mx="10">
-            <Text fontSize="md" mb="3">
-              Set a passcode
-            </Text>
-            <Text mb="3">
-              You will use this passcode to authorize transactions and sign into you account. Please
-              keep it safe.
-            </Text>
-            <CodeInput
-              value={code1}
-              password={true}
-              autoFocus={true}
-              onTextChange={(code) => setCode1(code)}
-              onFulfill={(code) => onFullCode1(code)}
-            />
-          </Box>
-        </Box>
+        <>
+          {isVerifying ? (
+            <Box>
+              <Box mx="10">
+                <Text fontSize="md" mb="3">
+                  Re-enter the passcode
+                </Text>
+                <Text mb="3">Please input the passcode again to confirm.</Text>
+                <CodeInput
+                  value={code2}
+                  autoFocus={true}
+                  password={true}
+                  onTextChange={(code) => setCode2(code)}
+                  onFulfill={(code) => onFullCode2(code)}
+                />
+              </Box>
+
+              <Text fontSize="xs" mx="10" mt="5">
+                You will use this passcode to authorize transactions and sign into your account.
+                Please keep it safe.
+              </Text>
+            </Box>
+          ) : (
+            <Box>
+              <Box mx="10">
+                <Text fontSize="md" mb="3">
+                  Set a passcode
+                </Text>
+                <Text mb="3">
+                  You will use this passcode to authorize transactions and sign into your account.
+                  Please keep it safe.
+                </Text>
+                <CodeInput
+                  value={code1}
+                  password={true}
+                  autoFocus={true}
+                  onTextChange={(code) => setCode1(code)}
+                  onFulfill={(code) => onFullCode1(code)}
+                />
+              </Box>
+            </Box>
+          )}
+        </>
       )}
     </Box>
   );
