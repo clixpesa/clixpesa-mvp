@@ -7,9 +7,9 @@ export default function VerificationScreen({ navigation, route }) {
   const [code, setCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isAutoFill, setIsAutoFill] = useState(false);
-  const verCode = '786624';
+  const verCode = '223344';
   //TODO Check why codeState is not up todate on done loopCode
-
+  /*
   useEffect(() => {
     setIsAutoFill(true);
     setCode('');
@@ -27,13 +27,14 @@ export default function VerificationScreen({ navigation, route }) {
     }
     loopCode();
     setIsLoading(true);
-  }, []);
+  }, []);*/
 
-  const handleOnFullFill = (code) => {
+  const handleOnFullFill = async (code) => {
     setIsLoading(false);
-    if (code === verCode) {
-      console.log('code is same');
-      navigation.navigate('setPasscode');
+    try {
+      await route.params.confirm.confirm(code);
+    } catch (error) {
+      console.log('Invalid code.');
     }
   };
 

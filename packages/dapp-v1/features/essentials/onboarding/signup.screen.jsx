@@ -19,27 +19,30 @@ import {
   isValidPhoneNumber,
   parsePhoneNumberFromString,
 } from 'libphonenumber-js';
+import auth from '@react-native-firebase/auth';
 
 export default function SignUpScreen({ navigation }) {
   const [phoneNo, setPhoneNo] = useState('');
-  const [isInvalid, setIsInvalid] = useState(true);
+  const [isInvalid, setIsInvalid] = useState(false);
   const [country, setCountry] = useState('KE');
+  const [confirm, setConfirm] = useState(null);
 
   const validateNo = () => {
     if (isPossiblePhoneNumber(phoneNo, country) && isValidPhoneNumber(phoneNo, country)) {
-      setIsInvalid(true);
+      setIsInvalid(false);
     } else {
       console.log('invalid');
-      setIsInvalid(false);
+      setIsInvalid(true);
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     validateNo();
-    if (isInvalid) {
+    if (!isInvalid) {
       const phoneNumber = parsePhoneNumberFromString(phoneNo, country);
-      //console.log(phoneNumber);
-      navigation.navigate('verifyPhoneNo', { phone: phoneNumber.number });
+      const confirmation = await auth().signInWithPhoneNumber(phoneNumber.number);
+      setConfirm(confirmation);
+      navigation.navigate('verifyPhoneNo', { phone: phoneNumber.number, confirm: confirmation });
     }
   };
 
@@ -75,7 +78,7 @@ export default function SignUpScreen({ navigation }) {
               onEndEditing={() => validateNo()}
             />
             <FormControl.ErrorMessage
-              isInvalid={!isInvalid}
+              isInvalid={isInvalid}
               leftIcon={<WarningOutlineIcon size="xs" />}
             >
               Please enter a valid phone number
