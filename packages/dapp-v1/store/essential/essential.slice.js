@@ -9,11 +9,14 @@ const initialState = {
   isAgreedToTerms: false,
   hasAccount: false,
   userDetails: {
+    id: null,
     names: null,
     initials: null,
+    email: null,
     phone: '',
     country: null,
     address: null,
+    photo: null,
   },
 };
 
@@ -25,11 +28,20 @@ const essentialSlice = createSlice({
       state.isLoggedIn = action.payload;
     },
     setUserDetails: (state, { payload }) => {
-      const { phoneNumber } = payload;
-      state.userDetails.phone = phoneNumber;
+      const { userId, userPhone, userNames, userEmail, userName, userPhoto } = payload;
+      state.userDetails.id = userId;
+      state.userDetails.phone = userPhone;
       const country = { '+254': 'Kenya', '+256': 'Uganda', '+255': 'Tanzania' };
-      state.userDetails.country = country[phoneNumber.slice(0, 4)];
-      state.userDetails.initials = phoneNumber.slice(11, 13)
+      state.userDetails.country = country[userPhone.slice(0, 4)];
+      if (userEmail) state.userDetails.email = userEmail;
+      if (userPhoto) state.userDetails.photo = userPhoto;
+      if (userName) {
+        state.userDetails.names = userNames;
+        const twonames = userNames.split(' ');
+        state.userDetails.initials = twonames[0].slice(0, 1) + twonames[1].slice(0, 1);
+      } else {
+        state.userDetails.initials = userPhone.slice(11, 13);
+      }
     },
     updateUserDetails: (state, { payload }) => {
       const { names, address } = payload;

@@ -4,6 +4,7 @@ import { userToken } from 'dapp/config/usertoken';
 import { storeUserDetails } from 'dapp/services';
 import { USER_STORE } from 'dapp/config/constants';
 //import { isKeySet, setSigner } from 'dapp/config/signer';
+import { addUser } from '../firestore/firestore.slice';
 
 export const essentialListeners = (startListening) => {
   startListening({
@@ -15,6 +16,7 @@ export const essentialListeners = (startListening) => {
         throw new Error('Problem getting user details');
       }
       await storeUserDetails(USER_STORE, userData);
+      listenerApi.dispatch(addUser());
     },
   });
   /*

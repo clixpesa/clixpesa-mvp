@@ -11,6 +11,7 @@ import {
   Pressable,
   Button,
   Icon,
+  useDisclose,
 } from 'native-base';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,12 +21,17 @@ import {
   parsePhoneNumberFromString,
 } from 'libphonenumber-js';
 import auth from '@react-native-firebase/auth';
+import { VerificationModal } from '../../../components';
 
 export default function SignUpScreen({ navigation }) {
   const [phoneNo, setPhoneNo] = useState('');
+  const [thisNo, setThisNo] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
   const [country, setCountry] = useState('KE');
   const [confirm, setConfirm] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclose();
+  const [code, setCode] = useState('');
 
   const validateNo = () => {
     if (isPossiblePhoneNumber(phoneNo, country) && isValidPhoneNumber(phoneNo, country)) {
@@ -39,13 +45,16 @@ export default function SignUpScreen({ navigation }) {
   const handleSubmit = async () => {
     validateNo();
     if (!isInvalid) {
+      setIsLoading(true);
       const phoneNumber = parsePhoneNumberFromString(phoneNo, country);
+      setThisNo(phoneNumber.number);
       const confirmation = await auth().signInWithPhoneNumber(phoneNumber.number);
       setConfirm(confirmation);
-      navigation.navigate('verifyPhoneNo', { phone: phoneNumber.number, confirm: confirmation });
+      onOpen();
+      setIsLoading(false);
+      //navigation.navigate('verifyPhoneNo', { phone: phoneNumber.number });
     }
   };
-
   return (
     <Box flex={1} bg="white" alignItems="center">
       <FormControl mt="1/6">
@@ -91,6 +100,7 @@ export default function SignUpScreen({ navigation }) {
             rounded="3xl"
             pr="4"
             minW="75%"
+            isLoading={isLoading}
             _text={{ fontWeight: 'semibold', mb: '0.5' }}
             onPress={() => handleSubmit()}
           >
@@ -112,6 +122,14 @@ export default function SignUpScreen({ navigation }) {
           </Button>
         </VStack>
       </FormControl>
+      <VerificationModal
+        isOpen={isOpen}
+        onClose={onClose}
+        phoneNumber={thisNo}
+        confirmation={confirm}
+        code={code}
+        setCode={setCode}
+      />
     </Box>
   );
 }

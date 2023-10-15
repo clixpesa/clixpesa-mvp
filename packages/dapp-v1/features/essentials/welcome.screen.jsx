@@ -1,6 +1,29 @@
 import { Box, VStack, Button, Heading, Spacer } from 'native-base';
+import firestore from '@react-native-firebase/firestore';
 
 export default function WelcomeScreen({ navigation }) {
+  const addUserDeatils = () => {
+    firestore()
+      .collection('Users')
+      .doc('XiIFItRYFtdM2VuARU4monKZKSw2')
+      .get()
+      .then((documentSnapshot) => {
+        console.log('User exists: ', documentSnapshot.exists);
+
+        if (documentSnapshot.exists) {
+          documentSnapshot.ref
+            .collection('Wallets')
+            .doc('wallet2')
+            .set({
+              address: '0x123456789',
+              bal: 30,
+            })
+            .then(() => {
+              console.log('Wallet added!');
+            });
+        }
+      });
+  };
   return (
     <Box flex={1} bg="#fff" alignItems="center" justifyContent="flex-end">
       <Box width="75%" mt="3/4">
@@ -25,7 +48,7 @@ export default function WelcomeScreen({ navigation }) {
           pr="4"
           minW="75%"
           _text={{ color: 'primary.700', fontWeight: 'semibold', mb: '0.5' }}
-          onPress={() => navigation.navigate('importWallet')}
+          onPress={() => addUserDeatils()} //navigation.navigate('importWallet')}
         >
           Use Existing Account
         </Button>

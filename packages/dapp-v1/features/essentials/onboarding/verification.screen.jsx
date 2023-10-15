@@ -1,6 +1,7 @@
 import { Box, HStack, Pressable, Text, VStack, Spacer, Button } from 'native-base';
 import { CodeInput, ResendTimer } from 'dapp/components';
 import { useEffect, useState, useRef } from 'react';
+import auth from '@react-native-firebase/auth';
 
 export default function VerificationScreen({ navigation, route }) {
   const phoneNumber = route.params.phone;
@@ -28,11 +29,12 @@ export default function VerificationScreen({ navigation, route }) {
     loopCode();
     setIsLoading(true);
   }, []);*/
-
   const handleOnFullFill = async (code) => {
     setIsLoading(false);
     try {
-      await route.params.confirm.confirm(code);
+      const res = await route.params.confirm.confirm(code);
+      console.log(res);
+      navigation.navigate('setPasscode');
     } catch (error) {
       console.log('Invalid code.');
     }

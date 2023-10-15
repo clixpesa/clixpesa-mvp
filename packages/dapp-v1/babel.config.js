@@ -12,6 +12,7 @@ module.exports = function (api) {
             'dapp/config': './config',
             'dapp/contracts': './contracts',
             'dapp/essentials': './features/essentials',
+            'dapp/wallet': './features/wallet',
             'dapp/services': './services',
             'dapp/store': './store',
             'dapp/utils': './utils',

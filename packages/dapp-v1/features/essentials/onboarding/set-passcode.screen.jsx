@@ -1,33 +1,36 @@
-import { Box, VStack, Spinner, Text } from 'native-base';
-import { useEffect, useState } from 'react';
+import { Box, VStack, Spinner, Text, Button } from 'native-base';
+import { useEffect, useState, useLayoutEffect } from 'react';
 import { CodeInput } from 'dapp/components';
 import { PIN_BLOCKLIST } from 'dapp/config/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserToken } from 'dapp/config/usertoken';
-//import { createWallet, importWallet } from '@dapp/store/wallet/wallet.slice';
-//import { createAccount } from '@dapp/store/essential/essential.slice';
-//import { pendingWallet } from '@dapp/features/wallet';
+import { createWallet, importWallet } from 'dapp/store/wallet/wallet.slice';
+import { createAccount } from 'dapp/store/essential/essential.slice';
+import { pendingWallet } from 'dapp/wallet';
 
 export default function SetPasscodeScreen({ navigation }) {
   const dispatch = useDispatch();
+  const userDetails = useSelector((state) => state.essential.userDetails);
   const [code1, setCode1] = useState('');
   const [code2, setCode2] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [renderCount, setRenderCount] = useState(0);
   const pendingWallet = false;
 
   const handleOnSucess = (code) => {
     setUserToken(code);
+
     if (pendingWallet) {
       console.log('Is Pending Wallet');
       //dispatch(createAccount());
       //dispatch(importWallet(code));
       setIsSuccess(true);
     } else {
-      console.log('creating wallet');
-      //dispatch(createAccount());
-      //dispatch(createWallet(code));
+      console.log('creating account');
+      dispatch(createAccount());
+      dispatch(createWallet(code));
       setIsSuccess(true);
     }
   };
@@ -42,12 +45,13 @@ export default function SetPasscodeScreen({ navigation }) {
     }
   };
   const onFullCode2 = (code) => {
+    console.log('Code 1: ' + code);
     if (code1 === code) {
       console.log('Pin session is done');
-      handleOnSucess(code);
+      setIsLoading(true);
+      handleOnSucess(code2);
       setCode1('');
       //setCode2('');
-      setIsLoading(true);
       setIsVerifying(false);
     } else {
       console.log('Pin does not match');
