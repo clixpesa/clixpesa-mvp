@@ -1,27 +1,73 @@
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { NativeBaseProvider } from 'native-base';
-//import auth from '@react-native-firebase/auth';
+import * as SplashScreen from 'expo-splash-screen';
+import auth from '@react-native-firebase/auth';
+import { useDispatch } from 'react-redux';
+//import { connectToProvider } from 'dapp/config/provider';
+import { USER_STORE, WALLETS_STORE } from 'dapp/config/constants';
+import { getUserDetails } from './services';
+import { setHasAccount, setUserDetails, setIsConnected } from './store/essential/essential.slice';
+import { updateWalletAddress } from './store/wallet/wallet.slice';
+import { setUserTokenFrom } from 'dapp/config/usertoken';
+import { setPrivateKey } from 'dapp/config/signer';
+import { getWallets } from 'dapp/wallet';
+import { decryptDataWtoken } from 'dapp/utils';
 
 import { theme } from './theme';
 import { Navigation } from './navigation';
 
 export default function App() {
-  /*function onAuthStateChanged(user) {
-    if (user) {
-      console.log('There is a user');
-    }
-  }
-
+  const [isReady, setIsReady] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {}, []);
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);*/
+    async function loadResourcesAndDataAsync() {
+      try {
+        SplashScreen.preventAutoHideAsync();
 
-  return (
-    <NativeBaseProvider theme={theme}>
-      <StatusBar style="auto" />
-      <Navigation />
-    </NativeBaseProvider>
-  );
+        auth().onAuthStateChanged(async (user) => {
+          if (user) {
+            const userDetails = await getUserDetails(USER_STORE);
+            const wallet = (await getWallets())[0];
+            if (userDetails.token && wallet) {
+              setUserTokenFrom(userDetails.token);
+              const key = await decryptDataWtoken(wallet.enPrivateKey, userDetails.token);
+              setPrivateKey(key);
+              dispatch(setHasAccount(true)); //Evaluate for stability
+              dispatch(
+                setUserDetails({
+                  userId: user.uid,
+                  userName: user.displayName,
+                  userEmail: user.email,
+                  userPhone: user.phoneNumber,
+                  userPhoto: user.photoURL,
+                }),
+              );
+              dispatch(updateWalletAddress(wallet.address));
+            }
+          } else {
+            dispatch(setIsConnected(false));
+          }
+        });
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setIsReady(true);
+        SplashScreen.hideAsync();
+      }
+    }
+    loadResourcesAndDataAsync();
+  }, []);
+
+  if (!isReady) {
+    return null;
+  } else {
+    return (
+      <NativeBaseProvider theme={theme}>
+        <StatusBar style="auto" />
+        <Navigation />
+      </NativeBaseProvider>
+    );
+  }
 }

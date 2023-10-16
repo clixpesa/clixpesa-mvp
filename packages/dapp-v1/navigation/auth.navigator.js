@@ -6,18 +6,19 @@ import {
   WelcomeScreen,
   DummyScreen,
   SignUpScreen,
+  RestoreScreen,
   VerificationScreen,
   SetPasscodeScreen,
   StagingScreen,
   //UserDetailsScreen,
-  //LoginScreen,
-  //ImportWalletScreen,
+  LoginScreen,
+  ImportWalletScreen,
 } from 'dapp/essentials';
 
 const AuthStack = createNativeStackNavigator();
 
 export function AuthNavigator() {
-  const hasAccount = false; //useSelector((s) => s.essential.hasAccount);
+  const hasAccount = useSelector((s) => s.essential.hasAccount);
   return (
     <AuthStack.Navigator initialRouteName="Welcome">
       {hasAccount ? (
@@ -42,6 +43,16 @@ export function AuthNavigator() {
           options={{ headerTitle: 'Sign Up' }}
         />
         <AuthStack.Screen
+          name="importWallet"
+          component={ImportWalletScreen}
+          options={{ headerTitle: 'Restore Account' }}
+        />
+        <AuthStack.Screen
+          name="restore"
+          component={RestoreScreen}
+          options={{ headerTitle: 'Link wallet' }}
+        />
+        <AuthStack.Screen
           name="verifyPhoneNo"
           component={VerificationScreen}
           options={{ headerTitle: 'Verification' }}
@@ -64,11 +75,7 @@ export function AuthNavigator() {
         
         
         
-        <AuthStack.Screen
-          name="importWallet"
-          component={ImportWalletScreen}
-          options={{ headerTitle: 'Restore Account' }}
-        />*/}
+        */}
       </AuthStack.Group>
     </AuthStack.Navigator>
   );

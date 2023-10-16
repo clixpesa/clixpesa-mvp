@@ -16,16 +16,14 @@ export default function SetPasscodeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [renderCount, setRenderCount] = useState(0);
-  const pendingWallet = false;
 
   const handleOnSucess = (code) => {
     setUserToken(code);
 
     if (pendingWallet) {
       console.log('Is Pending Wallet');
-      //dispatch(createAccount());
-      //dispatch(importWallet(code));
+      dispatch(createAccount());
+      dispatch(importWallet(code));
       setIsSuccess(true);
     } else {
       console.log('creating account');
@@ -49,7 +47,7 @@ export default function SetPasscodeScreen({ navigation }) {
     if (code1 === code) {
       console.log('Pin session is done');
       setIsLoading(true);
-      handleOnSucess(code2);
+      handleOnSucess(code);
       setCode1('');
       //setCode2('');
       setIsVerifying(false);
@@ -58,12 +56,6 @@ export default function SetPasscodeScreen({ navigation }) {
       setCode2('');
     }
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigation.navigate('Staging');
-    }
-  }, [isSuccess]);
 
   return (
     <Box flex={1} bg="muted.50" justifyContent="center">
