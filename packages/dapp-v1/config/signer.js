@@ -1,5 +1,5 @@
-//import { Wallet } from 'ethers';
-//import { isProviderSet, getProvider } from './provider';
+import { Wallet } from 'ethers';
+import { isProviderSet, getProvider } from './provider';
 
 // Note this is the wallet's local signer, not to be confused with
 // vote signers in the Accounts contract
@@ -25,7 +25,7 @@ export function getSigner() {
   }
   return signer;
 }
-/*
+
 export function setSigner() {
   if (!privateKey) {
     throw new Error('invalid Key');
@@ -42,7 +42,7 @@ export function setSigner() {
   const provider = getProvider();
   signer = new Wallet(privateKey, provider);
   console.log('Signer is set');
-}*/
+}
 
 export function clearSigner() {
   signer = undefined;

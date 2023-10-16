@@ -4,7 +4,7 @@ import { NativeBaseProvider } from 'native-base';
 import * as SplashScreen from 'expo-splash-screen';
 import auth from '@react-native-firebase/auth';
 import { useDispatch } from 'react-redux';
-//import { connectToProvider } from 'dapp/config/provider';
+import { connectToProvider } from 'dapp/config/provider';
 import { USER_STORE, WALLETS_STORE } from 'dapp/config/constants';
 import { getUserDetails } from './services';
 import { setHasAccount, setUserDetails, setIsConnected } from './store/essential/essential.slice';
@@ -20,7 +20,21 @@ import { Navigation } from './navigation';
 export default function App() {
   const [isReady, setIsReady] = useState(false);
   const dispatch = useDispatch();
-  useEffect(() => {}, []);
+  useEffect(() => {
+    //LogBox.ignoreAllLogs();
+  }, []);
+  useEffect(() => {
+    async function initProvider() {
+      try {
+        await connectToProvider();
+        dispatch(setIsConnected(true));
+      } catch (e) {
+        console.log('Unable to connect to provider', e);
+        dispatch(setIsConnected(false));
+      }
+    }
+    initProvider();
+  }, []);
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
