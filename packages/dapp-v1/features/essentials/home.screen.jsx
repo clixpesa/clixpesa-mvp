@@ -5,9 +5,9 @@ import { RefreshControl } from 'react-native';
 import { FeatureHomeCard, TransactionItem, SectionHeader, FeaturedAssets } from 'dapp/components';
 import { rates } from 'dapp/utils';
 import { useSelector } from 'react-redux';
-//import { getWalletBalances, getWalletTxs } from '../wallet/manager.wallet';
+import { getWalletBalances, getWalletTxs } from '../wallet/manager.wallet';
 //import { utils } from 'ethers';
-//import { useGetTxsByAddrQuery, useGetTokenTxsQuery } from 'dapp/services';
+import { useGetTxsByAddrQuery, useGetTokenTxsQuery } from 'dapp/services';
 
 export default function HomeScreen() {
   const thisAddress = useSelector((s) => s.wallet.walletInfo.address);
@@ -20,16 +20,26 @@ export default function HomeScreen() {
   const [transactions, setTransactions] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  //const { data: accountTxs, refetch: refetchTxs } = useGetTxsByAddrQuery(thisAddress);
-  //const { data: erc20Txs, refetch: refetchErc20Txs } = useGetTokenTxsQuery(thisAddress);
+  const {
+    data: accountTxs,
+    refetch: refetchTxs,
+    error: txError,
+    isLoading: txIsLoading,
+  } = useGetTxsByAddrQuery(thisAddress);
+  const {
+    data: erc20Txs,
+    refetch: refetchErc20Txs,
+    error: ercError,
+    isLoading: ercIsLoading,
+  } = useGetTokenTxsQuery(thisAddress);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    //refetchTxs();
-    //refetchErc20Txs();
+    refetchTxs();
+    refetchErc20Txs();
     setTimeout(() => setRefreshing(false), 2000);
   }, []);
-  /*
+
   useEffect(() => {
     const getBalances = async () => {
       const thisBalances = await getWalletBalances(isSignerSet, thisAddress);
@@ -48,9 +58,11 @@ export default function HomeScreen() {
   }, [thisAddress, refreshing]);
 
   useEffect(() => {
-    const thisTxs = getWalletTxs(accountTxs, erc20Txs, thisAddress);
-    setTransactions(thisTxs);
-  }, [accountTxs, erc20Txs]); */
+    if (!txIsLoading && !ercIsLoading) {
+      const thisTxs = getWalletTxs(accountTxs, erc20Txs, thisAddress);
+      setTransactions(thisTxs);
+    }
+  }, [accountTxs]);
 
   const handleOnPress = async () => {
     const thisTxs = getWalletTxs(accountTxs, erc20Txs, thisAddress);
@@ -62,7 +74,7 @@ export default function HomeScreen() {
       <FlatList
         width="95%"
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-        data={transactions}
+        data={transactions.slice(0, 7)}
         ListHeaderComponent={
           <Box mt="4">
             <FeatureHomeCard
@@ -93,7 +105,7 @@ export default function HomeScreen() {
               }}
               itemBottom={false}
             />
-            <SectionHeader title="Assets" actionText="See all" action={() => handleOnPress()} />
+            <SectionHeader title="Assets" action={() => handleOnPress()} />
             <FeaturedAssets nativeBal={balance.celoBal} stableBal={balance.cusdBal} />
             {transactions.length > 0 ? (
               <SectionHeader
@@ -120,8 +132,12 @@ export default function HomeScreen() {
               spAmount={
                 (item.credited ? '+' : '-') + (item.amount * 1).toFixed(2) + ' ' + item.token
               }
-              eqAmount={(item.amount * rates[item.token]).toFixed(2) + ' KES'}
-              screen="DummyModal"
+              eqAmount={
+                (item.amount * (item.token === 'CELO' ? rates.CELOKES : rates.CUSDKES)).toFixed(2) +
+                ' KES'
+              }
+              screen="TxDetails"
+              params={item}
             />
           </Box>
         )}

@@ -45,14 +45,14 @@ const FeatureHomeCard = ({
             ≈ {apprxBalance} KES
           </Text>
           <Divider my="2" minW="full" />
-          <HStack justifyContent="space-between">
+          {/*<HStack justifyContent="space-between">
             <Box minW="40%">
               <HStack justifyContent="space-between">
                 <Text color="gray.600" fontSize="sm" lineHeight="sm">
-                  Energy
+                  Celo
                 </Text>
                 <Text color="gray.600" fontSize="sm" lineHeight="sm">
-                  78K/88K
+                  $0.44 ^0.7%
                 </Text>
               </HStack>
               <Progress size="xs" value={88} mt={2} colorScheme="warning" bg="warning.100" />
@@ -60,15 +60,15 @@ const FeatureHomeCard = ({
             <Box minW="40%">
               <HStack justifyContent="space-between">
                 <Text color="gray.600" fontSize="sm" lineHeight="sm">
-                  Bandwidth
+                  cUSD
                 </Text>
                 <Text color="gray.600" fontSize="sm" lineHeight="sm">
-                  1.1K/2K
+                  $1.0 ^0.5%
                 </Text>
               </HStack>
               <Progress size="xs" value={55} mt={2} colorScheme="emerald" bg="emerald.100" />
             </Box>
-          </HStack>
+  </HStack>*/}
         </Stack>
       </HStack>
       {balance ? null : <Spinner right="1/2" top={10} position="absolute" size="lg" />}

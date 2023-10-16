@@ -7,13 +7,13 @@ const TransactionItem = (props) => {
   const initials =
     title.length > 1
       ? title[0].slice(0, 1) +
-        (title[1].slice(0, 1).toUpperCase() === 'U' ? '$' : title[1].slice(0, 1).toUpperCase())
+        (title[1].slice(0, 2).toUpperCase() === 'CU' ? '$' : title[1].slice(0, 1).toUpperCase())
       : title[0].slice(0, 2).toUpperCase();
   return (
-    <Pressable onPress={() => navigation.navigate(props.screen)}>
+    <Pressable onPress={() => navigation.navigate(props.screen, props.params)}>
       <HStack space={3} my={2} mx={3} alignItems="center">
         <Avatar
-          bg={props.credited ? 'primary.200' : 'orange.200'}
+          bg={props.credited ? 'primary.100' : 'orange.100'}
           _text={{ color: props.credited ? 'primary.800' : 'orange.800' }}
         >
           {initials}

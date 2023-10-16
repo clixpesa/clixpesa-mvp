@@ -3,7 +3,7 @@ import { setIsConnected, setLoggedIn, createAccount, setIsSignered } from './ess
 import { userToken } from 'dapp/config/usertoken';
 import { storeUserDetails } from 'dapp/services';
 import { USER_STORE } from 'dapp/config/constants';
-//import { isKeySet, setSigner } from 'dapp/config/signer';
+import { isKeySet, setSigner } from 'dapp/config/signer';
 import { addUser } from '../firestore/firestore.slice';
 
 export const essentialListeners = (startListening) => {
@@ -19,7 +19,7 @@ export const essentialListeners = (startListening) => {
       listenerApi.dispatch(addUser());
     },
   });
-  /*
+
   startListening({
     actionCreator: setLoggedIn,
     effect: async (action, listenerApi) => {
@@ -45,5 +45,5 @@ export const essentialListeners = (startListening) => {
         }
       }
     },
-  });*/
+  });
 };

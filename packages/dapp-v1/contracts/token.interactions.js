@@ -1,4 +1,4 @@
-import { stableToken } from '@dapp/config/appconfig';
+import { stableToken } from 'dapp/config/appconfig';
 import tokenAbi from 'dapp/config/abis/token.abi.json';
 import { Contract, utils } from 'ethers';
 import { getSigner } from 'dapp/config/signer';
