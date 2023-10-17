@@ -9,3 +9,6 @@ export { default as PersonalHomeScreen } from './personal-home.screen';
 export { default as GroupsHomeScreen } from './groups-home.screen';
 export { default as ChallengesHomeScreen } from './challenges-home.screen';
 export { default as FundRoscaRoundScreen } from './fund-rosca-round.screen';
+export { default as SetPersonalGoalScreen } from './set-personal-goal.screen';
+export { default as SpareChangeScreen } from './spare-change.screen';
+export { default as RecurringTransfer } from './recurring-transfer.screen';

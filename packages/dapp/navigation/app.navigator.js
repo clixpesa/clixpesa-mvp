@@ -4,8 +4,6 @@ import Icon from 'react-native-remix-icon';
 import { Box, Text, Avatar, Pressable, HStack } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 
-//import { SpacesNavigator } from './spaces.navigator';
-//import { LoansNavigator } from './loans.navigator';
 import { AccountNavigator } from './account.navigator';
 
 import { HomeScreen, DepositScreen } from '../features/essentials';
@@ -15,8 +13,12 @@ import {
   SelectContactsScreen,
   SetRoscaGoalScreen,
   FundRoscaRoundScreen,
+  SetPersonalGoalScreen,
+  SpareChangeScreen,
+  RecurringTransfer,
+  PersonalHomeScreen,
 } from '../features/spaces';
-import { LoansHomeScreen } from '../features/microloans';
+
 import RoscaTabsNavigator from './rosca-tabs.navigator';
 import LoansTabsNavigator from './loan-tabs.navigator';
 import SpacesLandingNavigator from './spaces-landing.navigator';
@@ -60,6 +62,37 @@ export const AppNavigator = () => {
             headerTitle: 'Invite Friends',
           }}
         />
+        <AppStack.Screen
+          name="spareChange"
+          component={SpareChangeScreen}
+          options={{
+            headerTitle: 'Spare change',
+          }}
+        />
+        <AppStack.Screen
+          name="setPersonalGoal"
+          component={SetPersonalGoalScreen}
+          options={{
+            headerTitle: 'Set Personal Goal',
+          }}
+        />
+
+        <AppStack.Screen
+          name="recurringTransfer"
+          component={RecurringTransfer}
+          options={{
+            headerTitle: 'Recurring transfer',
+          }}
+        />
+
+        <AppStack.Screen
+          name="personalHome"
+          component={PersonalHomeScreen}
+          options={{
+            headerTitle: 'Home',
+          }}
+        />
+
         <AppStack.Screen
           name="setRoscaGoal"
           component={SetRoscaGoalScreen}

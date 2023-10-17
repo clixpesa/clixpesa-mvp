@@ -13,7 +13,7 @@ const ScheduleActSheet = (props) => {
             Schedule
           </Text>
           <Text fontSize="md" color="muted.500">
-            {props.schedule.occurrence} on {props.schedule.day}
+            {props.schedule.occurrence} {props.schedule.day ? 'on' : ''} {props.schedule.day}
           </Text>
         </Box>
         <HStack space={3} m={3}>
@@ -22,7 +22,7 @@ const ScheduleActSheet = (props) => {
             rounded="3xl"
             w="25%"
             _text={{ color: 'text.600', fontWeight: 'semibold', mb: '0.5' }}
-            onPress={() => props.setSchedule({ day: 'every', occurrence: 'Daily' })}
+            onPress={() => props.setSchedule({ day: '', occurrence: 'Daily' })}
           >
             Daily
           </Button>
@@ -85,10 +85,10 @@ const ScheduleActSheet = (props) => {
         <Button
           variant="subtle"
           rounded="3xl"
-          bg="primary.100"
+          bg="primary.600"
+          _text={{ color: 'text.50', fontWeight: 'semibold', mb: '0.5' }}
           w="60%"
           my={3}
-          _text={{ color: 'text.900', fontWeight: 'semibold', mb: '0.5' }}
           onPress={() => {
             if (props.isSetCtb) {
               dispatch(props.setCtbSchedule(props.schedule));

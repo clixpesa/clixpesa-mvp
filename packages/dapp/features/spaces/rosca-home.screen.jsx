@@ -47,6 +47,7 @@ export default function RoscaHomeScreen({ navigation }) {
     error: txError,
     isLoading: txIsLoading,
   } = useGetTokenTransfersQuery(thisRosca.roscaAddress);
+
   const handleGetTransactions = () => {
     const thisTxs = [];
     const goodTxs = Array.prototype.filter.call(

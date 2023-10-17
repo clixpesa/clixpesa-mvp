@@ -67,6 +67,15 @@ const spacesSlice = createSlice({
       state.spaceInfo.goalAmount = payload;
       state.spaceInfo.ctbAmount = size ? payload / (state.spaceInfo.members.length + 1) : payload;
     },
+    setPersonalGoal: (state, { payload }) => {
+      state.personalSpace.goalAmount = payload;
+    },
+    setPersonalDeadline: (state, { payload }) => {
+      state.personalSpace.deadline = payload;
+    },
+    setRecurringTransfer: (state, { payload }) => {
+      state.personalSpace.recurringTransfer = payload;
+    },
     setUserSpaces: (state, { payload }) => {
       const roscas = payload.filter((s) => s.type === 'rosca');
       state.userSpaces.roscas = roscas;
@@ -86,6 +95,10 @@ export const {
   setCtbSchedule,
   setDisbSchedule,
   setGoalAmount,
+  setGoalDeadline,
+  setPersonalGoal,
+  setPersonalDeadline,
+  setRecurringTransfer,
   setUserSpaces,
   setRoscaDetails,
   setThisRosca,

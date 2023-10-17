@@ -8,6 +8,25 @@ import { spareChangeList } from '../../data';
 export default function SpareChangeScreen({ navigation }) {
   const [spareChange, setSpareChange] = useState(spareChangeList);
 
+  const handleSpareChangeSelection = (selectedItemId) => {
+    setSpareChange((prev) => {
+      const newSpareChange = prev.map((item) => {
+        if (item.id === selectedItemId) {
+          prev.forEach((i) => {
+            if (i.id !== selectedItemId) {
+              i.selected = false;
+            }
+          });
+        }
+        if (item.id === selectedItemId) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+      return newSpareChange;
+    });
+  };
+
   return (
     <Box flex={1} bg="muted.100" alignItems="center" p={4}>
       <Box w="100%" my={4} pl={4}>
@@ -40,35 +59,14 @@ export default function SpareChangeScreen({ navigation }) {
               <SpareChange
                 key={item.id}
                 item={item}
-                action={() =>
-                  setSpareChange((prev) => {
-                    const newSpareChange = prev.map((i) => {
-                      if (i.id === item.id) {
-                        prev.forEach((j) => {
-                          if (j.id !== item.id) {
-                            j.selected = false;
-                          }
-                        });
-                      }
-                      if (i.id === item.id) {
-                        return { ...i, selected: !i.selected };
-                      }
-                      return i;
-                    });
-                    return newSpareChange;
-                  })
-                }
+                action={() => handleSpareChangeSelection(item.id)}
               />
             ))}
           </HStack>
         </VStack>
       </VStack>
       <Box mt="60%" w="50%">
-        <Button
-          variant="subtle"
-          rounded="2xl"
-          onPress={() => navigation.navigate('RecurringTransfer')}
-        >
+        <Button rounded="2xl" onPress={() => navigation.navigate('recurringTransfer')}>
           Continue
         </Button>
       </Box>

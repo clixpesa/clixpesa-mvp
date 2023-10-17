@@ -4,29 +4,24 @@ import { useDispatch } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { setGoalAmount, setGoalDeadline } from '../../store/spaces/spaces.slice';
+import { setPersonalGoal, setPersonalDeadline } from '../../store/spaces/spaces.slice';
 
 export default function SetPersonalGoalScreen({ navigation, route }) {
   const [amount, setAmount] = useState('');
-  const [date, setDate] = useState(null);
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-
+  const [deadline, setDeadline] = useState(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const dispatch = useDispatch();
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(false);
-    setDate(currentDate);
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+
+    if (selectedDate) {
+      setDeadline(selectedDate);
+    }
   };
 
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
+  const showDatePickerModal = () => {
+    setShowDatePicker(true);
   };
 
   return (
@@ -61,19 +56,19 @@ export default function SetPersonalGoalScreen({ navigation, route }) {
         </HStack>
         <HStack justifyContent="space-between" bg="#fff" p={4} roundedTop="md" roundedBottom="2xl">
           <Text>Deadline</Text>
-          <Pressable onPress={showDatepicker}>
+          <Pressable onPress={showDatePickerModal}>
             <HStack space={2}>
               <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.700" />
-              <Text>{date ? date.toLocaleDateString() : 'Set'}</Text>
+              <Text>{deadline ? deadline.toLocaleDateString() : 'Set'}</Text>
             </HStack>
           </Pressable>
         </HStack>
-        {show && (
+        {showDatePicker && (
           <DateTimePicker
             testID="dateTimePicker"
-            value={date || new Date()}
-            mode={mode}
-            onChange={onChange}
+            value={deadline || new Date()}
+            mode="date"
+            onChange={handleDateChange}
           />
         )}
       </VStack>
@@ -83,7 +78,7 @@ export default function SetPersonalGoalScreen({ navigation, route }) {
             variant="subtle"
             rounded="3xl"
             _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-            onPress={() => navigation.navigate('SpareChange')}
+            onPress={() => navigation.navigate('spareChange')}
           >
             Skip
           </Button>
@@ -94,9 +89,9 @@ export default function SetPersonalGoalScreen({ navigation, route }) {
             rounded="3xl"
             _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
             onPress={() => {
-              navigation.navigate('SpareChange');
-              dispatch(setGoalAmount(parseFloat(amount)));
-              dispatch(setGoalDeadline(date.toISOString()));
+              navigation.navigate('spareChange');
+              dispatch(setPersonalGoal(parseFloat(amount)));
+              dispatch(setPersonalDeadline(deadline.toISOString()));
             }}
           >
             Continue
@@ -104,12 +99,12 @@ export default function SetPersonalGoalScreen({ navigation, route }) {
         ) : (
           <Button
             rounded="3xl"
-            isDisabled={!amount || !date}
+            isDisabled={!amount || !deadline}
             _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
             onPress={() => {
               navigation.navigate('Customize');
-              dispatch(setGoalAmount(parseFloat(amount)));
-              dispatch(setGoalDeadline(date.toISOString()));
+              dispatch(setPersonalGoal(parseFloat(amount)));
+              dispatch(setPersonalDeadline(deadline.toISOString()));
             }}
           >
             Save

@@ -9,6 +9,7 @@ export default function VerificationScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isAutoFill, setIsAutoFill] = useState(false);
   const verCode = '786624';
+
   //TODO Check why codeState is not up todate on done loopCode
   useEffect(() => {
     setIsAutoFill(true);

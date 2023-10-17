@@ -1,6 +1,5 @@
 import {
   Box,
-  Text,
   Image,
   FormControl,
   Stack,

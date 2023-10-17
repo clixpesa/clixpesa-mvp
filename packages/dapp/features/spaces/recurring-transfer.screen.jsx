@@ -15,7 +15,7 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { useDispatch } from 'react-redux';
-import { addRecurringTransfer } from '../../store/spaces/spaces.slice';
+import { setRecurringTransfer } from '../../store/spaces/spaces.slice';
 
 const Divider = () => <Box w="100%" h={0.5} bg="muted.200" />;
 
@@ -79,8 +79,8 @@ export default function RecurringTransferScreen({ navigation }) {
           variant="solid"
           rounded="2xl"
           onPress={() => {
-            dispatch(addRecurringTransfer(parseFloat(amount)));
-            navigation.navigate('PersonalHome');
+            dispatch(setRecurringTransfer(parseFloat(amount)));
+            navigation.navigate('personalHome');
           }}
         >
           Confirm
@@ -138,7 +138,7 @@ export default function RecurringTransferScreen({ navigation }) {
           </Box>
 
           <Box w="60%" px={4} justifyContent="center" m={2}>
-            <Button variant="subtle" rounded="2xl" onPress={() => onClose()}>
+            <Button rounded="3xl" onPress={() => onClose()}>
               Set
             </Button>
           </Box>
