@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Box, HStack, Text, Avatar, VStack, FlatList, Button } from 'native-base';
+import { Box, HStack, Text, VStack, FlatList, Button, ScrollView, useToast } from 'native-base';
+import { TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import * as Contacts from 'expo-contacts';
-import { TouchableOpacity } from 'react-native';
+
+import { Contact, SelectedContact } from '@dapp/components';
 import { setSelectedMembers } from '@dapp/store/spaces/spaces.slice';
 
-//TODO! Maintain unique selctions
-//TODO! Handle submissions.
+//TODO! Handle submissions
 
 export default function SelectContactsScreen({ navigation }) {
-  const dispatch = useDispatch();
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [contactList, setContactList] = useState();
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  const showToast = () => {
+    toast.show({
+      description: 'At least 1 contact must be selected',
+      duration: 2000,
+      placement: 'top',
+    });
+  };
+
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
@@ -28,105 +39,103 @@ export default function SelectContactsScreen({ navigation }) {
     })();
   }, []);
 
-  const handleSelected = (selected) => {
-    const selectedInfo = {
-      id: selected.lookupKey,
-      name: selected.name,
-      phoneNo: selected.phoneNumbers
-        ? getContactData(selected.phoneNumbers, 'number')[0]
-        : 'No Number',
-    };
-    const selectedList = [...selectedContacts, selectedInfo];
-    setSelectedContacts(selectedList);
+  const toggleContactSelection = (contactId) => {
+    const isSelected = selectedContacts.includes(contactId);
+
+    if (isSelected) {
+      // Remove the contact from the selected list
+      setSelectedContacts(selectedContacts.filter((id) => id !== contactId));
+    } else {
+      // Check if the contact is not already selected before adding
+      if (!selectedContacts.includes(contactId)) {
+        // Add the contact to the selected list
+        setSelectedContacts([...selectedContacts, contactId]);
+      }
+    }
   };
 
-  const handleDeselect = (deselected) => {
-    const filtredList = selectedContacts.filter((el) => el.id !== deselected.id);
-    setSelectedContacts(filtredList);
+  const removeSelectedContact = (contactId) => {
+    const updatedContacts = selectedContacts.filter((id) => id !== contactId);
+    setSelectedContacts(updatedContacts);
+  };
+
+  const navigateToNextPage = () => {
+    if (selectedContacts.length === 0) {
+      // Show toast notification if no contacts are selected
+      showToast();
+    } else {
+      // Get details of selected contacts
+      const selectedContactDetails = selectedContacts.map((contactId) =>
+        contactList.find((contact) => contact.id === contactId),
+      );
+
+      // Navigate to the next page and pass the selected contact details
+      dispatch(setSelectedMembers(selectedContactDetails));
+      navigation.navigate('setRoscaGoal');
+    }
+  };
+
+  const renderItem = ({ item }) => {
+    const isSelected = selectedContacts.includes(item.id);
+
+    return (
+      <TouchableOpacity onPress={() => toggleContactSelection(item.id)}>
+        <Contact
+          isSelected={isSelected}
+          nameInitials={item.name[0].toUpperCase()}
+          fullName={item.name}
+          phoneNo={item.phoneNumbers ? getContactData(item.phoneNumbers, 'number')[0] : 'No Number'}
+        />
+      </TouchableOpacity>
+    );
   };
 
   return (
-    <Box flex={1} bg="muted.50" alignItems="flex-start">
-      <VStack width="full">
+    <Box flex={1} bg="muted.100">
+      <VStack width="full" bg="muted.200">
         {selectedContacts.length > 0 ? (
-          <HStack space={3} p={2} borderBottomWidth="1" borderColor="muted.200">
-            {selectedContacts.map((item, index) => {
-              return (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                    handleDeselect(item);
-                  }}
-                >
-                  <SelectedContact nameInitials={item.name[0].toUpperCase()} fullName={item.name} />
-                </TouchableOpacity>
-              );
-            })}
+          <HStack>
+            <ScrollView horizontal>
+              {selectedContacts.map((contactId) => {
+                const contact = contactList.find((contact) => contact.id === contactId);
+                return (
+                  <TouchableOpacity
+                    key={contactId}
+                    onPress={() => removeSelectedContact(contactId)}
+                  >
+                    <SelectedContact
+                      nameInitials={contact.name[0].toUpperCase()}
+                      fullName={contact.name}
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
           </HStack>
         ) : (
-          <Box alignItems="center" m={3} ml={8} w="60%">
-            <Text>Please select some members to add to your space</Text>
+          <Box alignItems="center" m={2} w="78%">
+            <Text>Please select members to add to your space</Text>
           </Box>
         )}
         <FlatList
           showsVerticalScrollIndicator={false}
           data={contactList}
-          keyExtractor={(item) => item.lookupKey}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                handleSelected(item);
-              }}
-            >
-              <ContactItem
-                nameInitials={item.name[0].toUpperCase()}
-                fullName={item.name}
-                phoneNo={
-                  item.phoneNumbers ? getContactData(item.phoneNumbers, 'number')[0] : 'No Number'
-                }
-              />
-            </TouchableOpacity>
-          )}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
         />
       </VStack>
       <Button
         position="absolute"
-        variant="subtle"
-        bg="primary.100"
-        bottom={6}
+        bottom={10}
         left="20%"
         rounded="3xl"
         w="60%"
-        _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-        onPress={() => {
-          dispatch(setSelectedMembers(selectedContacts));
-          navigation.navigate('setRoscaGoal');
-        }}
+        _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+        onPress={navigateToNextPage}
       >
-        Next
+        Continue
       </Button>
     </Box>
-  );
-}
-
-function ContactItem(props) {
-  return (
-    <HStack w="75%" space={3} ml={8} my={1.5}>
-      <Avatar>{props.nameInitials}</Avatar>
-      <VStack>
-        <Text>{props.fullName}</Text>
-        <Text>{props.phoneNo}</Text>
-      </VStack>
-    </HStack>
-  );
-}
-
-function SelectedContact(props) {
-  return (
-    <VStack alignItems="center">
-      <Avatar>{props.nameInitials}</Avatar>
-      <Text fontSize="xs">{props.fullName}</Text>
-    </VStack>
   );
 }
 

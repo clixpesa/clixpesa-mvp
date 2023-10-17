@@ -102,7 +102,7 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
     <Box flex={1} bg="muted.100" alignItems="center">
       <VStack space={3}>
         <Text mx={6} mt={8}>
-          Set an amount and contribution and disbursment schedule
+          Set an amount, contribution and disbursement schedule
         </Text>
         <Stack mx={2} space={1}>
           <Box bg="white" roundedTop="xl" roundedBottom="md" borderWidth={1} borderColor="gray.100">
@@ -166,7 +166,7 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
             borderWidth={1}
             borderColor="gray.100"
           >
-            <Text fontSize="md">Disbursment Schedule:</Text>
+            <Text fontSize="md">Disbursement Schedule:</Text>
             <Pressable onPress={onOpen} onPressOut={() => setIsSetCtb(false)}>
               {spaceInfo.disbDay !== 'every' ? (
                 <Text color="primary.600" fontSize="md">

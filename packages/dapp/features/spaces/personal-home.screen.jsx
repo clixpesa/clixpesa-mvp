@@ -19,6 +19,7 @@ export default function PersonalHomeScreen() {
   }, []);
 
   let totalBalance = 0;
+
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
       <FlatList
