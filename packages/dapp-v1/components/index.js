@@ -11,4 +11,4 @@ export { default as FeaturedAssets } from './featured-assets.component';
 
 //Modal
 export { default as VerificationModal } from './verification.component';
-//export { default as SuccessModal } from './success-modal.component';
+export { default as SuccessModal } from './success-modal.component';
