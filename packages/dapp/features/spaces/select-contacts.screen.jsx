@@ -104,6 +104,7 @@ export default function SelectContactsScreen({ navigation }) {
                     onPress={() => removeSelectedContact(contactId)}
                   >
                     <SelectedContact
+                      badge
                       nameInitials={contact.name[0].toUpperCase()}
                       fullName={contact.name}
                     />

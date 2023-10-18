@@ -2,13 +2,13 @@ import { Box, Text, Icon, HStack, VStack, Avatar, Stack, Pressable, ScrollView }
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useState, useEffect, useCallback } from 'react';
 import { RefreshControl } from 'react-native';
-
 import { useDispatch } from 'react-redux';
+
 import { fetchSpaces, setUserSpaces, updateSpaces } from '@dapp/store/spaces/spaces.slice';
 import { smartContractCall } from '@dapp/blockchain/blockchainHelper';
-import { getSpaces } from './spaces.manager';
+import { FeatureCard } from '@dapp/components';
 
-import { FeatureHomeCard } from '@dapp/components';
+import { getSpaces } from './spaces.manager';
 
 export default function SpacesHomeScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -109,25 +109,28 @@ export default function SpacesHomeScreen({ navigation }) {
   return (
     <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <Box flex={1} px={2} mt="4">
-        <FeatureHomeCard
+        <FeatureCard
           bg="white"
           balance={totalBalance.toFixed(4).toString()}
           apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
-          btn1={{
-            icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
-            name: 'New Space',
-            screen: 'createSpace',
-          }}
-          btn2={{
-            icon: <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />,
-            name: 'Fund',
-            screen: 'DummyModal',
-          }}
-          btn3={{
-            icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
-            name: 'More',
-            screen: 'DummyModal',
-          }}
+          actions={[
+            {
+              icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
+              name: 'New Space',
+              screen: 'createSpace',
+            },
+            {
+              icon: (
+                <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />
+              ),
+              name: 'Fund',
+              screen: 'DummyModal',
+            },
+            {
+              icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
+              screen: 'DummyModal',
+            },
+          ]}
           itemBottom={false}
         />
 

@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 
-import { SectionHeader, LoansFeatureItem, FeatureHomeCard } from '@dapp/components';
+import { SectionHeader, LoansFeatureItem, FeatureCard } from '@dapp/components';
 import { rates, LoansData } from '@dapp/data';
 
 export default function SpacesHomeScreen() {
@@ -28,26 +28,29 @@ export default function SpacesHomeScreen() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
           <Box mt="3">
-            <FeatureHomeCard
+            <FeatureCard
               color="warmGray.800"
               bg="white"
               balance={totalBalance.toFixed(4).toString()}
               apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
-              btn1={{
-                icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
-                name: 'Borrow',
-                screen: 'depositFunds',
-              }}
-              btn2={{
-                icon: <Icon as={Feather} name="arrow-right" size="md" color="primary.600" mr="1" />,
-                name: 'Repay',
-                screen: 'sendFunds',
-              }}
-              btn3={{
-                icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
-                name: 'More',
-                screen: 'DummyModal',
-              }}
+              actions={[
+                {
+                  icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
+                  name: 'Borrow',
+                  screen: 'depositFunds',
+                },
+                {
+                  icon: (
+                    <Icon as={Feather} name="arrow-right" size="md" color="primary.600" mr="1" />
+                  ),
+                  name: 'Repay',
+                  screen: 'sendFunds',
+                },
+                {
+                  icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
+                  screen: 'DummyModal',
+                },
+              ]}
               itemBottom={false}
             />
             {loans.length > 0 ? (
