@@ -9,10 +9,8 @@ import {
   HStack,
   Input,
   Pressable,
-  Avatar,
   useDisclose,
   Flex,
-  ScrollView,
 } from 'native-base';
 
 import { useSelector, useDispatch } from 'react-redux';
