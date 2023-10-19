@@ -26,7 +26,7 @@ export function AppNavigator() {
             component={DummyScreen}
             options={{ headerTitle: '' }}
           />
-          <AppStack.Screen name="AccountScreen" component={AccountScreen} />
+          <AppStack.Screen name="Account" component={AccountScreen} />
           <AppStack.Screen
             name="depositFunds"
             component={DepositScreen}
