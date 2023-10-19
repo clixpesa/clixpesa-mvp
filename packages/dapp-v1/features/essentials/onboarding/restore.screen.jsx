@@ -12,6 +12,7 @@ import {
   Button,
   Icon,
   useDisclose,
+  Spacer,
 } from 'native-base';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
@@ -47,12 +48,15 @@ export default function RestoreScreen({ navigation }) {
     if (!isInvalid) {
       setIsLoading(true);
       const phoneNumber = parsePhoneNumberFromString(phoneNo, country);
-      setThisNo(phoneNumber.number);
+      //setThisNo(phoneNumber.number);
       const confirmation = await auth().signInWithPhoneNumber(phoneNumber.number);
       setConfirm(confirmation);
-      onOpen();
+      //onOpen();
       setIsLoading(false);
-      //navigation.navigate('verifyPhoneNo', { phone: phoneNumber.number });
+      navigation.navigate('verifyPhoneNo', {
+        phone: phoneNumber.number,
+        verificationId: confirmation.verificationId,
+      });
     }
   };
   return (
@@ -96,6 +100,7 @@ export default function RestoreScreen({ navigation }) {
               Depending on your mobile network and country, standard rates and taxes may apply.
             </FormControl.HelperText>
           </Stack>
+          <Spacer />
           <Button
             rounded="3xl"
             pr="4"
@@ -106,6 +111,7 @@ export default function RestoreScreen({ navigation }) {
           >
             Link with Phone
           </Button>
+          {/** 
           <Text textAlign="center" fontWeight="medium">
             -- OR --
           </Text>
@@ -119,7 +125,7 @@ export default function RestoreScreen({ navigation }) {
             onPress={() => navigation.navigate('signInWithGoogle')}
           >
             Link with Google
-          </Button>
+          </Button>*/}
         </VStack>
       </FormControl>
       <VerificationModal
