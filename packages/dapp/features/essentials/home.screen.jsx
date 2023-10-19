@@ -1,15 +1,15 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Box, Icon, FlatList, Spinner } from 'native-base';
-import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { Feather } from '@expo/vector-icons';
+import { utils } from 'ethers';
+
 import { NativeTokensByAddress } from '@dapp/features/wallet/tokens';
 import { fetchBalances } from '@dapp/store/wallet/wallet.slice';
 import { useGetTokenTransfersQuery } from '@dapp/services/blockscout';
 import { shortenAddress, areAddressesEqual } from '@dapp/utils/addresses';
-import { utils } from 'ethers';
-
-import { SectionHeader, TransactionItem, FeatureHomeCard } from '@dapp/components';
+import { SectionHeader, TransactionItem, FeatureCard } from '@dapp/components';
 import { rates } from '@dapp/data';
 
 export default function HomeScreen() {
@@ -21,7 +21,7 @@ export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
 
   const [transactions, setTransactions] = useState([]);
-  const [news, setNews] = useState([]);
+
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -92,26 +92,29 @@ export default function HomeScreen() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
           <Box mt="4">
-            <FeatureHomeCard
+            <FeatureCard
               color="warmGray.800"
               bg="white"
               balance={totalBalance.toFixed(4).toString()}
               apprxBalance={(totalBalance * rates.cUSD).toFixed(2).toString()}
-              btn1={{
-                icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
-                name: 'Deposit',
-                screen: 'depositFunds',
-              }}
-              btn2={{
-                icon: <Icon as={Feather} name="arrow-right" size="md" color="primary.600" mr="1" />,
-                name: 'Transfer',
-                screen: 'sendFunds',
-              }}
-              btn3={{
-                icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
-                name: 'More',
-                screen: 'DummyModal',
-              }}
+              actions={[
+                {
+                  icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
+                  name: 'Deposit',
+                  screen: 'depositFunds',
+                },
+                {
+                  icon: (
+                    <Icon as={Feather} name="arrow-right" size="md" color="primary.600" mr="1" />
+                  ),
+                  name: 'Transfer',
+                  screen: 'sendFunds',
+                },
+                {
+                  icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
+                  screen: 'DummyModal',
+                },
+              ]}
               itemBottom={false}
             />
             {transactions.length > 0 ? (

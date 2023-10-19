@@ -3,12 +3,7 @@ import { useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 
-import {
-  SectionHeader,
-  TransactionItem,
-  RoscaFeatureCard,
-  PotProgressCard,
-} from '@dapp/components';
+import { SectionHeader, TransactionItem, FeatureCard, PotProgressCard } from '@dapp/components';
 import { roundDetails, rates } from '@dapp/data';
 import { getRoscaData } from '@dapp/store/spaces/spaces.slice';
 import { useGetTokenTransfersQuery } from '@dapp/services/blockscout';
@@ -99,27 +94,30 @@ export default function RoscaHomeScreen({ navigation }) {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
           <Box>
-            <RoscaFeatureCard
+            <FeatureCard
               color="warmGray.800"
               bg="white"
               balance={(roscaDetails.roscaBal * 1).toFixed(4).toString()}
               apprxBalance={(roscaDetails.roscaBal * 120.75).toFixed(2).toString()}
-              btn1={{
-                icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
-                name: 'Fund Rosca',
-                screen: 'fundRoscaRound',
-                screenParams: { roscaAddress: thisRosca.roscaAddress },
-              }}
-              btn2={{
-                icon: <Icon as={Feather} name="arrow-down" size="md" color="primary.600" mr="1" />,
-                name: 'Withdraw',
-                screen: 'sendFunds',
-              }}
-              btn3={{
-                icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
-                name: 'More',
-                screen: 'DummyModal',
-              }}
+              actions={[
+                {
+                  icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
+                  name: 'Fund Rosca',
+                  screen: 'fundRoscaRound',
+                  screenParams: { roscaAddress: thisRosca.roscaAddress },
+                },
+                {
+                  icon: (
+                    <Icon as={Feather} name="arrow-down" size="md" color="primary.600" mr="1" />
+                  ),
+                  name: 'Withdraw',
+                  screen: 'sendFunds',
+                },
+                {
+                  icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
+                  screen: 'DummyModal',
+                },
+              ]}
               itemBottom={false}
             />
             <SectionHeader

@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
 
-import { SectionHeader, RoscaFeatureCard, PocketsFeatureItem } from '@dapp/components';
+import { SectionHeader, FeatureCard, PocketsFeatureItem } from '@dapp/components';
 import { transactions, pockets } from '@dapp/data';
 
 export default function RoscaPocketsScreen() {
@@ -28,26 +28,30 @@ export default function RoscaPocketsScreen() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
           <Box>
-            <RoscaFeatureCard
+            <FeatureCard
               color="warmGray.800"
               bg="white"
               balance={totalBalance.toFixed(4).toString()}
               apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
-              btn1={{
-                icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
-                name: 'New Pocket',
-                screen: 'depositFunds',
-              }}
-              btn2={{
-                icon: <Icon as={Feather} name="arrow-right" size="md" color="primary.600" mr="1" />,
-                name: 'Add Funds',
-                screen: 'sendFunds',
-              }}
-              btn3={{
-                icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
-                name: 'More',
-                screen: 'DummyModal',
-              }}
+              actions={[
+                {
+                  icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
+                  name: 'New Pocket',
+                  screen: 'depositFunds',
+                },
+                {
+                  icon: (
+                    <Icon as={Feather} name="arrow-right" size="md" color="primary.600" mr="1" />
+                  ),
+                  name: 'Add Funds',
+                  screen: 'sendFunds',
+                },
+                {
+                  icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
+                  name: 'More',
+                  screen: 'DummyModal',
+                },
+              ]}
               itemBottom={false}
             />
             {transactions.length > 0 ? (

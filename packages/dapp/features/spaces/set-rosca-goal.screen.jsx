@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Box,
   Text,
@@ -8,38 +9,39 @@ import {
   HStack,
   Input,
   Pressable,
-  Avatar,
   useDisclose,
+  Flex,
 } from 'native-base';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
-
-import { setCtbSchedule, setDisbSchedule, setGoalAmount } from '@dapp/store/spaces/spaces.slice';
-import { smartContractCall } from '@dapp/blockchain/blockchainHelper';
-import { config } from '@dapp/blockchain/config';
-import { NativeTokens } from '@dapp/features/wallet/tokens';
-import { spacesIface } from '@dapp/blockchain/contracts';
-import { utils } from 'ethers';
 import { customAlphabet } from 'nanoid';
-import { ScheduleActSheet, SuccessModal } from '@dapp/components';
+import { utils } from 'ethers';
+
+import { smartContractCall } from '@dapp/blockchain/blockchainHelper';
+import { NativeTokens } from '@dapp/features/wallet/tokens';
+import { config } from '@dapp/blockchain/config';
+import { spacesIface } from '@dapp/blockchain/contracts';
+import { ScheduleActSheet, SuccessModal, SelectedContact } from '@dapp/components';
+import { setCtbSchedule, setDisbSchedule, setGoalAmount } from '@dapp/store/spaces/spaces.slice';
 
 export default function SetRoscaGoalScreen({ navigation, route }) {
-  const dispatch = useDispatch();
-  const spaceInfo = useSelector((state) => state.spaces.spaceInfo);
   const [newRosca, setNewRosca] = useState({ address: '', authCode: '' });
-  const [token, setToken] = useState('cUSD');
-  const [amount, setAmount] = useState('');
-  const { isOpen, onOpen, onClose } = useDisclose();
-  const { isOpen: isOpen1, onOpen: onOpen1, onClose: onClose1 } = useDisclose();
+  const [isLoading, setIsLoading] = useState(false);
   const [isSetCtb, setIsSetCtb] = useState(false);
+  const [amount, setAmount] = useState('');
+  const [token, setToken] = useState('cUSD');
+  const spaceInfo = useSelector((state) => state.spaces.spaceInfo);
   const [schedule, setSchedule] = useState({
     day: spaceInfo.ctbDay,
     occurrence: spaceInfo.ctbOccurence,
   });
-  const [isLoading, setIsLoading] = useState(false);
-  //const userAddress = useSelector((s) => s.wallet.walletInfo.address)
+
   const members = useSelector((state) => state.spaces.selectedMembers);
+
+  const { isOpen: isOpen1, onOpen: onOpen1, onClose: onClose1 } = useDisclose();
+  const { isOpen, onOpen, onClose } = useDisclose();
+  const dispatch = useDispatch();
+
   const thisToken = NativeTokens.find((Token) => Token.symbol === token);
   const nanoid = customAlphabet('1234567890ABCDEF', 10);
 
@@ -70,13 +72,13 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
         methodType: 'write',
         params: [Object.values(txData)],
       });
-      handleTxResponce(txReceipt);
+      handleTxResponse(txReceipt);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const handleTxResponce = (txReceipt) => {
+  const handleTxResponse = (txReceipt) => {
     setIsLoading(false);
     const { data, topics } = txReceipt.logs.find(
       (el) => el.address === config.contractAddresses['Spaces'],
@@ -93,15 +95,23 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
         authCode: results.args[2][3],
       };
       setNewRosca(roscaDetails);
-      //dispatch(setUserSpaces(results.args.roscaAddress));
       onOpen1();
     }
   };
 
+  const renderSelectedMembers = () =>
+    members.map((member) => (
+      <SelectedContact
+        key={member.name}
+        nameInitials={member.name[0].toUpperCase()}
+        fullName={member.name}
+      />
+    ));
+
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
       <VStack space={3}>
-        <Text mx={6} mt={8}>
+        <Text mx={4} mt={8}>
           Set an amount, contribution and disbursement schedule
         </Text>
         <Stack mx={2} space={1}>
@@ -128,7 +138,7 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
                 onSubmitEditing={() => dispatch(setGoalAmount(amount))}
               />
             </HStack>
-            <Text px={5} mb={3}>
+            <Text px={4} mb={3}>
               Each member contributes:{' '}
               {members.length > 0 ? (amount / (members.length + 1)).toFixed(2).toString() : 'some'}{' '}
               cUSD
@@ -179,22 +189,15 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
               )}
             </Pressable>
           </HStack>
-          <Stack py={3} px={4}>
-            <Text>Members: You + {members.length}</Text>
-            <HStack py={2} space={3}>
-              {members.map((member) => {
-                return (
-                  <SelectedMembers
-                    key={member.name}
-                    nameInitials={member.name[0].toUpperCase()}
-                    name={member.name}
-                  />
-                );
-              })}
-            </HStack>
+          <Stack py={2}>
+            <Text px={4}>Members: You + {members.length}</Text>
+            <Flex flexDir="row" flexWrap="wrap" py={2}>
+              {renderSelectedMembers()}
+            </Flex>
           </Stack>
         </Stack>
         <ScheduleActSheet
+          title="Schedule"
           isOpen={isOpen}
           onClose={onClose}
           schedule={schedule}
@@ -211,43 +214,20 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
           scrnOptions={{ roscaAddress: newRosca.address }}
         />
         <Spacer />
-        <Stack alignItems="center" space={3} mb={16}>
-          <Button
-            variant="subtle"
-            rounded="3xl"
-            bg="primary.100"
-            w="60%"
-            _text={{ color: 'text.900', fontWeight: 'semibold', mb: '0.5' }}
-            onPress={() => {}}
-          >
-            Skip
-          </Button>
-          <Button
-            isLoading={isLoading}
-            isLoadingText="Submitting"
-            rounded="3xl"
-            w="60%"
-            _text={{ color: 'text.50', fontWeight: 'semibold', mb: '0.5' }}
-            onPress={() => {
-              createRosca();
-              /*dispatch(setUserSpaces(userAddress)*/
-            }}
-          >
-            Continue
-          </Button>
-        </Stack>
+        <Button
+          isLoading={isLoading}
+          isLoadingText="Submitting"
+          position="absolute"
+          bottom={10}
+          left="20%"
+          rounded="3xl"
+          w="60%"
+          _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+          onPress={() => createRosca()}
+        >
+          Continue
+        </Button>
       </VStack>
     </Box>
-  );
-}
-
-function SelectedMembers(props) {
-  return (
-    <VStack alignItems="center">
-      <Avatar bg="primary.200" _text={{ color: 'text.800' }}>
-        {props.nameInitials}
-      </Avatar>
-      <Text fontSize="xs">{props.name}</Text>
-    </VStack>
   );
 }
