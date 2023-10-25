@@ -7,8 +7,12 @@ import { setSpaceName } from '../../store/spaces/spaces.slice';
 export default function CustomizePersonalScreen({ navigation, route }) {
   const suggestions = ['Savings', 'Vacation', 'Chama', 'Gift', 'Sherehe', 'Emergency', 'Masomo'];
   const [name, setName] = useState('');
-
   const dispatch = useDispatch();
+
+  const handleButtonPress = () => {
+    navigation.navigate(route.params?.edit ? 'Customize' : 'SetPersonalGoal');
+    dispatch(setSpaceName(name));
+  };
 
   return (
     <Box flex={1} bg="muted.50">
@@ -49,41 +53,19 @@ export default function CustomizePersonalScreen({ navigation, route }) {
             })}
           </HStack>
           <Stack alignItems="center" mt="40%">
-            {!route.params?.edit ? (
-              <Button
-                variant="solid"
-                rounded="3xl"
-                isDisabled={!name}
-                w="60%"
-                _text={{
-                  fontWeight: 'semibold',
-                  mb: '0.5',
-                }}
-                onPress={() => {
-                  navigation.navigate('SetPersonalGoal');
-                  dispatch(setSpaceName(name));
-                }}
-              >
-                Continue
-              </Button>
-            ) : (
-              <Button
-                variant="solid"
-                rounded="3xl"
-                isDisabled={!name}
-                w="60%"
-                _text={{
-                  fontWeight: 'semibold',
-                  mb: '0.5',
-                }}
-                onPress={() => {
-                  navigation.navigate('Customize');
-                  dispatch(setSpaceName(name));
-                }}
-              >
-                Save
-              </Button>
-            )}
+            <Button
+              variant="solid"
+              rounded="3xl"
+              isDisabled={!name}
+              w="60%"
+              _text={{
+                fontWeight: 'semibold',
+                mb: '0.5',
+              }}
+              onPress={handleButtonPress}
+            >
+              {route.params?.edit ? 'Save' : 'Continue'}
+            </Button>
           </Stack>
         </Stack>
       </FormControl>

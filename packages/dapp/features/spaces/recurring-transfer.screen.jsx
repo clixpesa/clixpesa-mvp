@@ -6,30 +6,32 @@ import {
   Input,
   Text,
   VStack,
-  Actionsheet,
   useDisclose,
   Button,
   Pressable,
-  FlatList,
 } from 'native-base';
+import { useDispatch } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { useDispatch } from 'react-redux';
+import { ScheduleActionSheet } from '@dapp/components';
 import { setRecurringTransfer } from '../../store/spaces/spaces.slice';
-
-const Divider = () => <Box w="100%" h={0.5} bg="muted.200" />;
 
 export default function RecurringTransferScreen({ navigation }) {
   const [amount, setAmount] = useState('');
   const [schedule, setSchedule] = useState({
-    repeat: 'Weekly',
     day: 'Monday',
+    occurrence: 'Monthly',
   });
 
-  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclose();
+  const dispatch = useDispatch();
 
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const handleConfirm = () => {
+    if (amount !== '') {
+      dispatch(setRecurringTransfer(parseFloat(amount)));
+      navigation.navigate('personalHome');
+    }
+  };
 
   return (
     <Box flex={1} bg="muted.100" alignItems="center" p={4}>
@@ -67,83 +69,24 @@ export default function RecurringTransferScreen({ navigation }) {
             <HStack space={2}>
               <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.700" />
               <Text>
-                {schedule.repeat} {schedule.day === 'Everyday' ? null : `on ${schedule.day}`}
+                {schedule.occurrence} {schedule.occurrence === 'Daily' ? '' : `on ${schedule.day}`}
               </Text>
             </HStack>
           </Pressable>
         </HStack>
       </VStack>
       <Box w="50%" mt="80%">
-        <Button
-          isDisabled={amount === ''}
-          variant="solid"
-          rounded="2xl"
-          onPress={() => {
-            dispatch(setRecurringTransfer(parseFloat(amount)));
-            navigation.navigate('personalHome');
-          }}
-        >
+        <Button variant="solid" rounded="2xl" onPress={handleConfirm}>
           Confirm
         </Button>
       </Box>
-      <Actionsheet isOpen={isOpen} onClose={onClose}>
-        <Actionsheet.Content>
-          <Box w="100%" px={4}>
-            <Text fontWeight="semibold">Repeat</Text>
-            <Text fontSize="xs" color="muted.500">
-              {schedule.repeat} {schedule.day === 'Everyday' ? null : `on ${schedule.day}`}
-            </Text>
-            <HStack space={2} m={4} justifyContent="center">
-              <Button
-                variant="subtle"
-                px={4}
-                rounded="lg"
-                onPress={() => setSchedule({ repeat: 'Daily', day: 'Everyday' })}
-              >
-                Daily
-              </Button>
-              <Button
-                variant="subtle"
-                rounded="lg"
-                onPress={() => setSchedule({ repeat: 'Weekly', day: schedule.day })}
-              >
-                Weekly
-              </Button>
-              <Button
-                variant="subtle"
-                rounded="lg"
-                onPress={() => setSchedule({ repeat: 'Monthly', day: schedule.day })}
-              >
-                Monthly
-              </Button>
-            </HStack>
-          </Box>
-
-          <Box w="90%" maxH={130}>
-            <FlatList
-              data={days}
-              horizontal={false}
-              keyExtractor={(item, index) => item + index}
-              ItemSeparatorComponent={Divider}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <Actionsheet.Item
-                  alignItems="center"
-                  onPress={() => setSchedule({ ...schedule, day: item })}
-                >
-                  {item}
-                </Actionsheet.Item>
-              )}
-            />
-          </Box>
-
-          <Box w="60%" px={4} justifyContent="center" m={2}>
-            <Button rounded="3xl" onPress={() => onClose()}>
-              Set
-            </Button>
-          </Box>
-        </Actionsheet.Content>
-      </Actionsheet>
+      <ScheduleActionSheet
+        isOpen={isOpen}
+        onClose={onClose}
+        schedule={schedule}
+        setSchedule={setSchedule}
+        onSetSchedule={onClose}
+      />
     </Box>
   );
 }

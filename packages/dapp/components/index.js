@@ -8,7 +8,7 @@ export { default as PotProgressCard } from './pot-progress.component';
 export { default as PocketsFeatureItem } from './pockets-feature-item.component';
 export { default as CodeInput } from './code-input.component';
 export { TokenIcon as TokenIcon } from './token-icons.component';
-export { default as ScheduleActSheet } from './schedule-act-sheet.component';
+export { default as ScheduleActionSheet } from './schedule-action-sheet.component';
 export { default as SuccessModal } from './success-modal.component';
 export { default as Contact } from './contact-item.component';
 export { default as SelectedContact } from './selected-contact.component';
