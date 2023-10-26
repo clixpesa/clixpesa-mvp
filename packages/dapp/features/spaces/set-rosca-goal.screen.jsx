@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   Box,
   Text,
+  Icon,
   VStack,
   Spacer,
   Button,
@@ -16,31 +17,55 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { customAlphabet } from 'nanoid';
 import { utils } from 'ethers';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { smartContractCall } from '@dapp/blockchain/blockchainHelper';
 import { NativeTokens } from '@dapp/features/wallet/tokens';
 import { config } from '@dapp/blockchain/config';
 import { spacesIface } from '@dapp/blockchain/contracts';
-import { ScheduleActSheet, SuccessModal, SelectedContact } from '@dapp/components';
+import { ScheduleActionSheet, SuccessModal, SelectedContact } from '@dapp/components';
 import { setCtbSchedule, setDisbSchedule, setGoalAmount } from '@dapp/store/spaces/spaces.slice';
 
 export default function SetRoscaGoalScreen({ navigation, route }) {
   const [newRosca, setNewRosca] = useState({ address: '', authCode: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const [isSetCtb, setIsSetCtb] = useState(false);
   const [amount, setAmount] = useState('');
   const [token, setToken] = useState('cUSD');
   const spaceInfo = useSelector((state) => state.spaces.spaceInfo);
-  const [schedule, setSchedule] = useState({
-    day: spaceInfo.ctbDay,
+
+  const [contributionSchedule, setContributionSchedule] = useState({
     occurrence: spaceInfo.ctbOccurence,
+    day: spaceInfo.ctbDay,
+  });
+
+  const [disbursementSchedule, setDisbursementSchedule] = useState({
+    occurrence: spaceInfo.disbOccurence,
+    day: spaceInfo.disbDay,
   });
 
   const members = useSelector((state) => state.spaces.selectedMembers);
 
   const { isOpen: isOpen1, onOpen: onOpen1, onClose: onClose1 } = useDisclose();
-  const { isOpen, onOpen, onClose } = useDisclose();
   const dispatch = useDispatch();
+
+  const {
+    isOpen: isOpenContribution,
+    onOpen: onOpenContribution,
+    onClose: onCloseContribution,
+  } = useDisclose();
+  const {
+    isOpen: isOpenDisbursment,
+    onOpen: onOpenDisbursment,
+    onClose: onCloseDisbursment,
+  } = useDisclose();
+
+  const setDisbursementScheduleAction = () => {
+    dispatch(setDisbSchedule(disbursementSchedule));
+  };
+
+  const setContributionScheduleAction = () => {
+    dispatch(setCtbSchedule(contributionSchedule));
+  };
 
   const thisToken = NativeTokens.find((Token) => Token.symbol === token);
   const nanoid = customAlphabet('1234567890ABCDEF', 10);
@@ -97,6 +122,7 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
       setNewRosca(roscaDetails);
       onOpen1();
     }
+    // navigation.navigate('NextScreen');
   };
 
   const renderSelectedMembers = () =>
@@ -133,9 +159,10 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
                   </Text>
                 }
                 value={amount}
-                onChangeText={(amount) => setAmount(amount)}
-                onClose={() => dispatch(setGoalAmount(amount))}
-                onSubmitEditing={() => dispatch(setGoalAmount(amount))}
+                onChangeText={(newAmount) => {
+                  setAmount(newAmount);
+                  dnewAmountispatch(setGoalAmount(newAmount));
+                }}
               />
             </HStack>
             <Text px={4} mb={3}>
@@ -153,17 +180,17 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
             borderWidth={1}
             borderColor="gray.100"
           >
-            <Text fontSize="md">Contribution Schedule:</Text>
-            <Pressable onPress={onOpen} onPressOut={() => setIsSetCtb(true)}>
-              {spaceInfo.ctbDay !== 'every' ? (
-                <Text color="primary.600" fontSize="md">
-                  {spaceInfo.ctbOccurence} on {spaceInfo.ctbDay.slice(0, 3)}
+            <Text fontSize="md">Contribution Schedule</Text>
+            <Pressable onPress={onOpenContribution}>
+              <HStack space={2}>
+                <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.800" />
+                <Text color="primary.800" fontWeight="semibold">
+                  {contributionSchedule.occurrence}{' '}
+                  {contributionSchedule.day === 'Everyday'
+                    ? null
+                    : `on ${contributionSchedule.day}`}
                 </Text>
-              ) : (
-                <Text color="primary.600" fontSize="md">
-                  Everyday
-                </Text>
-              )}
+              </HStack>
             </Pressable>
           </HStack>
           <HStack
@@ -176,17 +203,17 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
             borderWidth={1}
             borderColor="gray.100"
           >
-            <Text fontSize="md">Disbursement Schedule:</Text>
-            <Pressable onPress={onOpen} onPressOut={() => setIsSetCtb(false)}>
-              {spaceInfo.disbDay !== 'every' ? (
-                <Text color="primary.600" fontSize="md">
-                  {spaceInfo.disbOccurence} on {spaceInfo.disbDay.slice(0, 3)}
+            <Text fontSize="md">Disbursement Schedule</Text>
+            <Pressable onPress={onOpenDisbursment}>
+              <HStack space={2}>
+                <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.800" />
+                <Text color="primary.800" fontWeight="semibold">
+                  {disbursementSchedule.occurrence}{' '}
+                  {disbursementSchedule.day === 'Everyday'
+                    ? null
+                    : `on ${disbursementSchedule.day}`}
                 </Text>
-              ) : (
-                <Text color="primary.600" fontSize="md">
-                  Everyday
-                </Text>
-              )}
+              </HStack>
             </Pressable>
           </HStack>
           <Stack py={2}>
@@ -196,16 +223,23 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
             </Flex>
           </Stack>
         </Stack>
-        <ScheduleActSheet
-          title="Schedule"
-          isOpen={isOpen}
-          onClose={onClose}
-          schedule={schedule}
-          setSchedule={setSchedule}
-          setCtbSchedule={setCtbSchedule}
-          setDisbSchedule={setDisbSchedule}
-          isSetCtb={isSetCtb}
+
+        <ScheduleActionSheet
+          isOpen={isOpenContribution}
+          onClose={onCloseContribution}
+          schedule={contributionSchedule}
+          setSchedule={setContributionSchedule}
+          onSetSchedule={setContributionScheduleAction}
         />
+
+        <ScheduleActionSheet
+          isOpen={isOpenDisbursment}
+          onClose={onCloseDisbursment}
+          schedule={disbursementSchedule}
+          setSchedule={setDisbursementSchedule}
+          onSetSchedule={setDisbursementScheduleAction}
+        />
+
         <SuccessModal
           isOpen={isOpen1}
           onClose={onClose1}

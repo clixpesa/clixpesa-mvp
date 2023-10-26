@@ -26,6 +26,13 @@ import SpacesLandingNavigator from './spaces-landing.navigator';
 const Tab = createBottomTabNavigator();
 const AppStack = createNativeStackNavigator();
 
+const TAB_ICON = {
+  Home: ['home-3-fill', 'home-3-line'],
+  Spaces: ['safe-2-fill', 'safe-2-line'],
+  Loans: ['hand-coin-fill', 'hand-coin-line'],
+  Account: ['user-3-fill', 'user-3-line'],
+};
+
 export const AppNavigator = () => {
   return (
     <AppStack.Navigator>
@@ -127,30 +134,31 @@ const BottomTabNavigator = () => {
   );
 };
 
-const TAB_ICON = {
-  Home: ['home-3-fill', 'home-3-line'],
-  Spaces: ['safe-2-fill', 'safe-2-line'],
-  Loans: ['hand-coin-fill', 'hand-coin-line'],
-  Account: ['user-3-fill', 'user-3-line'],
-};
-
 const screenOptions = ({ route }) => {
-  const iconName = TAB_ICON[route.name];
   return {
-    tabBarIcon: ({ focused }) => (
-      <Box bg={focused ? 'primary.200' : '#ffffff'} rounded="2xl" px="5" py="1" mt="1">
-        <Icon name={focused ? iconName[0] : iconName[1]} size={22} color="#0F766E" />
-      </Box>
-    ),
-    tabBarLabel: () => (
-      <Text _light={{ color: 'primary.900' }} fontSize="2xs" mb="0.5">
-        {route.name}
-      </Text>
-    ),
+    tabBarIcon: createTabBarIcon(route),
+    tabBarLabel: createTabBarLabel(route),
     tabBarHideOnKeyboard: true,
     headerLeft: () => <AccPressable />,
     headerRight: () => <HeaderRightIcons />,
   };
+};
+
+const createTabBarIcon = (route) => {
+  const iconName = TAB_ICON[route.name];
+  return ({ focused }) => (
+    <Box bg={focused ? 'primary.200' : '#ffffff'} rounded="2xl" px="5" py="1" mt="1">
+      <Icon name={focused ? iconName[0] : iconName[1]} size={22} color="#0F766E" />
+    </Box>
+  );
+};
+
+const createTabBarLabel = (route) => {
+  return () => (
+    <Text _light={{ color: 'primary.900' }} fontSize="2xs" mb="0.5">
+      {route.name}
+    </Text>
+  );
 };
 
 function HeaderRightIcons() {
