@@ -40,14 +40,14 @@ export default function SetPersonalGoalScreen({ navigation, route }) {
           roundedBottom="md"
         >
           <HStack alignItems="center">
-            <Text fontWeight="semibold">cUSD</Text>
-            <Icon as={<MaterialIcons name="keyboard-arrow-down" />} size="md" />
+            <Text fontWeight="semibold" fontSize="md">
+              cUSD
+            </Text>
+            <Icon as={<MaterialIcons name="keyboard-arrow-down" />} size="lg" color="black" />
           </HStack>
           <Input
-            w={{
-              base: '75%',
-              md: '25%',
-            }}
+            textAlign="right"
+            w={{ base: '75%' }}
             value={amount}
             onChangeText={(text) => setAmount(text)}
             keyboardType="numeric"

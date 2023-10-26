@@ -4,7 +4,6 @@ import {
   Text,
   Icon,
   VStack,
-  Spacer,
   Button,
   Stack,
   HStack,
@@ -136,132 +135,107 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
 
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
-      <VStack space={3}>
-        <Text mx={4} mt={8}>
-          Set an amount, contribution and disbursement schedule
-        </Text>
-        <Stack mx={2} space={1}>
-          <Box bg="white" roundedTop="xl" roundedBottom="md" borderWidth={1} borderColor="gray.100">
-            <HStack m={3} space="xl">
-              <Text fontSize="lg" py={3} pl={4} fontWeight="semibold">
-                cUSD
-              </Text>
-              <Input
-                py={2}
-                textAlign="right"
-                minW="2/3"
-                placeholder="0.00"
-                size="lg"
-                keyboardType="numeric"
-                InputRightElement={
-                  <Text fontSize="md" fontWeight="medium" pr={3}>
-                    cUSD
-                  </Text>
-                }
-                value={amount}
-                onChangeText={(newAmount) => {
-                  setAmount(newAmount);
-                  dnewAmountispatch(setGoalAmount(newAmount));
-                }}
-              />
+      <Box p={4}>
+        <Text>Set amount contribution and disbursement schedule</Text>
+      </Box>
+
+      <VStack space={1}>
+        <Box bg="white" roundedTop="xl" roundedBottom="md" borderWidth={1} borderColor="gray.100">
+          <HStack bg="#fff" p={4} justifyContent="space-between" roundedTop="2xl">
+            <HStack alignItems="center">
+              <Text fontSize="md">cUSD</Text>
+              <Icon as={<MaterialIcons name="keyboard-arrow-down" />} size="lg" color="black" />
             </HStack>
-            <Text px={4} mb={3}>
-              Each member contributes:{' '}
-              {members.length > 0 ? (amount / (members.length + 1)).toFixed(2).toString() : 'some'}{' '}
-              cUSD
-            </Text>
-          </Box>
-          <HStack
-            bg="white"
-            py={3}
-            px={4}
-            justifyContent="space-between"
-            rounded="md"
-            borderWidth={1}
-            borderColor="gray.100"
-          >
-            <Text fontSize="md">Contribution Schedule</Text>
-            <Pressable onPress={onOpenContribution}>
-              <HStack space={2}>
-                <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.800" />
-                <Text color="primary.800" fontWeight="semibold">
-                  {contributionSchedule.occurrence}{' '}
-                  {contributionSchedule.day === 'Everyday'
-                    ? null
-                    : `on ${contributionSchedule.day}`}
-                </Text>
-              </HStack>
-            </Pressable>
+            <Input
+              textAlign="right"
+              w={{ base: '75%' }}
+              size="md"
+              value={amount}
+              keyboardType="numeric"
+              InputRightElement={<Text mr={2}>cUSD</Text>}
+              onChangeText={(text) => {
+                setAmount(text);
+                dispatch(setGoalAmount(text));
+              }}
+            />
           </HStack>
-          <HStack
-            bg="white"
-            p={4}
-            pt={3}
-            justifyContent="space-between"
-            roundedTop="md"
-            roundedBottom="xl"
-            borderWidth={1}
-            borderColor="gray.100"
-          >
-            <Text fontSize="md">Disbursement Schedule</Text>
-            <Pressable onPress={onOpenDisbursment}>
-              <HStack space={2}>
-                <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.800" />
-                <Text color="primary.800" fontWeight="semibold">
-                  {disbursementSchedule.occurrence}{' '}
-                  {disbursementSchedule.day === 'Everyday'
-                    ? null
-                    : `on ${disbursementSchedule.day}`}
-                </Text>
-              </HStack>
-            </Pressable>
-          </HStack>
-          <Stack py={2}>
-            <Text px={4}>Members: You + {members.length}</Text>
-            <Flex flexDir="row" flexWrap="wrap" py={2}>
-              {renderSelectedMembers()}
-            </Flex>
-          </Stack>
+          {/* <Text px={4} mb={3} fontSize="md" color="muted.400">
+            Each member contributes{' '}
+            {members.length > 0 ? (amount / (members.length + 1)).toFixed(2).toString() : 'some'}{' '}
+            cUSD
+          </Text> */}
+        </Box>
+        <HStack bg="white" p={4} justifyContent="space-between">
+          <Text fontSize="md">Contribution Schedule</Text>
+          <Pressable onPress={onOpenContribution}>
+            <HStack space={2}>
+              <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.800" />
+              <Text color="primary.800" fontWeight="semibold">
+                {contributionSchedule.occurrence}{' '}
+                {contributionSchedule.occurrence === 'Daily'
+                  ? ''
+                  : `on ${contributionSchedule.day.slice(0, 3)}`}
+              </Text>
+            </HStack>
+          </Pressable>
+        </HStack>
+        <HStack bg="white" p={4} justifyContent="space-between" roundedBottom="2xl">
+          <Text fontSize="md">Disbursement Schedule</Text>
+          <Pressable onPress={onOpenDisbursment}>
+            <HStack space={2}>
+              <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.800" />
+              <Text color="primary.800" fontWeight="semibold">
+                {disbursementSchedule.occurrence}{' '}
+                {disbursementSchedule.occurrence === 'Daily'
+                  ? ''
+                  : `on ${disbursementSchedule.day.slice(0, 3)}`}
+              </Text>
+            </HStack>
+          </Pressable>
+        </HStack>
+        <Stack py={2}>
+          <Text px={4}>Members: {members.length}</Text>
+          <Stack bg="amber.300">{renderSelectedMembers()}</Stack>
         </Stack>
-
-        <ScheduleActionSheet
-          isOpen={isOpenContribution}
-          onClose={onCloseContribution}
-          schedule={contributionSchedule}
-          setSchedule={setContributionSchedule}
-          onSetSchedule={setContributionScheduleAction}
-        />
-
-        <ScheduleActionSheet
-          isOpen={isOpenDisbursment}
-          onClose={onCloseDisbursment}
-          schedule={disbursementSchedule}
-          setSchedule={setDisbursementSchedule}
-          onSetSchedule={setDisbursementScheduleAction}
-        />
-
-        <SuccessModal
-          isOpen={isOpen1}
-          onClose={onClose1}
-          message={`Rosca created successfully! \nInvite Code: ${newRosca.authCode}`}
-          screen="RoscaHome"
-          scrnOptions={{ roscaAddress: newRosca.address }}
-        />
-        <Spacer />
-        <Button
-          isLoading={isLoading}
-          isLoadingText="Submitting"
-          position="absolute"
-          bottom={10}
-          left="20%"
-          rounded="3xl"
-          w="60%"
-          _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
-          onPress={() => createRosca()}
-        >
-          Continue
-        </Button>
       </VStack>
+
+      <ScheduleActionSheet
+        isOpen={isOpenContribution}
+        onClose={onCloseContribution}
+        schedule={contributionSchedule}
+        setSchedule={setContributionSchedule}
+        onSetSchedule={setContributionScheduleAction}
+      />
+
+      <ScheduleActionSheet
+        isOpen={isOpenDisbursment}
+        onClose={onCloseDisbursment}
+        schedule={disbursementSchedule}
+        setSchedule={setDisbursementSchedule}
+        onSetSchedule={setDisbursementScheduleAction}
+      />
+
+      <SuccessModal
+        isOpen={isOpen1}
+        onClose={onClose1}
+        message={`Rosca created successfully! \nInvite Code: ${newRosca.authCode}`}
+        screen="RoscaHome"
+        scrnOptions={{ roscaAddress: newRosca.address }}
+      />
+
+      <Button
+        isLoading={isLoading}
+        isLoadingText="Submitting"
+        position="absolute"
+        bottom={10}
+        left="20%"
+        rounded="3xl"
+        w="60%"
+        _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+        onPress={() => createRosca()}
+      >
+        Continue
+      </Button>
     </Box>
   );
 }

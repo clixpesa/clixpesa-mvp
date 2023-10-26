@@ -55,8 +55,8 @@ export default function RecurringTransferScreen({ navigation }) {
           <Input
             w={{
               base: '75%',
-              md: '25%',
             }}
+            textAlign="right"
             value={amount}
             onChangeText={(text) => setAmount(text)}
             keyboardType="numeric"
@@ -69,7 +69,8 @@ export default function RecurringTransferScreen({ navigation }) {
             <HStack space={2}>
               <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.700" />
               <Text>
-                {schedule.occurrence} {schedule.occurrence === 'Daily' ? '' : `on ${schedule.day}`}
+                {schedule.occurrence}{' '}
+                {schedule.occurrence === 'Daily' ? '' : `on ${schedule.day.slice(0, 3)}`}
               </Text>
             </HStack>
           </Pressable>
