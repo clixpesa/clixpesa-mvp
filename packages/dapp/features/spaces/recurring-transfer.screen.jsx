@@ -6,9 +6,9 @@ import {
   Input,
   Text,
   VStack,
-  useDisclose,
   Button,
   Pressable,
+  useDisclose,
 } from 'native-base';
 import { useDispatch } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -77,7 +77,11 @@ export default function RecurringTransferScreen({ navigation }) {
         </HStack>
       </VStack>
       <Box w="50%" mt="80%">
-        <Button variant="solid" rounded="2xl" onPress={handleConfirm}>
+        <Button
+          _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+          rounded="3xl"
+          onPress={handleConfirm}
+        >
           Confirm
         </Button>
       </Box>

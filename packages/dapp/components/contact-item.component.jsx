@@ -1,7 +1,8 @@
 import { HStack, Text, Avatar, VStack } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { setBgColor } from '../utils/setBgColor';
 
-const Contact = ({ nameInitials, isSelected, fullName, phoneNo }) => (
+const Contact = ({ nameInitials, isSelected, fullName, phoneNo, index }) => (
   <HStack
     alignItems="center"
     space={4}
@@ -10,7 +11,7 @@ const Contact = ({ nameInitials, isSelected, fullName, phoneNo }) => (
     borderRadius={4}
     borderColor="gray.300"
   >
-    <Avatar>
+    <Avatar bg={setBgColor(index)}>
       {nameInitials}
       {isSelected && (
         <Avatar.Badge>

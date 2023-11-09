@@ -25,12 +25,12 @@ export default function SetPersonalGoalScreen({ navigation, route }) {
   };
 
   return (
-    <Box flex={1} bg="muted.100" alignItems="center" p={4}>
+    <Box flex={1} bg="muted.100" alignItems="center">
       <Box w="100%" my={4} pl={4}>
         <Text>Set an amount and deadline for your goal</Text>
       </Box>
 
-      <VStack space={1} w="100%">
+      <VStack space={1}>
         <HStack
           bg="#fff"
           p={4}

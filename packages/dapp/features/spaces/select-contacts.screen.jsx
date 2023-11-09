@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Box, HStack, Text, VStack, FlatList, Button, ScrollView, useToast } from 'native-base';
+import {
+  Box,
+  HStack,
+  Text,
+  Stack,
+  VStack,
+  FlatList,
+  Button,
+  ScrollView,
+  useToast,
+} from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import * as Contacts from 'expo-contacts';
@@ -31,6 +41,7 @@ export default function SelectContactsScreen({ navigation }) {
           Fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
         });
         if (data.length > 0) {
+          console.log(data);
           setContactList(data);
         } else {
           console.log('No Contacts');
@@ -75,12 +86,13 @@ export default function SelectContactsScreen({ navigation }) {
     }
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
     const isSelected = selectedContacts.includes(item.id);
 
     return (
       <TouchableOpacity onPress={() => toggleContactSelection(item.id)}>
         <Contact
+          index={index}
           isSelected={isSelected}
           nameInitials={item.name[0].toUpperCase()}
           fullName={item.name}
@@ -96,7 +108,7 @@ export default function SelectContactsScreen({ navigation }) {
         {selectedContacts.length > 0 ? (
           <HStack>
             <ScrollView horizontal>
-              {selectedContacts.map((contactId) => {
+              {selectedContacts.map((contactId, index) => {
                 const contact = contactList.find((contact) => contact.id === contactId);
                 return (
                   <TouchableOpacity
@@ -104,6 +116,7 @@ export default function SelectContactsScreen({ navigation }) {
                     onPress={() => removeSelectedContact(contactId)}
                   >
                     <SelectedContact
+                      index={index}
                       badge
                       nameInitials={contact.name[0].toUpperCase()}
                       fullName={contact.name}
@@ -125,17 +138,15 @@ export default function SelectContactsScreen({ navigation }) {
           renderItem={renderItem}
         />
       </VStack>
-      <Button
-        position="absolute"
-        bottom={10}
-        left="20%"
-        rounded="3xl"
-        w="60%"
-        _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
-        onPress={navigateToNextPage}
-      >
-        Continue
-      </Button>
+      <Stack w="50%" position="absolute" bottom={20} left="25%">
+        <Button
+          rounded="3xl"
+          _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+          onPress={navigateToNextPage}
+        >
+          Continue
+        </Button>
+      </Stack>
     </Box>
   );
 }

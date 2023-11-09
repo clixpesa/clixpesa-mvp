@@ -10,7 +10,6 @@ import {
   Input,
   Pressable,
   useDisclose,
-  Flex,
 } from 'native-base';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -125,12 +124,15 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
   };
 
   const renderSelectedMembers = () =>
-    members.map((member) => (
-      <SelectedContact
-        key={member.name}
-        nameInitials={member.name[0].toUpperCase()}
-        fullName={member.name}
-      />
+    members.map((member, index) => (
+      <Box w="1/4">
+        <SelectedContact
+          index={index}
+          key={member.name}
+          nameInitials={member.name[0].toUpperCase()}
+          fullName={member.name}
+        />
+      </Box>
     ));
 
   return (
@@ -140,31 +142,30 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
       </Box>
 
       <VStack space={1}>
-        <Box bg="white" roundedTop="xl" roundedBottom="md" borderWidth={1} borderColor="gray.100">
-          <HStack bg="#fff" p={4} justifyContent="space-between" roundedTop="2xl">
-            <HStack alignItems="center">
-              <Text fontSize="md">cUSD</Text>
-              <Icon as={<MaterialIcons name="keyboard-arrow-down" />} size="lg" color="black" />
-            </HStack>
-            <Input
-              textAlign="right"
-              w={{ base: '75%' }}
-              size="md"
-              value={amount}
-              keyboardType="numeric"
-              InputRightElement={<Text mr={2}>cUSD</Text>}
-              onChangeText={(text) => {
-                setAmount(text);
-                dispatch(setGoalAmount(text));
-              }}
-            />
+        <HStack bg="#fff" p={4} justifyContent="space-between" roundedTop="2xl">
+          <HStack alignItems="center">
+            <Text fontSize="md">cUSD</Text>
+            <Icon as={<MaterialIcons name="keyboard-arrow-down" />} size="lg" color="black" />
           </HStack>
-          {/* <Text px={4} mb={3} fontSize="md" color="muted.400">
+          <Input
+            textAlign="right"
+            w={{ base: '75%' }}
+            size="md"
+            value={amount}
+            keyboardType="numeric"
+            InputRightElement={<Text mr={2}>cUSD</Text>}
+            onChangeText={(text) => {
+              setAmount(text);
+              dispatch(setGoalAmount(text));
+            }}
+          />
+        </HStack>
+        {/* <Text px={4} mb={3} fontSize="md" color="muted.400">
             Each member contributes{' '}
             {members.length > 0 ? (amount / (members.length + 1)).toFixed(2).toString() : 'some'}{' '}
             cUSD
           </Text> */}
-        </Box>
+
         <HStack bg="white" p={4} justifyContent="space-between">
           <Text fontSize="md">Contribution Schedule</Text>
           <Pressable onPress={onOpenContribution}>
@@ -193,9 +194,9 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
             </HStack>
           </Pressable>
         </HStack>
-        <Stack py={2}>
+        <Stack py={2} w="96%">
           <Text px={4}>Members: {members.length}</Text>
-          <Stack bg="amber.300">{renderSelectedMembers()}</Stack>
+          <HStack flexWrap="wrap">{renderSelectedMembers()}</HStack>
         </Stack>
       </VStack>
 
@@ -223,19 +224,17 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
         scrnOptions={{ roscaAddress: newRosca.address }}
       />
 
-      <Button
-        isLoading={isLoading}
-        isLoadingText="Submitting"
-        position="absolute"
-        bottom={10}
-        left="20%"
-        rounded="3xl"
-        w="60%"
-        _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
-        onPress={() => createRosca()}
-      >
-        Continue
-      </Button>
+      <Stack w="50%" position="absolute" bottom={20} left="25%">
+        <Button
+          isLoading={isLoading}
+          isLoadingText="Submitting"
+          rounded="3xl"
+          _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+          onPress={() => createRosca()}
+        >
+          Continue
+        </Button>
+      </Stack>
     </Box>
   );
 }
