@@ -3,7 +3,7 @@ import { rates } from 'dapp/utils';
 
 const FeaturedAssets = ({ nativeBal, stableBal }) => {
   return (
-    <HStack space="2%" width="95%">
+    <HStack space="3%" width="90%">
       <HStack justifyContent="space-between" bg="white" py={2} px={3} minW="48%" rounded="2xl">
         <HStack alignItems="center" space={2}>
           <Avatar

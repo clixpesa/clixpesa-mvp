@@ -1,4 +1,4 @@
-require('dotenv').config({ path: __dirname + '/.dev.env' });
+//require('dotenv').config({ path: __dirname + '/.env' });
 const { GOOGLE_SERVICES_JSON, GOOGLE_SERVICES_PLIST } = process.env;
 
 export default {

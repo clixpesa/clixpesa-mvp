@@ -8,6 +8,7 @@ export default function ImportWalletScreen({ navigation }) {
   const dispatch = useDispatch();
   const [phrase, setPhrase] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isCancel, setIsCancel] = useState(false);
   const handleChange = (text) => {
     setPhrase(text);
   };
@@ -20,19 +21,21 @@ export default function ImportWalletScreen({ navigation }) {
     }
   };
 
-  const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-  };
-
   useEffect(() => {
     //set a pending account
     const handlePendingWallet = async () => {
       await setPendingWallet(phrase);
     };
     if (isLoading) {
-      handlePendingWallet();
-      navigation.navigate('restore');
-      setIsLoading(false);
+      setTimeout(() => {
+        if (isCancel) {
+          setIsLoading(false);
+          setIsCancel(false);
+        }
+        handlePendingWallet();
+        setIsLoading(false);
+        navigation.navigate('restore');
+      }, 500);
     }
   }, [isLoading]);
 
@@ -90,7 +93,10 @@ export default function ImportWalletScreen({ navigation }) {
             pr="4"
             minW="75%"
             _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-            onPress={() => navigation.navigate('Welcome')}
+            onPress={() => {
+              setIsCancel(true);
+              navigation.navigate('Welcome');
+            }}
           >
             Cancel
           </Button>
