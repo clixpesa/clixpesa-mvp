@@ -30,13 +30,10 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "3594833d-ce4f-4e67-be06-b12367eb0416"
-      }
-    },
+
     "runtimeVersion": {
       "policy": "sdkVersion"
-    }
+    },
+    "owner": "clixpesa"
   }
 }
