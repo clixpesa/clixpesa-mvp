@@ -10,5 +10,8 @@ export { default as CodeInput } from './code-input.component';
 export { TokenIcon as TokenIcon } from './token-icons.component';
 export { default as ScheduleActionSheet } from './schedule-action-sheet.component';
 export { default as SuccessModal } from './success-modal.component';
+export { default as ErrorModal } from './error-modal.component';
 export { default as Contact } from './contact-item.component';
 export { default as SelectedContact } from './selected-contact.component';
+export { default as Alert } from './alert.component';
+export { default as ScheduleComponent } from './schedule.component';

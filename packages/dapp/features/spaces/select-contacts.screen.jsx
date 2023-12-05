@@ -41,7 +41,6 @@ export default function SelectContactsScreen({ navigation }) {
           Fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
         });
         if (data.length > 0) {
-          console.log(data);
           setContactList(data);
         } else {
           console.log('No Contacts');
