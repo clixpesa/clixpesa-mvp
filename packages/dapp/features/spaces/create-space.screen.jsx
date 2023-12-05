@@ -11,7 +11,7 @@ import {
 } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { setSpaceInfo } from '@dapp/store/spaces/spaces.slice';
+import { setSpaceInfo } from '../../store/spaces/spaces.slice';
 
 export default function CreateSpaceScreen({ navigation }) {
   const walletAddress = useSelector((s) => s.wallet.walletInfo.address);
