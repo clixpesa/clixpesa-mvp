@@ -17,3 +17,4 @@ export { default as ImportWalletScreen } from './onboarding/import.screen';
 
 //Account
 export { default as AccountScreen } from './account/account.screen';
+export { default as EditProfileScreen } from './account/edit-profile.screen';

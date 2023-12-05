@@ -44,10 +44,11 @@ const essentialSlice = createSlice({
       }
     },
     updateUserDetails: (state, { payload }) => {
-      const { names, address } = payload;
+      const { names, address, email } = payload;
       state.userDetails.names = names;
-      const twonames = userNames.split(' ');
+      const twonames = names.split(' ');
       state.userDetails.initials = twonames[0].slice(0, 1) + twonames[1].slice(0, 1);
+      if (email) state.userDetails.email = email;
       if (address) state.userDetails.address = address;
     },
     setIsConnected: (state, action) => {

@@ -62,7 +62,7 @@ export default function HomeScreen() {
       const thisTxs = getWalletTxs(accountTxs, erc20Txs, thisAddress);
       setTransactions(thisTxs);
     }
-  }, [accountTxs]);
+  }, [accountTxs, erc20Txs]);
 
   const handleOnPress = async () => {
     const thisTxs = getWalletTxs(accountTxs, erc20Txs, thisAddress);
@@ -74,7 +74,8 @@ export default function HomeScreen() {
       <FlatList
         width="95%"
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-        data={transactions.slice(0, 7)}
+        data={transactions.slice(0, 6)}
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <Box mt="4">
             <FeatureHomeCard
@@ -121,7 +122,7 @@ export default function HomeScreen() {
             bg="white"
             opacity={85}
             roundedTop={index === 0 ? '2xl' : 'md'}
-            roundedBottom={index === transactions.length - 1 ? '2xl' : 'md'}
+            roundedBottom={index === transactions.length - 1 || index === 5 ? '2xl' : 'md'}
             mt={1}
           >
             <TransactionItem
