@@ -22,7 +22,6 @@ import { setSelectedMembers } from '@dapp/store/spaces/spaces.slice';
 export default function SelectContactsScreen({ navigation }) {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [contactList, setContactList] = useState();
-  const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
   const toast = useToast();
 
