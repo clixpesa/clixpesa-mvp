@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Box,
   HStack,
@@ -22,6 +22,7 @@ import { setSelectedMembers } from '@dapp/store/spaces/spaces.slice';
 export default function SelectContactsScreen({ navigation }) {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [contactList, setContactList] = useState();
+  const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
   const toast = useToast();
 
@@ -34,35 +35,51 @@ export default function SelectContactsScreen({ navigation }) {
   };
 
   useEffect(() => {
-    (async () => {
-      const { status } = await Contacts.requestPermissionsAsync();
-      if (status === 'granted') {
-        const { data } = await Contacts.getContactsAsync({
-          Fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
-        });
-        if (data.length > 0) {
-          setContactList(data);
+    const fetchContacts = async () => {
+      try {
+        // Request permission to access contacts
+        const { status } = await Contacts.requestPermissionsAsync();
+
+        // If permission granted, fetch contacts
+        if (status === 'granted') {
+          const { data } = await Contacts.getContactsAsync({
+            Fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
+          });
+
+          // If contacts exist, update contact list
+          if (data && data.length > 0) {
+            setContactList(data);
+          } else {
+            console.log('No Contacts');
+          }
         } else {
-          console.log('No Contacts');
+          console.log('Permission Denied');
         }
+      } catch (error) {
+        console.log('An error accurred while fetching contacts:', error);
       }
-    })();
+    };
+
+    fetchContacts();
   }, []);
 
-  const toggleContactSelection = (contactId) => {
-    const isSelected = selectedContacts.includes(contactId);
+  const toggleContactSelection = useCallback(
+    (contactId) => {
+      const isSelected = selectedContacts.includes(contactId);
 
-    if (isSelected) {
-      // Remove the contact from the selected list
-      setSelectedContacts(selectedContacts.filter((id) => id !== contactId));
-    } else {
-      // Check if the contact is not already selected before adding
-      if (!selectedContacts.includes(contactId)) {
-        // Add the contact to the selected list
-        setSelectedContacts([...selectedContacts, contactId]);
+      if (isSelected) {
+        // Remove the contact from the selected list
+        setSelectedContacts(selectedContacts.filter((id) => id !== contactId));
+      } else {
+        // Check if the contact is not already selected before adding
+        if (!selectedContacts.includes(contactId)) {
+          // Add the contact to the selected list
+          setSelectedContacts([...selectedContacts, contactId]);
+        }
       }
-    }
-  };
+    },
+    [selectedContacts],
+  );
 
   const removeSelectedContact = (contactId) => {
     const updatedContacts = selectedContacts.filter((id) => id !== contactId);
@@ -85,11 +102,13 @@ export default function SelectContactsScreen({ navigation }) {
     }
   };
 
-  const renderItem = ({ item, index }) => {
+  const handleContactSelection = (contactId) => () => toggleContactSelection(contactId);
+
+  const renderItem = useCallback(({ item, index }) => {
     const isSelected = selectedContacts.includes(item.id);
 
     return (
-      <TouchableOpacity onPress={() => toggleContactSelection(item.id)}>
+      <TouchableOpacity onPress={handleContactSelection(item.id)}>
         <Contact
           index={index}
           isSelected={isSelected}
@@ -99,31 +118,39 @@ export default function SelectContactsScreen({ navigation }) {
         />
       </TouchableOpacity>
     );
-  };
+  });
+
+  const removeContactHandler = (contactId) => () => removeSelectedContact(contactId);
+
+  const renderSelectedContact = useCallback(
+    (contactId, index) => {
+      const contact = contactList.find((contact) => contact.id === contactId);
+      return (
+        <TouchableOpacity key={contactId} onPress={removeContactHandler(contactId)}>
+          <SelectedContact
+            index={index}
+            badge
+            nameInitials={contact.name[0].toUpperCase()}
+            fullName={contact.name}
+          />
+        </TouchableOpacity>
+      );
+    },
+    [removeContactHandler, contactList],
+  );
+
+  const renderSelectedContacts = useCallback(() => {
+    return selectedContacts.map((contactId, index) => renderSelectedContact(contactId, index));
+  }, [selectedContacts, renderSelectedContact]);
+
+  const keyExtractor = (item) => item.id;
 
   return (
     <Box flex={1} bg="muted.100">
-      <VStack width="full" bg="muted.200">
+      <VStack bg="muted.200">
         {selectedContacts.length > 0 ? (
           <HStack>
-            <ScrollView horizontal>
-              {selectedContacts.map((contactId, index) => {
-                const contact = contactList.find((contact) => contact.id === contactId);
-                return (
-                  <TouchableOpacity
-                    key={contactId}
-                    onPress={() => removeSelectedContact(contactId)}
-                  >
-                    <SelectedContact
-                      index={index}
-                      badge
-                      nameInitials={contact.name[0].toUpperCase()}
-                      fullName={contact.name}
-                    />
-                  </TouchableOpacity>
-                );
-              })}
-            </ScrollView>
+            <ScrollView horizontal>{renderSelectedContacts()}</ScrollView>
           </HStack>
         ) : (
           <Box alignItems="center" m={2} w="78%">
@@ -133,7 +160,7 @@ export default function SelectContactsScreen({ navigation }) {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={contactList}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={keyExtractor}
           renderItem={renderItem}
         />
       </VStack>

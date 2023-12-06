@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { Text, Avatar, VStack } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setBgColor } from '../utils/setBgColor';
 
-const SelectedContact = ({ nameInitials, fullName, badge, index }) => {
+const SelectedContact = memo(({ nameInitials, fullName, badge, index }) => {
   const firstName = fullName.split(' ')[0];
   return (
     <VStack alignItems="center" py={2} px={4}>
@@ -17,6 +18,6 @@ const SelectedContact = ({ nameInitials, fullName, badge, index }) => {
       <Text fontSize="xs">{badge ? firstName : fullName}</Text>
     </VStack>
   );
-};
+});
 
 export default SelectedContact;
