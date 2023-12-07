@@ -1,15 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import {
-  Box,
-  HStack,
-  Text,
-  Stack,
-  VStack,
-  FlatList,
-  Button,
-  ScrollView,
-  useToast,
-} from 'native-base';
+import { useEffect, useState, useCallback, useLayoutEffect } from 'react';
+import { Box, HStack, Text, Stack, VStack, FlatList, Button, ScrollView } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import * as Contacts from 'expo-contacts';
@@ -21,17 +11,31 @@ import { setSelectedMembers } from '@dapp/store/spaces/spaces.slice';
 
 export default function SelectContactsScreen({ navigation }) {
   const [selectedContacts, setSelectedContacts] = useState([]);
-  const [contactList, setContactList] = useState();
+  const [contactList, setContactList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
-  const toast = useToast();
 
-  const showToast = () => {
-    toast.show({
-      description: 'At least 1 contact must be selected',
-      duration: 2000,
-      placement: 'top',
-    });
+  const handleSearch = (event) => {
+    setSearchQuery(event.nativeEvent.text);
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerSearchBarOptions: {
+        placeholder: 'Search members...',
+        onChangeText: handleSearch,
+      },
+    });
+  }, [navigation]);
+
+  const filteredContacts = contactList.filter(
+    (contact) =>
+      contact.name.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
+      (contact.phoneNumbers &&
+        contact.phoneNumbers.some((phoneNumber) =>
+          phoneNumber.number.includes(searchQuery.trim().toLowerCase()),
+        )),
+  );
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -45,9 +49,12 @@ export default function SelectContactsScreen({ navigation }) {
             Fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
           });
 
-          // If contacts exist, update contact list
+          // If contacts exist, update and sort contact list alphabetically
           if (data && data.length > 0) {
-            setContactList(data);
+            const sortedContacts = data.sort((a, b) =>
+              a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }),
+            );
+            setContactList(sortedContacts);
           } else {
             console.log('No Contacts');
           }
@@ -86,19 +93,14 @@ export default function SelectContactsScreen({ navigation }) {
   };
 
   const navigateToNextPage = () => {
-    if (selectedContacts.length === 0) {
-      // Show toast notification if no contacts are selected
-      showToast();
-    } else {
-      // Get details of selected contacts
-      const selectedContactDetails = selectedContacts.map((contactId) =>
-        contactList.find((contact) => contact.id === contactId),
-      );
+    // Get details of selected contacts
+    const selectedContactDetails = selectedContacts.map((contactId) =>
+      contactList.find((contact) => contact.id === contactId),
+    );
 
-      // Navigate to the next page and pass the selected contact details
-      dispatch(setSelectedMembers(selectedContactDetails));
-      navigation.navigate('setRoscaGoal');
-    }
+    // Navigate to the next page and pass the selected contact details
+    dispatch(setSelectedMembers(selectedContactDetails));
+    navigation.navigate('setRoscaGoal');
   };
 
   const handleContactSelection = (contactId) => () => toggleContactSelection(contactId);
@@ -119,13 +121,13 @@ export default function SelectContactsScreen({ navigation }) {
     );
   });
 
-  const removeContactHandler = (contactId) => () => removeSelectedContact(contactId);
+  const handleRemoveContact = (contactId) => () => removeSelectedContact(contactId);
 
   const renderSelectedContact = useCallback(
     (contactId, index) => {
       const contact = contactList.find((contact) => contact.id === contactId);
       return (
-        <TouchableOpacity key={contactId} onPress={removeContactHandler(contactId)}>
+        <TouchableOpacity key={contactId} onPress={handleRemoveContact(contactId)}>
           <SelectedContact
             index={index}
             badge
@@ -135,7 +137,7 @@ export default function SelectContactsScreen({ navigation }) {
         </TouchableOpacity>
       );
     },
-    [removeContactHandler, contactList],
+    [handleRemoveContact, contactList],
   );
 
   const renderSelectedContacts = useCallback(() => {
@@ -156,9 +158,10 @@ export default function SelectContactsScreen({ navigation }) {
             <Text>Please select members to add to your space</Text>
           </Box>
         )}
+
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={contactList}
+          data={filteredContacts}
           keyExtractor={keyExtractor}
           renderItem={renderItem}
         />
@@ -168,6 +171,7 @@ export default function SelectContactsScreen({ navigation }) {
           rounded="3xl"
           _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
           onPress={navigateToNextPage}
+          isDisabled={selectedContacts.length === 0}
         >
           Continue
         </Button>

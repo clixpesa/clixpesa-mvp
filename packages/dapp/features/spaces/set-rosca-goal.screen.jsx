@@ -144,7 +144,7 @@ export default function SetRoscaGoalScreen() {
 
   const renderSelectedMembers = () =>
     members.map((member, index) => (
-      <Box w="1/4">
+      <Box w="1/4" key={index}>
         <SelectedContact
           index={index}
           key={member.name}
