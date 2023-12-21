@@ -11,7 +11,6 @@ import {
   FormControl,
 } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
 import { setSpaceInfo } from '../../store/spaces/spaces.slice';
 
 const personalSpaceImg = 'https://source.unsplash.com/0ITvgXAU5Oo';
