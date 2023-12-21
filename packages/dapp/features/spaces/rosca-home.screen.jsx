@@ -12,7 +12,7 @@ import { utils } from 'ethers';
 import { areAddressesEqual, shortenAddress } from '@dapp/utils/addresses';
 
 export default function RoscaHomeScreen({ navigation }) {
-  const thisRosca = useSelector((s) => s.spaces.thisRosca); //route.params.roscaAddress;
+  const thisRosca = useSelector((s) => s.spaces.thisRosca);
   const dispatch = useDispatch();
   const { roscaDetails } = useSelector((state) => state.spaces);
   const [refreshing, setRefreshing] = useState(false);
@@ -81,7 +81,6 @@ export default function RoscaHomeScreen({ navigation }) {
     });
   }, []);
 
-  let totalBalance = 0;
   if (!roscaDetails.roscaBal) {
     return <Spinner size="lg" />;
   }

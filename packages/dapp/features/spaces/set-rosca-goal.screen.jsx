@@ -4,6 +4,7 @@ import { Box, Text, Icon, VStack, Button, Stack, HStack, Input, useDisclose } fr
 
 import { useSelector, useDispatch } from 'react-redux';
 import { customAlphabet } from 'nanoid';
+
 import { utils } from 'ethers';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -21,6 +22,7 @@ import {
 } from '@dapp/components';
 
 import { setCtbSchedule, setDisbSchedule, setGoalAmount } from '@dapp/store/spaces/spaces.slice';
+import { setThisRosca } from '../../store/spaces/spaces.slice';
 
 export default function SetRoscaGoalScreen() {
   const [newRosca, setNewRosca] = useState({ address: '', authCode: '' });
@@ -98,28 +100,24 @@ export default function SetRoscaGoalScreen() {
         params: [Object.values(txData)],
       });
 
-      await handleTxResponse(txReceipt);
-
-      // if (txReceipt) {
-      //   handleTxResponse(txReceipt);
-      // } else {
-      //   throw new Error('Transaction receipt is not available');
-      // }
+      if (txReceipt) {
+        handleTxResponse(txReceipt);
+      } else {
+        throw new Error('Transaction receipt is not available');
+      }
     } catch (e) {
-      console.log('Error', e);
-      console.log('setIsLoading is', setIsLoading);
       setIsLoading(false);
       setIsErrorModalOpen(true);
-      // setErrorMessage(e);
+      setErrorMessage(e.message);
     }
   };
 
   async function handleTxResponse(txReceipt) {
     try {
-      const { data } = txReceipt.logs.find(
+      const { data, topics } = txReceipt.logs.find(
         (el) => el.address === config.contractAddresses['Spaces'],
       );
-      const results = spacesIface.parseLog({ data });
+      const results = spacesIface.parseLog({ data, topics });
       if (results) {
         const roscaDetails = {
           address: results.args.roscaAddress,
@@ -130,29 +128,32 @@ export default function SetRoscaGoalScreen() {
           ctbOccur: results.args[2][7],
           authCode: results.args[2][3],
         };
-        // setIsLoading(false);
-        // setIsSuccessModalOpen(true);
+        setIsLoading(false);
+        setIsSuccessModalOpen(true);
+        setThisRosca(roscaDetails);
         setNewRosca(roscaDetails);
       }
     } catch (e) {
-      console.log('Errorrrr', e);
-      // setIsLoading(false);
-      // setIsErrorModalOpen(true);
-      // setErrorMessage(e);
+      setIsLoading(false);
+      setIsErrorModalOpen(true);
+      setErrorMessage(e.message);
     }
   }
 
   const renderSelectedMembers = () =>
-    members.map((member, index) => (
-      <Box w="1/4" key={index}>
-        <SelectedContact
-          index={index}
-          key={member.name}
-          nameInitials={member.name[0].toUpperCase()}
-          fullName={member.name}
-        />
-      </Box>
-    ));
+    members.map((member, index) => {
+      const w = members.length >= 4 ? '1/4' : '1/3';
+      return (
+        <Box w={w} key={index}>
+          <SelectedContact
+            index={index}
+            key={member.name}
+            nameInitials={member.name[0].toUpperCase()}
+            fullName={member.name}
+          />
+        </Box>
+      );
+    });
 
   return (
     <KeyboardAvoidingView
@@ -183,11 +184,7 @@ export default function SetRoscaGoalScreen() {
               }}
             />
           </HStack>
-          {/* <Text px={4} mb={3} fontSize="md" color="muted.400">
-            Each member contributes{' '}
-            {members.length > 0 ? (amount / (members.length + 1)).toFixed(2).toString() : 'some'}{' '}
-            cUSD
-          </Text> */}
+
           <ScheduleComponent
             title="Contribution Schedule"
             schedule={contributionSchedule}
