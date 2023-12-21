@@ -5,7 +5,6 @@ import { config } from './config';
 import { setSigner, getSigner } from './signer';
 import { getContractByAddress, getContract, getCustomContract } from './contracts';
 import { sendTransaction, getCurrentNonce } from './transaction';
-import axios from 'axios';
 
 export const setAppSigner = async (privateKey) => {
   const provider = getProvider();

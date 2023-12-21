@@ -66,7 +66,11 @@ export default function SpareChangeScreen({ navigation }) {
         </VStack>
       </VStack>
       <Box mt="60%" w="50%">
-        <Button rounded="2xl" onPress={() => navigation.navigate('recurringTransfer')}>
+        <Button
+          rounded="3xl"
+          _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+          onPress={() => navigation.navigate('recurringTransfer')}
+        >
           Continue
         </Button>
       </Box>

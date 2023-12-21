@@ -6,9 +6,9 @@ import {
   Input,
   Text,
   VStack,
-  useDisclose,
   Button,
   Pressable,
+  useDisclose,
 } from 'native-base';
 import { useDispatch } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -55,8 +55,8 @@ export default function RecurringTransferScreen({ navigation }) {
           <Input
             w={{
               base: '75%',
-              md: '25%',
             }}
+            textAlign="right"
             value={amount}
             onChangeText={(text) => setAmount(text)}
             keyboardType="numeric"
@@ -69,14 +69,19 @@ export default function RecurringTransferScreen({ navigation }) {
             <HStack space={2}>
               <Icon as={<MaterialIcons name="date-range" />} size="md" color="primary.700" />
               <Text>
-                {schedule.occurrence} {schedule.occurrence === 'Daily' ? '' : `on ${schedule.day}`}
+                {schedule.occurrence}{' '}
+                {schedule.occurrence === 'Daily' ? '' : `on ${schedule.day.slice(0, 3)}`}
               </Text>
             </HStack>
           </Pressable>
         </HStack>
       </VStack>
       <Box w="50%" mt="80%">
-        <Button variant="solid" rounded="2xl" onPress={handleConfirm}>
+        <Button
+          _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+          rounded="3xl"
+          onPress={handleConfirm}
+        >
           Confirm
         </Button>
       </Box>

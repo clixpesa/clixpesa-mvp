@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Box, HStack, Text, VStack, FlatList, Button, ScrollView, useToast } from 'native-base';
+import { useEffect, useState, useCallback, useLayoutEffect } from 'react';
+import { Box, HStack, Text, Stack, VStack, FlatList, Button, ScrollView } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import * as Contacts from 'expo-contacts';
@@ -11,48 +11,81 @@ import { setSelectedMembers } from '@dapp/store/spaces/spaces.slice';
 
 export default function SelectContactsScreen({ navigation }) {
   const [selectedContacts, setSelectedContacts] = useState([]);
-  const [contactList, setContactList] = useState();
+  const [contactList, setContactList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
-  const toast = useToast();
 
-  const showToast = () => {
-    toast.show({
-      description: 'At least 1 contact must be selected',
-      duration: 2000,
-      placement: 'top',
-    });
+  const handleSearch = (event) => {
+    setSearchQuery(event.nativeEvent.text);
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerSearchBarOptions: {
+        placeholder: 'Search members...',
+        onChangeText: handleSearch,
+      },
+    });
+  }, [navigation]);
+
+  const filteredContacts = contactList.filter(
+    (contact) =>
+      contact.name.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
+      (contact.phoneNumbers &&
+        contact.phoneNumbers.some((phoneNumber) =>
+          phoneNumber.number.includes(searchQuery.trim().toLowerCase()),
+        )),
+  );
 
   useEffect(() => {
-    (async () => {
-      const { status } = await Contacts.requestPermissionsAsync();
-      if (status === 'granted') {
-        const { data } = await Contacts.getContactsAsync({
-          Fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
-        });
-        if (data.length > 0) {
-          setContactList(data);
+    const fetchContacts = async () => {
+      try {
+        // Request permission to access contacts
+        const { status } = await Contacts.requestPermissionsAsync();
+
+        // If permission granted, fetch contacts
+        if (status === 'granted') {
+          const { data } = await Contacts.getContactsAsync({
+            Fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
+          });
+
+          // If contacts exist, update and sort contact list alphabetically
+          if (data && data.length > 0) {
+            const sortedContacts = data.sort((a, b) =>
+              a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }),
+            );
+            setContactList(sortedContacts);
+          } else {
+            console.log('No Contacts');
+          }
         } else {
-          console.log('No Contacts');
+          console.log('Permission Denied');
         }
+      } catch (error) {
+        console.log('An error accurred while fetching contacts:', error);
       }
-    })();
+    };
+
+    fetchContacts();
   }, []);
 
-  const toggleContactSelection = (contactId) => {
-    const isSelected = selectedContacts.includes(contactId);
+  const toggleContactSelection = useCallback(
+    (contactId) => {
+      const isSelected = selectedContacts.includes(contactId);
 
-    if (isSelected) {
-      // Remove the contact from the selected list
-      setSelectedContacts(selectedContacts.filter((id) => id !== contactId));
-    } else {
-      // Check if the contact is not already selected before adding
-      if (!selectedContacts.includes(contactId)) {
-        // Add the contact to the selected list
-        setSelectedContacts([...selectedContacts, contactId]);
+      if (isSelected) {
+        // Remove the contact from the selected list
+        setSelectedContacts(selectedContacts.filter((id) => id !== contactId));
+      } else {
+        // Check if the contact is not already selected before adding
+        if (!selectedContacts.includes(contactId)) {
+          // Add the contact to the selected list
+          setSelectedContacts([...selectedContacts, contactId]);
+        }
       }
-    }
-  };
+    },
+    [selectedContacts],
+  );
 
   const removeSelectedContact = (contactId) => {
     const updatedContacts = selectedContacts.filter((id) => id !== contactId);
@@ -60,27 +93,25 @@ export default function SelectContactsScreen({ navigation }) {
   };
 
   const navigateToNextPage = () => {
-    if (selectedContacts.length === 0) {
-      // Show toast notification if no contacts are selected
-      showToast();
-    } else {
-      // Get details of selected contacts
-      const selectedContactDetails = selectedContacts.map((contactId) =>
-        contactList.find((contact) => contact.id === contactId),
-      );
+    // Get details of selected contacts
+    const selectedContactDetails = selectedContacts.map((contactId) =>
+      contactList.find((contact) => contact.id === contactId),
+    );
 
-      // Navigate to the next page and pass the selected contact details
-      dispatch(setSelectedMembers(selectedContactDetails));
-      navigation.navigate('setRoscaGoal');
-    }
+    // Navigate to the next page and pass the selected contact details
+    dispatch(setSelectedMembers(selectedContactDetails));
+    navigation.navigate('setRoscaGoal');
   };
 
-  const renderItem = ({ item }) => {
+  const handleContactSelection = (contactId) => () => toggleContactSelection(contactId);
+
+  const renderItem = useCallback(({ item, index }) => {
     const isSelected = selectedContacts.includes(item.id);
 
     return (
-      <TouchableOpacity onPress={() => toggleContactSelection(item.id)}>
+      <TouchableOpacity onPress={handleContactSelection(item.id)}>
         <Contact
+          index={index}
           isSelected={isSelected}
           nameInitials={item.name[0].toUpperCase()}
           fullName={item.name}
@@ -88,54 +119,63 @@ export default function SelectContactsScreen({ navigation }) {
         />
       </TouchableOpacity>
     );
-  };
+  });
+
+  const handleRemoveContact = (contactId) => () => removeSelectedContact(contactId);
+
+  const renderSelectedContact = useCallback(
+    (contactId, index) => {
+      const contact = contactList.find((contact) => contact.id === contactId);
+      return (
+        <TouchableOpacity key={contactId} onPress={handleRemoveContact(contactId)}>
+          <SelectedContact
+            index={index}
+            badge
+            nameInitials={contact.name[0].toUpperCase()}
+            fullName={contact.name}
+          />
+        </TouchableOpacity>
+      );
+    },
+    [handleRemoveContact, contactList],
+  );
+
+  const renderSelectedContacts = useCallback(() => {
+    return selectedContacts.map((contactId, index) => renderSelectedContact(contactId, index));
+  }, [selectedContacts, renderSelectedContact]);
+
+  const keyExtractor = (item) => item.id;
 
   return (
     <Box flex={1} bg="muted.100">
-      <VStack width="full" bg="muted.200">
+      <VStack bg="muted.200">
         {selectedContacts.length > 0 ? (
           <HStack>
-            <ScrollView horizontal>
-              {selectedContacts.map((contactId) => {
-                const contact = contactList.find((contact) => contact.id === contactId);
-                return (
-                  <TouchableOpacity
-                    key={contactId}
-                    onPress={() => removeSelectedContact(contactId)}
-                  >
-                    <SelectedContact
-                      badge
-                      nameInitials={contact.name[0].toUpperCase()}
-                      fullName={contact.name}
-                    />
-                  </TouchableOpacity>
-                );
-              })}
-            </ScrollView>
+            <ScrollView horizontal>{renderSelectedContacts()}</ScrollView>
           </HStack>
         ) : (
           <Box alignItems="center" m={2} w="78%">
             <Text>Please select members to add to your space</Text>
           </Box>
         )}
+
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={contactList}
-          keyExtractor={(item) => item.id.toString()}
+          data={filteredContacts}
+          keyExtractor={keyExtractor}
           renderItem={renderItem}
         />
       </VStack>
-      <Button
-        position="absolute"
-        bottom={10}
-        left="20%"
-        rounded="3xl"
-        w="60%"
-        _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
-        onPress={navigateToNextPage}
-      >
-        Continue
-      </Button>
+      <Stack w="50%" position="absolute" bottom={20} left="25%">
+        <Button
+          rounded="3xl"
+          _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+          onPress={navigateToNextPage}
+          isDisabled={selectedContacts.length === 0}
+        >
+          Continue
+        </Button>
+      </Stack>
     </Box>
   );
 }

@@ -1,30 +1,38 @@
+import { useState } from 'react';
 import {
   Box,
   Image,
-  FormControl,
   Stack,
   Input,
   Button,
   HStack,
   Select,
   CheckIcon,
+  FormControl,
 } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { setSpaceInfo } from '../../store/spaces/spaces.slice';
 
+const personalSpaceImg = 'https://source.unsplash.com/0ITvgXAU5Oo';
+const otherSpaceImg = 'https://source.unsplash.com/ybPJ47PMT_M';
+
 export default function CreateSpaceScreen({ navigation }) {
-  const walletAddress = useSelector((s) => s.wallet.walletInfo.address);
-  const suggestions = ['Savings', 'Vacation', 'Chama', 'Gift', 'Sherehe', 'Emergency', 'Masomo'];
-  const dispatch = useDispatch();
   const [spaceName, setSpaceName] = useState('');
   const [spaceType, setSpaceType] = useState('');
+  const walletAddress = useSelector((s) => s.wallet.walletInfo.address);
+  const dispatch = useDispatch();
+
+  const suggestions = ['Savings', 'Vacation', 'Chama', 'Gift', 'Sherehe', 'Emergency', 'Masomo'];
 
   const nextScreen = spaceType !== 'personal' ? 'selectContacts' : 'setPersonalGoal';
   const defaultImg =
-    spaceType === 'personal' || spaceType === ''
-      ? 'https://source.unsplash.com/0ITvgXAU5Oo'
-      : 'https://source.unsplash.com/ybPJ47PMT_M';
+    spaceType === 'personal' || spaceType === '' ? personalSpaceImg : otherSpaceImg;
+
+  const handleContinue = () => {
+    dispatch(setSpaceInfo({ spaceName, spaceType, walletAddress, defaultImg }));
+    navigation.navigate(nextScreen);
+  };
 
   return (
     <Box flex={1} bg="muted.100">
@@ -63,7 +71,7 @@ export default function CreateSpaceScreen({ navigation }) {
               bg="white"
               p={2}
               placeholder="Savings"
-              size="lg"
+              size="md"
               value={spaceName}
               onChangeText={(text) => setSpaceName(text)}
             />
@@ -86,17 +94,12 @@ export default function CreateSpaceScreen({ navigation }) {
             })}
           </HStack>
         </Stack>
-        <Stack alignItems="center" width="95%" mt="15%">
+        <Stack w="50%" mt="22%">
           <Button
             rounded="3xl"
             disabled={spaceType ? false : true}
-            pr="4"
-            minW="75%"
             _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
-            onPress={() => {
-              dispatch(setSpaceInfo({ spaceName, spaceType, walletAddress, defaultImg }));
-              navigation.navigate(nextScreen);
-            }}
+            onPress={handleContinue}
           >
             Continue
           </Button>

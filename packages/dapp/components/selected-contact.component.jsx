@@ -1,11 +1,13 @@
-import { Box, Text, Avatar, VStack } from 'native-base';
+import { memo } from 'react';
+import { Text, Avatar, VStack } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { setBgColor } from '../utils/setBgColor';
 
-const SelectedContact = ({ nameInitials, fullName, badge }) => {
+const SelectedContact = memo(({ nameInitials, fullName, badge, index }) => {
   const firstName = fullName.split(' ')[0];
   return (
     <VStack alignItems="center" py={2} px={4}>
-      <Avatar>
+      <Avatar bg={setBgColor(index)}>
         {nameInitials}
         {badge && (
           <Avatar.Badge bg="gray.300">
@@ -16,6 +18,6 @@ const SelectedContact = ({ nameInitials, fullName, badge }) => {
       <Text fontSize="xs">{badge ? firstName : fullName}</Text>
     </VStack>
   );
-};
+});
 
 export default SelectedContact;

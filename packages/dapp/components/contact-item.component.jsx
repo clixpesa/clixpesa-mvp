@@ -1,7 +1,9 @@
+import { memo } from 'react';
 import { HStack, Text, Avatar, VStack } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { setBgColor } from '../utils/setBgColor';
 
-const Contact = ({ nameInitials, isSelected, fullName, phoneNo }) => (
+const Contact = memo(({ nameInitials, isSelected, fullName, phoneNo, index }) => (
   <HStack
     alignItems="center"
     space={4}
@@ -10,11 +12,11 @@ const Contact = ({ nameInitials, isSelected, fullName, phoneNo }) => (
     borderRadius={4}
     borderColor="gray.300"
   >
-    <Avatar>
+    <Avatar bg={setBgColor(index)}>
       {nameInitials}
       {isSelected && (
         <Avatar.Badge>
-          <MaterialCommunityIcons name="check" color="green.100" />
+          <MaterialCommunityIcons name="check" />
         </Avatar.Badge>
       )}
     </Avatar>
@@ -23,6 +25,6 @@ const Contact = ({ nameInitials, isSelected, fullName, phoneNo }) => (
       <Text>{phoneNo}</Text>
     </VStack>
   </HStack>
-);
+));
 
 export default Contact;

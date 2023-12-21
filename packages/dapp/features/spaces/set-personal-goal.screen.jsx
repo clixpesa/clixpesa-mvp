@@ -25,12 +25,12 @@ export default function SetPersonalGoalScreen({ navigation, route }) {
   };
 
   return (
-    <Box flex={1} bg="muted.100" alignItems="center" p={4}>
+    <Box flex={1} bg="muted.100" alignItems="center">
       <Box w="100%" my={4} pl={4}>
         <Text>Set an amount and deadline for your goal</Text>
       </Box>
 
-      <VStack space={1} w="100%">
+      <VStack space={1}>
         <HStack
           bg="#fff"
           p={4}
@@ -40,14 +40,14 @@ export default function SetPersonalGoalScreen({ navigation, route }) {
           roundedBottom="md"
         >
           <HStack alignItems="center">
-            <Text fontWeight="semibold">cUSD</Text>
-            <Icon as={<MaterialIcons name="keyboard-arrow-down" />} size="md" />
+            <Text fontWeight="semibold" fontSize="md">
+              cUSD
+            </Text>
+            <Icon as={<MaterialIcons name="keyboard-arrow-down" />} size="lg" color="black" />
           </HStack>
           <Input
-            w={{
-              base: '75%',
-              md: '25%',
-            }}
+            textAlign="right"
+            w={{ base: '75%' }}
             value={amount}
             onChangeText={(text) => setAmount(text)}
             keyboardType="numeric"
