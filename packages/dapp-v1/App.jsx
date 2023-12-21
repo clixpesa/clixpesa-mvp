@@ -39,31 +39,24 @@ export default function App() {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHideAsync();
-
-        auth().onAuthStateChanged(async (user) => {
-          if (user) {
-            const userDetails = await getUserDetails(USER_STORE);
-            const wallet = (await getWallets())[0];
-            if (userDetails.token && wallet) {
-              setUserTokenFrom(userDetails.token);
-              const key = await decryptDataWtoken(wallet.enPrivateKey, userDetails.token);
-              setPrivateKey(key);
-              dispatch(setHasAccount(true)); //Evaluate for stability
-              dispatch(
-                setUserDetails({
-                  userId: user.uid,
-                  userName: user.displayName,
-                  userEmail: user.email,
-                  userPhone: user.phoneNumber,
-                  userPhoto: user.photoURL,
-                }),
-              );
-              dispatch(updateWalletAddress(wallet.address));
-            }
-          } else {
-            dispatch(setIsConnected(false));
-          }
-        });
+        const userDetails = await getUserDetails(USER_STORE);
+        const wallet = (await getWallets())[0];
+        if (userDetails.token && wallet) {
+          setUserTokenFrom(userDetails.token);
+          const key = await decryptDataWtoken(wallet.enPrivateKey, userDetails.token);
+          setPrivateKey(key);
+          dispatch(setHasAccount(true)); //Evaluate for stability
+          dispatch(
+            setUserDetails({
+              userId: userDetails.id,
+              userName: userDetails.names,
+              userEmail: userDetails.email,
+              userPhone: userDetails.phone,
+              userPhoto: userDetails.photo,
+            }),
+          );
+          dispatch(updateWalletAddress(wallet.address));
+        }
       } catch (e) {
         console.warn(e);
       } finally {

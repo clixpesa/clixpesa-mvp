@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 //Screens
-import { HomeScreen, DummyScreen, AccountScreen } from 'dapp/essentials';
+import { HomeScreen, DummyScreen, AccountScreen, EditProfileScreen } from 'dapp/essentials';
 import { TxDetailsScreen, DepositScreen, TransferFundsScreen } from 'dapp/wallet';
 import { HeaderRightIcons, AccPressable } from './bottom.tabs';
 
@@ -26,7 +26,7 @@ export function AppNavigator() {
             component={DummyScreen}
             options={{ headerTitle: '' }}
           />
-          <AppStack.Screen name="AccountScreen" component={AccountScreen} />
+          <AppStack.Screen name="Account" component={AccountScreen} />
           <AppStack.Screen
             name="depositFunds"
             component={DepositScreen}
@@ -43,6 +43,11 @@ export function AppNavigator() {
             options={{
               headerTitle: '',
             }}
+          />
+          <AppStack.Screen
+            name="editProfile"
+            component={EditProfileScreen}
+            options={{ headerTitle: 'Edit Profile' }}
           />
         </AppStack.Group>
       }

@@ -47,14 +47,18 @@ export default function SignUpScreen({ navigation }) {
     if (!isInvalid) {
       setIsLoading(true);
       const phoneNumber = parsePhoneNumberFromString(phoneNo, country);
-      setThisNo(phoneNumber.number);
+      //setThisNo(phoneNumber.number);
       const confirmation = await auth().signInWithPhoneNumber(phoneNumber.number);
       setConfirm(confirmation);
-      onOpen();
+      //onOpen();
       setIsLoading(false);
-      //navigation.navigate('verifyPhoneNo', { phone: phoneNumber.number });
+      navigation.navigate('verifyPhoneNo', {
+        phone: phoneNumber.number,
+        verificationId: confirmation.verificationId,
+      });
     }
   };
+
   return (
     <Box flex={1} bg="white" alignItems="center">
       <FormControl mt="1/6">
@@ -106,6 +110,7 @@ export default function SignUpScreen({ navigation }) {
           >
             Create Account
           </Button>
+          {/*
           <Text textAlign="center" fontWeight="medium">
             -- OR --
           </Text>
@@ -119,7 +124,7 @@ export default function SignUpScreen({ navigation }) {
             onPress={() => navigation.navigate('signInWithGoogle')}
           >
             Sign in with Google
-          </Button>
+            </Button>*/}
         </VStack>
       </FormControl>
       <VerificationModal

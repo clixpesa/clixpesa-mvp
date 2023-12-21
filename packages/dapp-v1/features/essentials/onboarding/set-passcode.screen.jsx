@@ -15,22 +15,21 @@ export default function SetPasscodeScreen({ navigation }) {
   const [code2, setCode2] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isCodeReady, setIsCodeReady] = useState(false);
 
   const handleOnSucess = (code) => {
-    setUserToken(code);
-
-    if (pendingWallet) {
-      console.log('Is Pending Wallet');
-      dispatch(createAccount());
-      dispatch(importWallet(code));
-      setIsSuccess(true);
-    } else {
-      console.log('creating account');
-      dispatch(createAccount());
-      dispatch(createWallet(code));
-      setIsSuccess(true);
-    }
+    //setUserToken(code);
+    setTimeout(() => {
+      if (pendingWallet) {
+        console.log('Is Pending Wallet');
+        dispatch(createAccount());
+        dispatch(importWallet(code));
+      } else {
+        console.log('creating account');
+        dispatch(createAccount());
+        dispatch(createWallet(code));
+      }
+    }, 500);
   };
 
   const onFullCode1 = (code) => {
@@ -46,7 +45,7 @@ export default function SetPasscodeScreen({ navigation }) {
     console.log('Code 1: ' + code);
     if (code1 === code) {
       console.log('Pin session is done');
-      setIsLoading(true);
+
       handleOnSucess(code);
       setCode1('');
       //setCode2('');
@@ -57,12 +56,21 @@ export default function SetPasscodeScreen({ navigation }) {
     }
   };
 
+  useEffect(() => {
+    if (isCodeReady) {
+      setTimeout(() => {
+        setUserToken(code2);
+        onFullCode2(code2);
+      }, 500);
+    }
+  }, [isCodeReady]);
+
   return (
     <Box flex={1} bg="muted.50" justifyContent="center">
       {isLoading ? (
         <VStack mx="20" space={3} alignItems="center">
           <Spinner size="lg" />
-          <Text fontSize="md">Loading Account...</Text>
+          <Text fontSize="md">Setting up Account...</Text>
         </VStack>
       ) : (
         <>
@@ -78,7 +86,11 @@ export default function SetPasscodeScreen({ navigation }) {
                   autoFocus={true}
                   password={true}
                   onTextChange={(code) => setCode2(code)}
-                  onFulfill={(code) => onFullCode2(code)}
+                  onFulfill={(code) => {
+                    setIsLoading(true);
+                    setCode2(code);
+                    setIsCodeReady(true);
+                  }}
                 />
               </Box>
 

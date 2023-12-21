@@ -13,6 +13,7 @@ export default function LoginScreen({ navigation }) {
   const firstName = names ? names.split(' ')[0] : '**' + phone.slice(9, 13);
   const [code, setCode] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const [isCodeReady, setIsCodeReady] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   const handleFullFill = (code) => {
@@ -30,9 +31,19 @@ export default function LoginScreen({ navigation }) {
 
   useEffect(() => {
     if (isLoading) {
-      dispatch(setLoggedIn(true));
+      setTimeout(() => {
+        dispatch(setLoggedIn(true));
+      }, 500);
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    if (isCodeReady) {
+      setTimeout(() => {
+        handleFullFill(code);
+      }, 500);
+    }
+  }, [isCodeReady]);
 
   return (
     <Box flex={1} bg="#fff" justifyContent="center">
@@ -74,7 +85,10 @@ export default function LoginScreen({ navigation }) {
             cellStyleFocused={null}
             value={code}
             onTextChange={(code) => setCode(code)}
-            onFulfill={(code) => handleFullFill(code)}
+            onFulfill={(code) => {
+              setCode(code);
+              setIsCodeReady(true);
+            }}
           />
         )}
         {isValid ? null : <Text>Forgot passcode? See how to reset here!</Text>}

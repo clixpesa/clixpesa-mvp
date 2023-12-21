@@ -2,7 +2,7 @@
   "expo": {
     "name": "Clixpesa MVP",
     "slug": "clixpesa-mvp",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,18 +25,21 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.clixpesa.mvp"
+      "package": "com.clixpesa.mvp",
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+
+    "owner": "clixpesa",
     "extra": {
       "eas": {
         "projectId": "3594833d-ce4f-4e67-be06-b12367eb0416"
       }
-    },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
     }
   }
 }
