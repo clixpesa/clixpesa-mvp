@@ -101,3 +101,31 @@ export const LoansData = [
     ],
   },
 ];
+
+export const spaces = [
+  {
+    id: '0x1',
+    type: 'contribution',
+    roscaName: 'Masomo',
+    goalAmount: '50',
+    token: 'cUSD',
+    dueDate: '20 Mar 2020',
+    address: '0x8ad186F9F99B59fE98430CaA4E204B2084C6e51c',
+  },
+  {
+    id: '0x2',
+    type: 'rosca',
+    name: 'TMK Wanaume',
+    value: '5000',
+    token: 'cUSD',
+    dueDate: '20 Mar 2020',
+  },
+  {
+    id: '0x3',
+    type: 'personal',
+    name: 'Vacation',
+    value: '500',
+    token: 'cUSD',
+    dueDate: '20 Mar 2020',
+  },
+];

@@ -100,11 +100,11 @@ export default function HomeScreen() {
                 screen: 'transferFunds',
                 params: balance,
               }}
-              btn3={{
+              /*btn3={{
                 icon: <Icon as={Feather} name="refresh-ccw" size="md" color="primary.600" mr="1" />,
                 name: 'Swap',
                 screen: 'DummyModal',
-              }}
+              }}*/
               btn4={{
                 icon: <Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />,
                 name: 'more',

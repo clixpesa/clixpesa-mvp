@@ -8,7 +8,9 @@ const SectionHeader = ({ title, action, actionText }) => (
     <Spacer />
     {action && (
       <Pressable onPress={action}>
-        <Text color="primary.600">{actionText}</Text>
+        <Text color="primary.600" fontSize="md">
+          {actionText}
+        </Text>
       </Pressable>
     )}
   </HStack>

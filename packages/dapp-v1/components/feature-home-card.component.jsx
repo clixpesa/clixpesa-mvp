@@ -72,7 +72,7 @@ const FeatureHomeCard = ({
         </Stack>
       </HStack>
       {balance ? null : <Spinner right="1/2" top={10} position="absolute" size="lg" />}
-      <HStack mx="4" mb="3" justifyContent="center" space="1">
+      <HStack mx="4" mb="3" space="1">
         <Button
           leftIcon={btn1.icon}
           rounded="3xl"
@@ -96,7 +96,7 @@ const FeatureHomeCard = ({
         >
           {btn2.name}
         </Button>
-        <Button
+        {/*<Button
           leftIcon={btn3.icon}
           rounded="3xl"
           variant="subtle"
@@ -106,7 +106,7 @@ const FeatureHomeCard = ({
           onPress={() => navigation.navigate(btn3.screen)}
         >
           {btn3.name}
-        </Button>
+</Button>*/}
         <Button
           leftIcon={btn4.icon}
           rounded="3xl"

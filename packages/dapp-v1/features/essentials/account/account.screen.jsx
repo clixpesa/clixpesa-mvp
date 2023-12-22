@@ -43,10 +43,6 @@ export default function AccountScreen({ navigation }) {
           title: 'Language',
           action: 'changeLanguage',
         },
-        {
-          title: 'Currency',
-          action: 'changeCurrency',
-        },
       ],
     },
     {
@@ -104,6 +100,7 @@ export default function AccountScreen({ navigation }) {
     <Box flex={1} bg="white" alignItems="center" justifyContent="center">
       <SectionList
         sections={data}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => item + index}
         renderItem={({ item, index }) => (
           <>
@@ -119,7 +116,7 @@ export default function AccountScreen({ navigation }) {
               }}
             >
               <HStack justifyContent="space-between">
-                <Text>{item.title}</Text>
+                <Text fontSize="md">{item.title}</Text>
                 <ChevronRightIcon size="4" />
               </HStack>
             </Pressable>
@@ -134,7 +131,11 @@ export default function AccountScreen({ navigation }) {
                   <Text fontSize="lg" textAlign="left">
                     {title}
                   </Text>
-                  {description ? <Text fontSize="xs">{description}</Text> : null}
+                  {description ? (
+                    <Text fontSize="sm" maxW="90%">
+                      {description}
+                    </Text>
+                  ) : null}
                 </Stack>
                 <Pressable p={3} mt={4} onPress={() => copyToClipboard()}>
                   <Icon as={Ionicons} name="ios-copy-outline" size="lg" color="text.400" />
