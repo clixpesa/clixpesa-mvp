@@ -1,11 +1,39 @@
-import { Text, Box, SectionList, Pressable, Divider, HStack, ChevronRightIcon } from 'native-base';
+import {
+  Text,
+  Box,
+  SectionList,
+  Pressable,
+  Divider,
+  HStack,
+  ChevronRightIcon,
+  Icon,
+  Stack,
+  useToast,
+} from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
+import * as Clipboard from 'expo-clipboard';
+import { useSelector } from 'react-redux';
 
 export default function AccountScreen({ navigation }) {
+  const walletAddress = useSelector((s) => s.wallet.walletInfo.address);
+  const userNumber = useSelector((s) => s.essential.userDetails.phone);
+  const toast = useToast();
+
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(walletAddress);
+    toast.show({
+      title: 'Address copied to clipboard',
+      status: 'success',
+      duration: 2000,
+      placement: 'top',
+    });
+  };
+
   const data = [
     {
-      title: 'Profile',
+      title: userNumber,
       icon: 'person',
-      description: '',
+      description: walletAddress,
       data: [
         {
           title: 'Edit Profile',
@@ -100,10 +128,26 @@ export default function AccountScreen({ navigation }) {
         )}
         renderSectionHeader={({ section: { title, icon, description } }) => (
           <Box maxW="90%" mt={3} mb={2}>
-            <Text fontSize="lg" textAlign="left">
-              {title}
-            </Text>
-            {description ? <Text fontSize="xs">{description}</Text> : null}
+            {icon === 'person' ? (
+              <HStack alignItems="center" space={6}>
+                <Stack>
+                  <Text fontSize="lg" textAlign="left">
+                    {title}
+                  </Text>
+                  {description ? <Text fontSize="xs">{description}</Text> : null}
+                </Stack>
+                <Pressable p={3} mt={4} onPress={() => copyToClipboard()}>
+                  <Icon as={Ionicons} name="ios-copy-outline" size="lg" color="text.400" />
+                </Pressable>
+              </HStack>
+            ) : (
+              <>
+                <Text fontSize="lg" textAlign="left">
+                  {title}
+                </Text>
+                {description ? <Text fontSize="xs">{description}</Text> : null}
+              </>
+            )}
           </Box>
         )}
       />

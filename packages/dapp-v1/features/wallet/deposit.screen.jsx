@@ -1,10 +1,35 @@
-import { Box, Text, VStack, Divider, HStack, Icon, Pressable, Spacer, Button } from 'native-base';
+import {
+  Box,
+  Text,
+  VStack,
+  Divider,
+  HStack,
+  Icon,
+  Pressable,
+  Spacer,
+  Button,
+  useToast,
+} from 'native-base';
 import QRCode from 'react-native-qrcode-svg';
 import { useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
+import * as Clipboard from 'expo-clipboard';
 
 export default function DepositScreen() {
   const walletAddress = useSelector((s) => s.wallet.walletInfo.address);
+  const userNumber = useSelector((s) => s.essential.userDetails.phone);
+  const thistoast = useToast();
+
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(walletAddress);
+    console.log('Copied to clipboard');
+    thistoast.show({
+      title: 'Address copied to clipboard',
+      status: 'success',
+      duration: 2000,
+      placement: 'top',
+    });
+  };
   return (
     <Box flex={1} bg="muted.50" alignItems="center">
       <Pressable mt={10}>
@@ -18,7 +43,7 @@ export default function DepositScreen() {
       <Box alignSelf="center" alignItems="center" p={3} bg="white" minW="40%" rounded={16}>
         <QRCode value={walletAddress} size={150} />
         <Text mt={2} alignSelf="center" fontWeight="medium">
-          $Akimbo6856
+          {userNumber.replace('+', '$')}
         </Text>
       </Box>
       <VStack width="95%" bg="white" mt={3} rounded="2xl">
@@ -28,7 +53,7 @@ export default function DepositScreen() {
             <Text color="text.600">Wallet Address</Text>
             <Text fontWeight="medium">{walletAddress}</Text>
           </Box>
-          <Pressable p={3} mt={4}>
+          <Pressable p={3} mt={4} onPress={() => copyToClipboard()}>
             <Icon as={Ionicons} name="ios-copy-outline" size="lg" color="text.400" />
           </Pressable>
         </HStack>
@@ -49,7 +74,7 @@ export default function DepositScreen() {
           </HStack>
           <HStack justifyContent="space-between">
             <Text>Expected arrival</Text>
-            <Text fontWeight="medium">12 block confirmations</Text>
+            <Text fontWeight="medium">~2 block confirmations</Text>
           </HStack>
         </Box>
       </VStack>

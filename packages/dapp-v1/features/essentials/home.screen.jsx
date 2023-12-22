@@ -2,7 +2,13 @@ import { useState, useCallback, useEffect } from 'react';
 import { Box, Text, Button, Icon, FlatList, Spinner } from 'native-base';
 import { Feather } from '@expo/vector-icons';
 import { RefreshControl } from 'react-native';
-import { FeatureHomeCard, TransactionItem, SectionHeader, FeaturedAssets } from 'dapp/components';
+import {
+  FeatureHomeCard,
+  TransactionItem,
+  SectionHeader,
+  FeaturedAssets,
+  NoItems,
+} from 'dapp/components';
 import { rates } from 'dapp/utils';
 import { useSelector } from 'react-redux';
 import { getWalletBalances, getWalletTxs } from '../wallet/manager.wallet';
@@ -108,13 +114,19 @@ export default function HomeScreen() {
             />
             <SectionHeader title="Assets" action={() => handleOnPress()} />
             <FeaturedAssets nativeBal={balance.celoBal} stableBal={balance.cusdBal} />
-            {transactions.length > 0 ? (
-              <SectionHeader
-                title="Transactions"
-                actionText="See all"
-                action={() => console.log('See all')}
+            <SectionHeader
+              title="Transactions"
+              actionText="See all"
+              action={() => console.log('See all')}
+            />
+            {transactions.length > 0 ? null : (
+              <NoItems
+                title="No Transactions yet"
+                message="Your transactions will show here."
+                action={() => console.log('Contribute')}
+                actionText="Add funds"
               />
-            ) : null}
+            )}
           </Box>
         }
         renderItem={({ item, index }) => (

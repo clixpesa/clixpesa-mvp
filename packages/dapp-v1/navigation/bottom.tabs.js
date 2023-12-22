@@ -7,7 +7,23 @@ import Icon from 'react-native-remix-icon';
 import { Box, Text, Avatar, Pressable, HStack } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 
-export function HeaderRightIcons() {
+import { HomeScreen, DummyScreen, AccountScreen, EditProfileScreen } from 'dapp/essentials';
+
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+export function BottomTabs() {
+  return (
+    <Tab.Navigator screenOptions={TabScreenOptions}>
+      <Tab.Screen name="Home" component={HomeScreen} options={{ headerTitle: 'Clixpesa' }} />
+      <Tab.Screen name="Spaces" component={DummyScreen} />
+      {/* <Tab.Screen name="Loans" component={LoansStack} /> */}
+      <Tab.Screen name="Account" component={AccountScreen} />
+    </Tab.Navigator>
+  );
+}
+
+const HeaderRightIcons = () => {
   const navigation = useNavigation();
   return (
     <HStack space="5" mr="3">
@@ -37,9 +53,9 @@ export function HeaderRightIcons() {
       </Pressable>
     </HStack>
   );
-}
+};
 
-export function AccPressable() {
+const AccPressable = () => {
   const { initials } = useSelector((s) => s.essential.userDetails);
   const navigation = useNavigation();
   return (
@@ -55,4 +71,36 @@ export function AccPressable() {
       </Avatar>
     </Pressable>
   );
-}
+};
+
+// Path: navigation/bottom.tabs.js
+const TabIcons = {
+  Home: ['home-3-fill', 'home-3-line'],
+  Spaces: ['safe-2-fill', 'safe-2-line'],
+  //Loans: ['hand-coin-fill', 'hand-coin-line'],
+  Account: ['user-3-fill', 'user-3-line'],
+};
+
+const TabScreenOptions = ({ route }) => ({
+  tabBarIcon: ({ focused }) => {
+    const [iconFill, iconLine] = TabIcons[route.name];
+    return (
+      <Box bg={focused ? 'primary.200' : '#ffffff'} rounded="2xl" px="5" py="1" mt="1">
+        <Icon name={focused ? iconFill : iconLine} size={22} color="#0F766E" key={route.name} />
+      </Box>
+    );
+  },
+  tabBarLabel: () => {
+    return (
+      <Text fontSize="xs" color="primary.900" key={route.name} mb="1">
+        {route.name}
+      </Text>
+    );
+  },
+  headerLeft: () => <AccPressable />,
+  headerRight: () => <HeaderRightIcons />,
+  tabBarHideOnKeyboard: true,
+  tabBarStyle: {
+    height: 60,
+  },
+});

@@ -3,22 +3,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //Screens
 import { HomeScreen, DummyScreen, AccountScreen, EditProfileScreen } from 'dapp/essentials';
 import { TxDetailsScreen, DepositScreen, TransferFundsScreen } from 'dapp/wallet';
-import { HeaderRightIcons, AccPressable } from './bottom.tabs';
+import { BottomTabs } from './bottom.tabs';
 
 const AppStack = createNativeStackNavigator();
 
 export function AppNavigator() {
   return (
     <AppStack.Navigator>
-      <AppStack.Screen
-        name="Main"
-        component={HomeScreen}
-        options={{
-          headerLeft: () => <AccPressable />,
-          headerRight: () => <HeaderRightIcons />,
-          headerTitle: ' Clixpesa',
-        }}
-      />
+      <AppStack.Screen name="Main" component={BottomTabs} options={{ headerShown: false }} />
       {
         <AppStack.Group screenOptions={{ presentation: 'modal' }}>
           <AppStack.Screen

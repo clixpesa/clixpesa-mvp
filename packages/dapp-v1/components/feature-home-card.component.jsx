@@ -72,14 +72,14 @@ const FeatureHomeCard = ({
         </Stack>
       </HStack>
       {balance ? null : <Spinner right="1/2" top={10} position="absolute" size="lg" />}
-      <HStack mx="4" mb="3" justifyContent="center" space="2">
+      <HStack mx="4" mb="3" justifyContent="center" space="1">
         <Button
           leftIcon={btn1.icon}
           rounded="3xl"
           variant="subtle"
           pr="4"
           size="sm"
-          _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
+          _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5', fontSize: 'sm' }}
           onPress={() => navigation.navigate(btn1.screen, btn1.screenParams)}
         >
           {btn1.name}
@@ -91,7 +91,7 @@ const FeatureHomeCard = ({
           pr="4"
           size="sm"
           c
-          _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
+          _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5', fontSize: 'sm' }}
           onPress={() => navigation.navigate(btn2.screen, btn2.params ? { ...btn2.params } : null)}
         >
           {btn2.name}
@@ -102,7 +102,7 @@ const FeatureHomeCard = ({
           variant="subtle"
           pr="4"
           size="sm"
-          _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
+          _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5', fontSize: 'sm' }}
           onPress={() => navigation.navigate(btn3.screen)}
         >
           {btn3.name}
