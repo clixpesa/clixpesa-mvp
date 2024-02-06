@@ -1,9 +1,5 @@
 import { PIN_SALT, WALLETS_STORE, USER_STORE } from 'app-env';
 
-console.log('PIN_SALT', PIN_SALT);
-console.log('WALLETS_STORE', WALLETS_STORE);
-console.log('USER_STORE', USER_STORE);
-
 module.exports = {
   NULL_ADDRESS: '0x0000000000000000000000000000000000000000',
   DERIVATION_PATH: "m/44'/52752'/0'/0/0",

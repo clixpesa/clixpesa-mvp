@@ -9,6 +9,7 @@ export async function storeUserDetails(storeName, userDetails) {
     throw new Error('New user already exists. you cant share a phonenumber');
   }
   const serialised = JSON.stringify(userDetails);
+  console.log('userKey', storeName);
   await setItemAsync(storeName, serialised);
   console.log('User details stored');
 }
@@ -49,6 +50,7 @@ export async function storeUserWallet(listName, newWallet) {
   }
   Array.prototype.push.call(storedWallets, newWallet); //storedWallets is an object
   const serialised = JSON.stringify(storedWallets);
+  console.log('walletKey', listName);
   await setItemAsync(listName, serialised);
 }
 

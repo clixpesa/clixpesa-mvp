@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 
-import { setUserDetails } from '../../../store/essential/essential.slice';
+import { setUserDetails } from 'dapp/store/essential/essential.slice';
 
 export default function VerificationScreen({ navigation, route }) {
   const { phone, verificationId } = route.params;

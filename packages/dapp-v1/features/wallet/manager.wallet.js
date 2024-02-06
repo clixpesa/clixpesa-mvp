@@ -5,6 +5,9 @@ import { Wallet, utils } from 'ethers';
 import { getProvider } from 'dapp/config/provider';
 import { getTokenBalance } from 'dapp/contracts';
 
+console.log('DERIVATION_PATH', DERIVATION_PATH);
+console.log('WALLETS_STORE', WALLETS_STORE);
+
 export const walletsListCache = {};
 
 export async function hasWallets() {
@@ -62,6 +65,7 @@ export async function storeWallet(passcode, wallet) {
     enPrivateKey: enPrivateKey,
     enMnemonic: enMnemonic,
   };
+  console.log('walletKey', WALLETS_STORE);
   await storeUserWallet(WALLETS_STORE, newWallet);
 
   Object.assign(walletsListCache, { [wallet.address]: newWallet });

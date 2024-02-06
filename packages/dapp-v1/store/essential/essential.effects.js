@@ -6,6 +6,8 @@ import { USER_STORE } from 'dapp/config/constants';
 import { isKeySet, setSigner } from 'dapp/config/signer';
 import { addUser } from '../firestore/firestore.slice';
 
+console.log('USER_STORE', USER_STORE);
+
 export const essentialListeners = (startListening) => {
   startListening({
     actionCreator: createAccount,
@@ -15,6 +17,7 @@ export const essentialListeners = (startListening) => {
       if (userDetails.phone === '' && !userToken) {
         throw new Error('Problem getting user details');
       }
+      console.log('userKey', USER_STORE);
       await storeUserDetails(USER_STORE, userData);
       listenerApi.dispatch(addUser());
     },
