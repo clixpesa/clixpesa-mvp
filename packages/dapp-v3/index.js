@@ -1,6 +1,7 @@
 import { registerRootComponent } from 'expo';
 //import { Provider } from 'react-redux';
 import 'react-native-get-random-values';
+import 'expo-dev-client';
 //import '@ethersproject/shims';
 
 import App from './App';
@@ -8,7 +9,7 @@ import App from './App';
 
 const ReduxApp = () => (
   //<Provider store={store}>
-    <App />
+  <App />
   //</Provider>
 );
 

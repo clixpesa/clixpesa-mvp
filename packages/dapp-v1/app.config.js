@@ -5,7 +5,7 @@ export default {
   expo: {
     name: 'Clixpesa MVP',
     slug: 'dapp-v1',
-    version: '1.0.0',
+    version: '1.0.2',
     orientation: 'portrait',
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
@@ -27,6 +27,7 @@ export default {
       },
       package: 'com.clixpesa.dappv1',
       googleServicesFile: GOOGLE_SERVICES_JSON,
+      versionCode: 2,
     },
     web: {
       favicon: './assets/favicon.png',

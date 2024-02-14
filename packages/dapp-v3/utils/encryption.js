@@ -1,9 +1,5 @@
 import Crypto from 'crypto-js';
-//import * as Crypto from 'expo-crypto'
-//import { SALT } from 'dapp/config/constants';
-import * as SecureStore from 'expo-secure-store'; 
-
-const SALT = '20f22f6c1144ae240b6fab1a84d91a4e9019a11b05d4ac18fa19b01435849496';
+import { SALT } from '../config';
 
 export async function encryptData(data, passcode) {
   const saltedPasscode = saltyPasscode(passcode);

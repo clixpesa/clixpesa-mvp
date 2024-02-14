@@ -28,6 +28,6 @@ export default {
     web: {
       favicon: './assets/favicon.png',
     },
-    plugins: ['@react-native-firebase/app', '@react-native-firebase/auth'],
+    plugins: ['@react-native-firebase/app', '@react-native-firebase/auth', 'expo-secure-store'],
   },
 };
