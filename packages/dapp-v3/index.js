@@ -1,16 +1,16 @@
 import { registerRootComponent } from 'expo';
-//import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import 'react-native-get-random-values';
 import 'expo-dev-client';
-//import '@ethersproject/shims';
+import '@ethersproject/shims';
 
 import App from './App';
-//import { store } from './redux';
+import { store } from './redux';
 
 const ReduxApp = () => (
-  //<Provider store={store}>
-  <App />
-  //</Provider>
+  <Provider store={store}>
+    <App />
+  </Provider>
 );
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);

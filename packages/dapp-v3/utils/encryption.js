@@ -1,15 +1,19 @@
 import Crypto from 'crypto-js';
 import { SALT } from '../config';
 
-export async function encryptData(data, passcode) {
+export function encryptData(data, passcode) {
   const saltedPasscode = saltyPasscode(passcode);
   return Crypto.AES.encrypt(data, saltedPasscode).toString();
 }
 
-export async function decryptDataWpasscode(encryptedData, passcode) {
+export function decryptDataWpasscode(encryptedData, passcode) {
   const saltedPasscode = saltyPasscode(passcode);
   const bytes = Crypto.AES.decrypt(encryptedData.toString(), saltedPasscode);
   return bytes.toString(Crypto.enc.Utf8);
+}
+
+export function encryptDataWToken(data, token) {
+  return Crypto.AES.encrypt(data, token).toString();
 }
 
 export async function decryptDataWtoken(encryptedData, token) {

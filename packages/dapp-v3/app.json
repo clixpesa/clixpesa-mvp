@@ -2,7 +2,7 @@
   "expo": {
     "name": "Clixpesa MVP",
     "slug": "dapp-v3",
-    "version": "1.0.1",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,11 +21,13 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.clixpesa.dappv3",
-      "versionCode": 1
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 7
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": ["@react-native-firebase/app", "@react-native-firebase/auth"],
     "extra": {
       "eas": {
         "projectId": "1159703d-edfc-4ba4-907d-8a53e14af8de"
