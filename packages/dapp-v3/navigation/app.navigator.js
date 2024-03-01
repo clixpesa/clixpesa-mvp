@@ -2,11 +2,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 //Screens
 import {
-  //HomeScreen,
   DummyScreen,
   AccountScreen,
   EditProfileScreen,
   ChangePasscodeScreen,
+  RecoveryPhraseScreen,
 } from 'dapp/essentials';
 //import { TxDetailsScreen, DepositScreen, TransferFundsScreen } from 'dapp/wallet';
 //import { JoinSpaceScreen, CreateSpaceScreen, SetSpaceGoalScreen } from 'dapp/spaces';
@@ -26,24 +26,24 @@ export function AppNavigator() {
             options={{ headerTitle: '' }}
           />
           <AppStack.Screen name="Account" component={AccountScreen} />
-          {/*
+
           <AppStack.Screen
             name="depositFunds"
-            component={DepositScreen}
+            component={DummyScreen}
             options={{ headerTitle: '' }}
           />
           <AppStack.Screen
             name="transferFunds"
-            component={TransferFundsScreen}
+            component={DummyScreen}
             options={{ headerTitle: '' }}
           />
           <AppStack.Screen
             name="TxDetails"
-            component={TxDetailsScreen}
+            component={DummyScreen}
             options={{
               headerTitle: '',
             }}
-          />*/}
+          />
           <AppStack.Screen
             name="editProfile"
             component={EditProfileScreen}
@@ -53,6 +53,11 @@ export function AppNavigator() {
             name="changePasscode"
             component={ChangePasscodeScreen}
             options={{ headerTitle: 'Change Passcode' }}
+          />
+          <AppStack.Screen
+            name="getRecoveryPhrase"
+            component={RecoveryPhraseScreen}
+            options={{ headerTitle: 'Recovery Phrase' }}
           />
           <AppStack.Screen
             name="joinSpace"

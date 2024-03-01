@@ -6,11 +6,7 @@ import Icon from 'react-native-remix-icon';
 import { Box, Text, Avatar, Pressable, HStack } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 
-import {
-  //HomeScreen,
-  DummyScreen,
-  AccountScreen,
-} from 'dapp/essentials';
+import { HomeScreen, DummyScreen, AccountScreen } from 'dapp/essentials';
 import {
   SpacesLandingScreen,
   //SpaceHomeScreen
@@ -22,7 +18,7 @@ export function BottomTabs() {
   const hasSpaces = false;
   return (
     <Tab.Navigator screenOptions={TabScreenOptions}>
-      <Tab.Screen name="Home" component={DummyScreen} options={{ headerTitle: 'Clixpesa' }} />
+      <Tab.Screen name="Home" component={HomeScreen} options={{ headerTitle: 'Clixpesa' }} />
       <Tab.Screen name="Spaces" component={hasSpaces ? DummyScreen : SpacesLandingScreen} />
       {/* <Tab.Screen name="Loans" component={LoansStack} /> */}
       <Tab.Screen name="Account" component={AccountScreen} />

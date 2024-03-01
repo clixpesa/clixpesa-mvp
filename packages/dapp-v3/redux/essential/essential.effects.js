@@ -6,11 +6,14 @@ import {
   changeUserToken,
   createPendingWallet,
   setHasAccount,
+  setIsConnected,
+  setSignered,
 } from './essential.slice';
 import {
   addUserData,
   addUserToken,
   getUserData,
+  getUserWallet,
   storeUserDetails,
   modifyUserDetails,
   updateUserData,
@@ -18,7 +21,8 @@ import {
   generateWalletFromMnemonic,
   encryptWallet,
   addUserWallet,
-  //getUserWallet,
+  setSigner,
+  connectToProvider,
 } from 'dapp/services';
 
 import { LOCAL_STORAGE_KEY } from 'dapp/config';
@@ -54,6 +58,7 @@ export const essentialListeners = (startListening) => {
         const encryptedWallet = encryptWallet(action.payload);
         await addUserWallet(encryptedWallet, userId);
         //Add check for wallet
+        setSigner(encryptedWallet.enPrivateKey);
         listenerApi.dispatch(setHasAccount({ state: true, address: encryptedWallet.address }));
         listenerApi.dispatch(setLoggedIn(true));
       }
@@ -80,5 +85,29 @@ export const essentialListeners = (startListening) => {
         listenerApi.dispatch(setLoggedIn(false));
       }
     },
-  });
+  }); /*
+  startListening({
+    predicate: (action) => action.type === 'essential/setIsConnected' && action.payload === true,
+    effect: async (action, listenerApi) => {
+      const userWallet = await getUserWallet(listenerApi.getState().essential.userDetails.id); //Fix refetching wallet
+      if (listenerApi.getState().essential.isConnected) {
+        if (userWallet) {
+          setSigner(userWallet.enPrivateKey);
+          listenerApi.dispatch(setSignered(true));
+        } else {
+          console.warn('No wallet found');
+          listenerApi.dispatch(setSignered(false));
+        }
+      } else {
+        try {
+          console.log('Retrying Connecting to provider');
+          await connectToProvider();
+          listenerApi.dispatch(setIsConnected(true));
+        } catch (e) {
+          console.log('Unable to connect to provider', e);
+          listenerApi.dispatch(setIsConnected(false));
+        }
+      }
+    },
+  });*/
 };

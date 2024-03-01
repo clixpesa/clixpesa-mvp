@@ -4,9 +4,9 @@ import { CodeInput } from 'dapp/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { setLoggedIn } from 'dapp/redux/essential/essential.slice';
-import { saltyPasscode, userToken } from 'dapp/utils';
+import { saltyPasscode, userToken } from 'dapp/utils'; //replace with getUsertoken from services
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
   const dispatch = useDispatch();
   const { names, initials, phone } = useSelector((s) => s.essential.userDetails);
   const firstName = names ? names.split(' ')[0] : '**' + phone.slice(9, 13);
@@ -24,6 +24,7 @@ export default function LoginScreen({ navigation }) {
       console.log('LoggedIn Failed');
       setIsValid(false);
       setLoading(false);
+      setIsCodeReady(false);
       setCode('');
     }
   };

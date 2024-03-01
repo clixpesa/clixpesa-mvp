@@ -1,5 +1,5 @@
 export { default as LoginScreen } from './login.screen';
-//export { default as HomeScreen } from './home.screen';
+export { default as HomeScreen } from './home.screen';
 export { default as WelcomeScreen } from './welcome.screen';
 export { default as DummyScreen } from './dummy.screen';
 
@@ -16,6 +16,7 @@ export { default as ImportWalletScreen } from './onboarding/import.screen';
 export { default as AccountScreen } from './account/account.screen';
 export { default as EditProfileScreen } from './account/edit-profile.screen';
 export { default as ChangePasscodeScreen } from './account/change-pin.screen';
+export { default as RecoveryPhraseScreen } from './account/recovery-phrase.screen';
 
 //Wallet
 export { default as DepositScreen } from './wallet/deposit.screen';

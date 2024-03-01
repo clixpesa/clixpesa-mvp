@@ -2,7 +2,7 @@
   "expo": {
     "name": "Clixpesa MVP",
     "slug": "dapp-v3",
-    "version": "1.0.7",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -22,7 +22,7 @@
       },
       "package": "com.clixpesa.dappv3",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 7
+      "versionCode": 9
     },
     "web": {
       "favicon": "./assets/favicon.png"

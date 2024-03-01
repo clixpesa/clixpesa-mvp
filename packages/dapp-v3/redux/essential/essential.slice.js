@@ -2,6 +2,8 @@ import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const initialState = {
   isLoggedIn: false,
+  isConnected: false,
+  isSignerSet: false,
   hasAccount: {
     state: false,
     address: null,
@@ -43,11 +45,17 @@ const essentialSlice = createSlice({
     setUserDetailsOnLogin: (state, action) => {
       state.userDetails = action.payload;
     },
+    setIsConnected: (state, action) => {
+      state.isConnected = action.payload;
+    },
     setLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
     },
     setHasAccount: (state, action) => {
       state.hasAccount = action.payload;
+    },
+    setSignered: (state, action) => {
+      state.isSignerSet = action.payload;
     },
     updateUserDetails: (state, action) => {
       const { names, address, email } = action.payload;
@@ -75,10 +83,13 @@ export const {
   setHasAccount,
   updateUserDetails,
   clearUserDetails,
+  setIsConnected,
+  setSignered,
 } = essentialSlice.actions;
 
 export const addUserDetailsToken = createAction('essential/addUserDetailsToken');
 export const changeUserToken = createAction('essential/changeUserToken');
 export const createPendingWallet = createAction('essential/createPendingWallet');
+//export const setSignerWith = createAction('essential/setSignerWith');
 
 export default essentialSlice.reducer;

@@ -1,6 +1,6 @@
 {
   "name": "dapp-v3",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
@@ -32,6 +32,7 @@
     "react-dom": "^18.2.0",
     "react-native": "0.72.10",
     "react-native-animatable": "^1.4.0",
+    "react-native-dotenv": "^3.4.11",
     "react-native-get-random-values": "~1.9.0",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-remix-icon": "^0.4.0",

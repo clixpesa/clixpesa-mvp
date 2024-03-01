@@ -16,7 +16,7 @@ export function encryptDataWToken(data, token) {
   return Crypto.AES.encrypt(data, token).toString();
 }
 
-export async function decryptDataWtoken(encryptedData, token) {
+export function decryptDataWtoken(encryptedData, token) {
   const bytes = Crypto.AES.decrypt(encryptedData.toString(), token);
   return bytes.toString(Crypto.enc.Utf8);
 }
